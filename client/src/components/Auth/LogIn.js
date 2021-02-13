@@ -4,8 +4,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+//import FormControlLabel from '@material-ui/core/FormControlLabel';
+//import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -16,10 +16,10 @@ import Container from '@material-ui/core/Container';
 
 import { Link as RouteLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
-import GoogleLogin from 'react-google-login'
+//import GoogleLogin from 'react-google-login'
 import { useHistory } from 'react-router-dom';
 import { signin } from '../../actions/auth';
-import { AUTH } from '../../actions/types';
+//import { AUTH } from '../../actions/types';
 
 
 function Copyright() {  
@@ -75,20 +75,20 @@ export default function SignIn() {
       localStorage.setItem('profileupdated', JSON.stringify({ updated: true }));
   };
 
-  const googleSuccess = async (res) => {
-    const result = res?.profileObj;
-    const token = res?.tokenId;
-    try {
-      dispatch({ type: AUTH, data: { result, token } });
-      history.push('/main');
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //const googleSuccess = async (res) => {
+   // const result = res?.profileObj;
+    //const token = res?.tokenId;
+    //try {
+    //  dispatch({ type: AUTH, data: { result, token } });
+    //  history.push('/main');
+   // } catch (error) {
+   //   console.log(error);
+    //}
+ // };
 
-  const googleError = (error) => {
-    alert('Google Sign In was unsuccessful. Try again later');
-  }
+  //const googleError = (error) => {
+  //  alert('Google Sign In was unsuccessful. Try again later');
+  //}
 
 
   return (
