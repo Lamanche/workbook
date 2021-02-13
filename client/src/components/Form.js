@@ -96,6 +96,7 @@ const Form = () => {
                                     variant="outlined"
                                     required
                                     fullWidth
+                                    multiline
                                     id="description"
                                     label="Headline"
                                     name="description"
@@ -108,6 +109,7 @@ const Form = () => {
                                     variant="outlined"
                                     required
                                     fullWidth
+                                    multiline
                                     name="about"
                                     label="Description"
                                     type="about"
@@ -121,6 +123,7 @@ const Form = () => {
                                     variant="outlined"
                                     required
                                     fullWidth
+                                    multiline
                                     name="price"
                                     label="Price from .. €"                                    
                                     id="price"

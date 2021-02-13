@@ -136,7 +136,7 @@ export default function ServiceCard(props) {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem >Update</MenuItem>
+              {/*<MenuItem >Update</MenuItem>*/}
               <MenuItem onClick={deletePost}>Delete</MenuItem>
             </Menu>                          
         </IconButton> 
@@ -155,12 +155,12 @@ export default function ServiceCard(props) {
         <Typography variant="h6" color="textSecondary" component="p">
           {props.category}
         </Typography>
-        <Typography paragraph variant='h7' className={classes.headline}>
+        <Typography paragraph variant='body2' className={classes.headline}>
             {props.description}
         </Typography>
         
         <div className={classes.footer}>
-          <Typography color='primary'>Price from: {props.price}€</Typography>
+          <Typography className={classes.headline} variant='body1' color='primary'>Price from: {props.price}€</Typography>
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -177,11 +177,11 @@ export default function ServiceCard(props) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>          
         <Typography  variant='subtitle2' color="textSecondary" >Description</Typography>
-          <Typography className={classes.headline} paragraph color="textPrimary" variant='subtitle2'>
+          <Typography variant='body2' className={classes.headline} paragraph color="textPrimary">
             {props.about}
           </Typography>
           <Typography  variant='subtitle2' color="textSecondary" >Contact me</Typography>
-          <Typography paragraph variant='body1' color='primary'>
+          <Typography variant='body2' color='primary'>
             {props.email}
           </Typography>
         </CardContent>

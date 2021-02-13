@@ -19,12 +19,10 @@ import StarRatingComponent from 'react-star-rating-component';
 
 const UserProfile = () => {
     const dispatch = useDispatch();
-    const history = useHistory();    
+    const history = useHistory();      
     
     const owner = JSON.parse(localStorage.getItem('profile'));
     const user = JSON.parse(localStorage.getItem('user'));
-    //const name = user.name
-    //const email = user.email
     
     let name;
     let email;
@@ -61,9 +59,11 @@ const UserProfile = () => {
     },[name, email]);    
     
     
-    useEffect(() => {
+    useEffect(() => { 
         const unlisten = history.listen((location) => {
-            dispatch(clearProfile())
+            if(location.pathname !== '/userprofile'){
+                dispatch(clearProfile())
+            }          
         });
         return () => {
           unlisten();
@@ -135,7 +135,7 @@ const UserProfile = () => {
                     InputProps={{
                         readOnly: true,
                     }}
-                    multiline='true'
+                    multiline
                     InputLabelProps={{ shrink: true }}
                 />
                 <TextField
@@ -147,7 +147,7 @@ const UserProfile = () => {
                     InputProps={{
                         readOnly: true,
                     }}
-                    multiline='true'
+                    multiline
                     InputLabelProps={{ shrink: true }}
                 />                    
                 <TextField
@@ -159,7 +159,7 @@ const UserProfile = () => {
                     InputProps={{
                         readOnly: true,
                     }}
-                    multiline='true'
+                    multiline
                     InputLabelProps={{ shrink: true }}
                 /> 
                  <TextField
@@ -171,7 +171,7 @@ const UserProfile = () => {
                     InputProps={{
                         readOnly: true,
                     }}
-                    multiline='true'
+                    multiline
                     InputLabelProps={{ shrink: true }}
                 /> 
                 {profile._id === owner.result._id ? 

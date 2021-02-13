@@ -22,7 +22,7 @@ export const findPostsByWord = (word) => API.get('/post/find', word)
 
 // User profiles
 export const fetchUserProfile = (name) => API.post('/user/find', name);
-export const fetchMyProfile = (id) => API.get(`user/user/${id}`)
+//export const fetchMyProfile = (id) => API.get(`user/user/${id}`)
 export const updateMyProfile = (id, formData) => API.patch(`user/update/${id}`, formData)
 
 // Comments

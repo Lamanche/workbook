@@ -34,7 +34,6 @@ const UpdateProfile = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value})
     };
     
-    // Pole kindel kas siia catchi on vaja ja response on kasutamata/testimata
     const handleSubmit = (e) => {
         e.preventDefault();
         updateMyProfile(id, formData)
@@ -44,8 +43,7 @@ const UpdateProfile = () => {
                 localStorage.setItem('profile', JSON.stringify({ result: res.data, token }));                
                 history.push('/userprofile')
                 window.location.reload()
-            })
-                .catch(error => console.log(error))
+            })                
     };    
 
     // Navigation
@@ -122,13 +120,13 @@ const UpdateProfile = () => {
                     <form className={classes.form} onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <TextField className={classes.text} onChange={handleChange} multiline='true' name="about" fullWidth id="standard-required1" label="About" defaultValue={user.result.about} />
+                                <TextField className={classes.text} onChange={handleChange} multiline name="about" fullWidth id="standard-required1" label="About" defaultValue={user.result.about} />
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField className={classes.text} onChange={handleChange} multiline='true' name="experience" fullWidth id="standard-required2" label="Experience" defaultValue={user.result.experience} />
+                                <TextField className={classes.text} onChange={handleChange} multiline name="experience" fullWidth id="standard-required2" label="Experience" defaultValue={user.result.experience} />
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField className={classes.text} onChange={handleChange} multiline='true' name="references" fullWidth id="standard-required3" label="References" defaultValue={user.result.references} />
+                                <TextField className={classes.text} onChange={handleChange} multiline name="references" fullWidth id="standard-required3" label="References" defaultValue={user.result.references} />
                             </Grid>
                             <div className={classes.fileInput}>                                
                                                                 
