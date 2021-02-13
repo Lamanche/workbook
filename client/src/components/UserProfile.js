@@ -16,8 +16,7 @@ import Comment from './Comments/Comment.js'
 import AddComment from './Comments/AddComment.js'
 import StarRatingComponent from 'react-star-rating-component';
 
-// Probleem - 'User' ei kustu localStoragest ära kui navigeerida
-// mujale muud moodi kui Back nuppu vajutades
+
 const UserProfile = () => {
     const dispatch = useDispatch();
     const history = useHistory();    
