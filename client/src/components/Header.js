@@ -118,7 +118,7 @@ export default function ProminentAppBar() {
         <Toolbar className={classes.toolbar}>
             <Typography className={classes.title} variant="h2" noWrap>
               <Link className={classes.link} to="/main">
-                <Typography className={classes.title} variant='h2'>Wörkbook</Typography>
+                <Typography className={classes.title} variant='h2'>Wörkbook <span style={{color: 'red'}}>(Alpha Testing)</span></Typography>
               </Link>
             </Typography>
             

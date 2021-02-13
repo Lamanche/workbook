@@ -126,10 +126,10 @@ export default function SignIn() {
             autoComplete="current-password"
             onChange={handleChange}
           />
-          <FormControlLabel
+          {/*<FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          />*/}
             <Button
               type="submit"
               fullWidth
@@ -139,7 +139,7 @@ export default function SignIn() {
             >
               Sign In
             </Button>
-            <GoogleLogin 
+            {/*<GoogleLogin 
               clientId="847952746555-hpp742qaep7kffdi40a52fvdpmbb4qp4.apps.googleusercontent.com"              
               render={(renderProps) => (
                 <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
@@ -149,7 +149,7 @@ export default function SignIn() {
               onSuccess={googleSuccess}
               onFailure={googleError}
               cookiePolicy="single_host_origin"
-            />
+              />*/}
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
