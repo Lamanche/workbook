@@ -31,19 +31,42 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // Styles
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: 220,
-    margin: 10, 
+  card: {
+    //width: '100%',
+    //minWidth: 200,
+    //margin: 10,
+    /*"@media (max-width: 550px)": {
+      maxWidth: 125
+    }*/
   },
   header: {
-    display: 'flex'
+    display: 'flex',
+  },
+  headerText:{
+    fontWeight: 'bold',
+    "@media (max-width: 550px)": {
+      fontSize: '.8rem'
+    }
+  },
+  subheader: {
+    "@media (max-width: 550px)": {
+      fontSize: '.7rem'
+    }
   },
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
+  category: {
+    "@media (max-width: 550px)": {
+      fontSize: '1.1rem'
+    }
+  },
   headline: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    "@media (max-width: 550px)": {
+      fontSize: '.8rem'
+    }
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -57,6 +80,10 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
+    "@media (max-width: 550px)": {
+      height: 25,
+      width: 25,
+    }
   },
   footer: {
     display: 'flex',
@@ -115,9 +142,11 @@ export default function ServiceCard(props) {
   }
   
   return (
-    <Card className={classes.root}>      
+    <Card className={classes.card}>      
       <div className={classes.header}>
         <CardHeader
+          //className={classes.headerText}
+          classes={{ title: classes.headerText, subheader: classes.subheader}}
           onClick={getProfiles}
           avatar={
             <Avatar src={props.picture} className={classes.avatar}></Avatar>
@@ -152,7 +181,7 @@ export default function ServiceCard(props) {
         title="category"
       />
       <CardContent>
-        <Typography variant="h6" color="textSecondary" component="p">
+        <Typography className={classes.category} variant="h6" color="textSecondary" component="p">
           {props.category}
         </Typography>
         <Typography paragraph variant='body2' className={classes.headline}>
@@ -181,7 +210,7 @@ export default function ServiceCard(props) {
             {props.about}
           </Typography>
           <Typography  variant='subtitle2' color="textSecondary" >Contact me</Typography>
-          <Typography variant='body2' color='primary'>
+          <Typography className={classes.headline} variant='body2' color='primary'>
             {props.email}
           </Typography>
         </CardContent>

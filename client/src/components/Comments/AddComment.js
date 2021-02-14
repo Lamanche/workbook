@@ -15,9 +15,6 @@ const AddComment = (props) => {
             marginBottom: 30
         },
         form: {
-            //width: '100%',
-            //display: 'flex',
-            //flexDirection: 'column',
             marginTop: 30,
             marginBottom: 20
         }

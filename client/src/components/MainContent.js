@@ -9,7 +9,7 @@ import Card from './Card.js'
 
 // Styles
 import { makeStyles, fade } from '@material-ui/core/styles';
-import { Grid, Tabs, Tab, Paper, Button } from '@material-ui/core'
+import { Grid, Tabs, Tab, Paper, Button, GridList, GridListTile } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 
@@ -52,15 +52,41 @@ function Main() {
 
     //Styles
     const useStyles = makeStyles((theme) => ({
-        root: {    
-        display: 'flex',
-        justifyContent: 'space-around',
+        grid: {    
+          width: '100%'
+        },
+        gridItem:{
+          padding: theme.spacing(1)
+        },
+        card: {
+          //padding: theme.spacing(2)
         },
         searchBar: {
-            display: 'flex',
-            justifyContent: 'flex-end',
-            
+          display: 'flex',
+          //justifyContent: 'flex-end',
+          "@media (max-width: 550px)": {
+            flexDirection: 'column'            
+          }      
         },
+        gridList: {
+          width: '100%',
+          flexWrap: 'nowrap',
+          transform: 'translateZ(0)',
+          height: 50,
+          overflowY: 'hidden',
+          "@media (max-width: 550px)": {
+            //overflow: 'scroll'            
+          },
+          '&::-webkit-scrollbar':{
+            display: 'none'
+          },        
+        },
+        
+        tabValue: {
+          "@media (max-width: 550px)": {
+            fontSize: '.7rem',           
+          }      
+        },       
         search: {
             position: 'relative',
             display: 'flex',
@@ -72,11 +98,15 @@ function Main() {
             marginRight: 8,
             marginBottom: 8,
             marginTop: 8,
-            width: '100%',
+            //width: '100%',
             [theme.breakpoints.up('sm')]: {
               marginLeft: theme.spacing(3),
               width: 'auto',
             },
+            "@media (max-width: 550px)": {
+              width: 150,
+              marginLeft: 10         
+            }    
           },
           searchIcon: {
             padding: theme.spacing(0, 2),
@@ -109,19 +139,88 @@ function Main() {
     return (  
         <>            
             <Paper className={classes.searchBar} elevation={20}  square>
+                
+                
+                
+              <GridList className={classes.gridList} cols={3}>
+                <GridListTile>
+                  <Tabs                    
+                    className={classes.searchtabs}
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    //centered
+                  >
+                    <Tab className={classes.tabValue} label="All" value="" />
+                  </Tabs>                  
+                </GridListTile>
+                <GridListTile>
                 <Tabs                    
+                    className={classes.searchtabs}
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    //centered
+                  >
+                    <Tab className={classes.tabValue} label="Coding" value="Coding" />
+                  </Tabs>                 
+                </GridListTile>
+                <GridListTile>
+                <Tabs                    
+                    className={classes.searchtabs}
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    //centered
+                  >
+                    <Tab className={classes.tabValue} label="Engineering" value="Engineering" />
+                  </Tabs>                  
+                </GridListTile>
+                <GridListTile>
+                <Tabs                    
+                    className={classes.searchtabs}
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    //centered
+                  >
+                    <Tab className={classes.tabValue} label="Design" value="Design" />
+                  </Tabs>
+                </GridListTile>
+                <GridListTile>
+                <Tabs                    
+                    className={classes.searchtabs}
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    //centered
+                  >
+                    <Tab className={classes.tabValue} label="Construction" value="Construction" />
+                  </Tabs>
+                </GridListTile>                
+              </GridList>
+                
+                
+                {/*<Tabs                    
+                    className={classes.searchtabs}
                     value={value}
                     onChange={handleChange}
                     indicatorColor="primary"
                     textColor="primary"
                     //centered
                 >
-                    <Tab label="All" value="" />
-                    <Tab label="Coding" value="Coding" />
-                    <Tab label="Engineering" value="Engineering" />
-                    <Tab label="Design" value="Design" />
-                    <Tab label="Construction" value="Construction" />
-                </Tabs>
+                    <Tab className={classes.tabValue} label="All" value="" />
+                    <Tab className={classes.tabValue} label="Coding" value="Coding" />
+                    <Tab className={classes.tabValue} label="Engineering" value="Engineering" />
+                    <Tab className={classes.tabValue} label="Design" value="Design" />
+                    <Tab className={classes.tabValue} label="Construction" value="Construction" />
+                </Tabs>*/}
+                
                 <div className={classes.search}>
                   <InputBase
                     placeholder="Search…"
@@ -136,9 +235,11 @@ function Main() {
                   <Button onClick={search}><SearchIcon className={classes.searchIcon}/></Button>
                 </div>
             </Paper>                               
-            <Grid className={classes.root} container >            
+            <Grid className={classes.grid} container >            
                 {posts.map(post => (                    
-                    <Card key={post._id} id={post._id} date={post.createdAt} name={post.name} email={post.email} category={post.category} description={post.description}  about={post.about} picture={post.picture} creator={post.creatorId} price={post.price}/>
+                  <Grid className={classes.gridItem} item xs={6} sm={4} md={3} lg={2}> 
+                    <Card className={classes.card} key={post._id} id={post._id} date={post.createdAt} name={post.name} email={post.email} category={post.category} description={post.description}  about={post.about} picture={post.picture} creator={post.creatorId} price={post.price}/>
+                  </Grid>
                 ))}        
             </Grid>
         </>

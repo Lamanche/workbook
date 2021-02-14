@@ -8,7 +8,7 @@ import { deleteComment } from '../../api/index.js'
 import { getProfile } from '../../actions/profile.js'
 
 //Styles
-import { Avatar, Grid, Divider, Typography, Button } from '@material-ui/core'
+import { Avatar, Grid, Divider, Typography, Button, makeStyles } from '@material-ui/core'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const Comment = (props) => {
@@ -27,20 +27,49 @@ const Comment = (props) => {
     dispatch(getProfile({ name, email }))
     history.replace("/userprofile")
   }
+
+  //Styles
+  const useStyles = makeStyles(() => ({
+    avatar: {
+      "@media (max-width: 550px)": {
+        height: 25,
+        width: 25,
+      }
+    },
+    name: {
+      fontWeight: 'bold', 
+      fontSize: '.95rem',
+      "@media (max-width: 550px)": {
+        fontSize: '.85rem',
+      }
+    },
+    date: {
+      "@media (max-width: 550px)": {
+        fontSize: '.8rem',
+      }
+    },
+    comment: {
+      "@media (max-width: 550px)": {
+        fontSize: '.85rem',
+      }
+    }
+  
+  }));
+  const classes = useStyles();
   
   return (
         <>
           <div style={{display: 'flex'}}>
           <Grid  style={{width: '100%', display: 'flex'}} >          
-            <Avatar src={props.picture} />
+            <Avatar className={classes.avatar} src={props.picture} />
             <div style={{display: 'flex', flexDirection: 'column', marginLeft: 10}}>
               <Grid onClick={getProfiles}>
-                <Typography style={{fontWeight: 'bold', fontSize: '.95rem'}}>{props.author}</Typography>
-                <Typography variant='subtitle2'>{moment(props.date).fromNow()}</Typography>                  
+                <Typography className={classes.name} style={{}}>{props.author}</Typography>
+                <Typography className={classes.date} variant='subtitle2'>{moment(props.date).fromNow()}</Typography>                  
               </Grid>
               <Grid container wrap="nowrap" style={{marginTop: 10}}>
                 <Grid item>
-                  <Typography variant='body1'>{props.comment}</Typography>
+                  <Typography className={classes.comment} variant='body1'>{props.comment}</Typography>
                 </Grid>                  
               </Grid>
             </div>

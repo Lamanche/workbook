@@ -76,9 +76,15 @@ const UserProfile = () => {
         container: {    
             display: 'flex',
             justifyContent: 'center',
+            '@media (max-width: 550px)': {
+                flexDirection: 'column'
+            },
           },
           name: {
-              fontWeight: 'bold'
+              fontWeight: 'bold',
+              '@media (max-width: 550px)': {
+                fontSize: '2rem'
+            },
           },
           text: {
               marginTop: 20,        
@@ -99,11 +105,19 @@ const UserProfile = () => {
           },
           grid: {
             display: 'flex',
+            width: '100%'
+          },
+          gridItem:{
+            padding: theme.spacing(1)
           },
           avatar: {
               margin: theme.spacing(1),
               width: 100,
               height: 100,
+              '@media (max-width: 550px)': {
+                width: 90,
+              height: 90,
+            },
           },
           update: {
             marginTop: theme.spacing(3),
@@ -111,6 +125,7 @@ const UserProfile = () => {
           back: {
             margin: theme.spacing(3, 0, 2),
           },
+          
     }));
   
     const classes = useStyles();
@@ -197,7 +212,9 @@ const UserProfile = () => {
             <Container className={classes.boxRight} >
                 <Grid className={classes.grid} container>
                     {posts.map(post => (
-                        <Card key={post._id} id={post._id} date={post.createdAt} name={post.name} email={post.email} category={post.category} description={post.description}  about={post.about} picture={post.picture} creator={post.creatorId}/>
+                        <Grid className={classes.gridItem} item xs={12} sm={9} md={6} lg={5}> 
+                            <Card key={post._id} id={post._id} date={post.createdAt} name={post.name} email={post.email} category={post.category} description={post.description}  about={post.about} picture={post.picture} creator={post.creatorId} price={post.price}/>
+                        </Grid>
                     ))}
                 </Grid>
             </Container>

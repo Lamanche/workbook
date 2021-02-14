@@ -63,67 +63,81 @@ export default function ProminentAppBar() {
     }
   },[user?.token])
 
-// Styles
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-    },
+// Styles  
+// Container
+const useStyles = makeStyles(() => ({
     appBar: {
-      height: 158
-    },
-    toolbar: {
-      height: '100%',
-      alignItems: 'flex-start',
+      height: 158,
+      position: 'relative',
+      display: 'flex',
       paddingTop: 8, 
-      paddingBottom: 10,
+      "@media (max-width: 550px)": {
+        flexDirection: 'column',
+        height: 120,
+      }  
     },
+    
+// Title
     title: {
-      flexGrow: 1,
-      alignSelf: 'flex-end',
-      fontWeight: 'bold'
+      position: 'absolute',
+      bottom: 10,
+      left: 20,
+      "@media (max-width: 550px)": {
+        left: 10       
+      },          
+    },
+    headline: {
+      fontWeight: 'bold',
+      fontSize: '4rem',
+      "@media (max-width: 550px)": {
+        fontSize: '2.8rem',       
+      },       
     },
     link: {
       textDecoration: 'none',
       color: 'inherit'
     },
-    profileRoot: {
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      position: 'relative'
-    },
+
+// profile
     profile: {
       display: 'flex',
-      justifyContent: 'flex-end',
+      position: 'absolute',
+      right: 10, 
+      top: 10, 
+      "@media (max-width: 550px)": {
+        top: 2,
+      }
     },
     avatar: {
       display: 'flex',
       alignItems: 'center',
-      marginRight: 20,
-      marginTop: 4
+      marginRight: 10,
+      marginTop: 4,
+      "@media (max-width: 550px)": {
+        marginRight: 10,
+        height: 25,
+        width: 25,
+        marginTop: 12,
+      }
     },
     userName: {
       display: 'flex',
       alignItems: 'center',
-      marginRight: 10,
+      "@media (max-width: 550px)": {
+        fontSize: '0.9rem',
+      }
     },    
   }));
 
   const classes = useStyles();
 
-  return (
-    <div className={classes.root}>
+  return (    
       <AppBar className={classes.appBar}position="static">
-        <Toolbar className={classes.toolbar}>
-            <Typography className={classes.title} variant="h2" noWrap>
-              <Link className={classes.link} to="/main">
-                <Typography className={classes.title} variant='h2'>Wörkbook <span style={{color: 'red'}}>(Alpha Testing)</span></Typography>
-              </Link>
-            </Typography>
+            <div className={classes.title}>              
+                <Typography className={classes.headline} variant='h2'><Link className={classes.link} to="/main">Wörkbook{/*<span style={{color: 'red'}}>(Alpha Testing)</span>*/}</Link></Typography>              
+            </div>
             
             {user || signedIn ? (
-              <div className={classes.profileRoot}>
                 <div className={classes.profile}>
                   <Avatar className={classes.avatar} alt={user.result.name} src={user.result.picture}>{user.result.name.charAt(0)}</Avatar>
                   <Typography className={classes.userName} variant="h6">{user.result.name}</Typography>              
@@ -141,13 +155,10 @@ export default function ProminentAppBar() {
                         <MenuItem onClick={logout}>Logout</MenuItem>
                       </Menu>                          
                   </IconButton>                
-                </div>                
-              </div>
+                </div>
               ) 
               : 
               null}
-        </Toolbar>
       </AppBar>
-    </div>
   );
 }
