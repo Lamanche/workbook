@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGOUT } from '../../actions/types';
 import { Link } from 'react-router-dom';
-import decode from 'jwt-decode';
 import { clearProfile } from '../../actions/profile.js'
 import { useStyles } from './styles'
 
@@ -18,7 +17,7 @@ import { Avatar } from '@material-ui/core';
 
 
 
-export default function ProminentAppBar() {
+const Header = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   let history = useHistory();
@@ -51,16 +50,7 @@ export default function ProminentAppBar() {
   const post = () => {
     history.push("/form");
     setAnchorEl(null);   
-  };  
-
-  useEffect(() => {
-    const token = user?.token;
-    if (token) {
-      const decodedToken = decode(token);
-      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
-    }
-  },[])
-
+  }; 
 
   return (    
       <AppBar className={classes.appBar} position="static">
@@ -93,3 +83,5 @@ export default function ProminentAppBar() {
       </AppBar>
   );
 }
+
+export default Header

@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import decode from 'jwt-decode';
+import { LOGOUT } from '../actions/types';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 // API
 import { fetchAllPosts } from '../api/index.js'
@@ -14,7 +18,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 
 
-function Main() {    
+const Main = () => {    
+    const user = JSON.parse(localStorage.getItem('profile')); 
+    let history = useHistory();
+    const dispatch = useDispatch();
+  
     const [posts, setPosts] = useState([])
     const [value, setValue] = useState("");
 
@@ -36,9 +44,12 @@ function Main() {
                 .then(res => {
                     setPosts(res.data.Posts)
                 })
-        }
-        
-    }
+    }}
+
+    const logout = () => {
+      dispatch({ type: LOGOUT });
+      history.replace("/");   
+    };
         
     useEffect(() => {
         fetchAllPosts()
@@ -48,7 +59,15 @@ function Main() {
                 const filterData = sortedData.filter(data => data.category.includes(value))                
                 setPosts(filterData)
             })     
-    },[value])    
+    },[value]) 
+    
+    useEffect(() => {
+      const token = user?.token;
+      if (token) {
+        const decodedToken = decode(token);
+        if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+      }
+    },[])
 
     //Styles
     const useStyles = makeStyles((theme) => ({

@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Header from './components/Header/Header';
 import LogIn from './components/Auth/LogIn.js';
 import Register from './components/Auth/Register.js';
-import MainContent from './components/MainContent'
+import Main from './components/Main'
 import UserProfile from './components/Profiles/UserProfile'
 import UpdateProfile from './components/Profiles/UpdateProfile.js' 
 import Form from './components/Form.js';
@@ -34,7 +34,6 @@ function App() {
 
   useEffect(() => {
     if (profile) {
-      console.log(history)
       history.replace('/main')
   }})
 
@@ -46,7 +45,7 @@ function App() {
               <Switch>                
                   <Route path="/" exact component={LogIn} />                                                
                   <Route path="/register" component={Register} />
-                  {profile ? <Route path="/main" component={MainContent} /> : <Redirect to="/" exact component={LogIn} />}
+                  {profile ? <Route path="/main" component={Main} /> : <Redirect to="/" exact component={LogIn} />}
                   {profile ? <Route path="/updateprofile" component={UpdateProfile} /> : <Redirect to="/" exact component={LogIn} />}                                
                   {profile ? <Route path="/form" component={Form} /> : <Redirect to="/" exact component={LogIn} />}
                   {profile ? <Route path="/userprofile" component={UserProfile} /> : <Redirect to="/" exact component={LogIn} />}  
