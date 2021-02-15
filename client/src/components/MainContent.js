@@ -138,10 +138,7 @@ function Main() {
     
     return (  
         <>            
-            <Paper className={classes.searchBar} elevation={20}  square>
-                
-                
-                
+            <Paper className={classes.searchBar} elevation={20}  square>                
               <GridList className={classes.gridList} cols={3}>
                 <GridListTile>
                   <Tabs                    

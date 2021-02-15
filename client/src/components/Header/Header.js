@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOGOUT } from '../actions/types';
+import { LOGOUT } from '../../actions/types';
 import { Link } from 'react-router-dom';
 import decode from 'jwt-decode';
-import { clearProfile } from '../actions/profile.js'
+import { clearProfile } from '../../actions/profile.js'
+import { useStyles } from './styles'
 
 // Styles
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -20,6 +19,7 @@ import { Avatar } from '@material-ui/core';
 
 
 export default function ProminentAppBar() {
+  const classes = useStyles();
   const dispatch = useDispatch();
   let history = useHistory();
 
@@ -28,7 +28,6 @@ export default function ProminentAppBar() {
 
   const [anchorEl, setAnchorEl] = useState(null);
   
-  // Functions
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -39,7 +38,7 @@ export default function ProminentAppBar() {
   
   const profile = () => {
     dispatch(clearProfile())
-    history.replace("/userprofile");
+    history.push("/userprofile");
     setAnchorEl(null);
   };
 
@@ -49,8 +48,8 @@ export default function ProminentAppBar() {
     setAnchorEl(null);    
   };
 
-  const form = () => {
-    history.replace("/form");
+  const post = () => {
+    history.push("/form");
     setAnchorEl(null);   
   };  
 
@@ -58,83 +57,15 @@ export default function ProminentAppBar() {
     const token = user?.token;
     if (token) {
       const decodedToken = decode(token);
-
       if (decodedToken.exp * 1000 < new Date().getTime()) logout();
     }
-  },[user?.token])
+  },[])
 
-// Styles  
-// Container
-const useStyles = makeStyles(() => ({
-    appBar: {
-      height: 158,
-      position: 'relative',
-      display: 'flex',
-      paddingTop: 8, 
-      "@media (max-width: 550px)": {
-        flexDirection: 'column',
-        height: 120,
-      }  
-    },
-    
-// Title
-    title: {
-      position: 'absolute',
-      bottom: 10,
-      left: 20,
-      "@media (max-width: 550px)": {
-        left: 10       
-      },          
-    },
-    headline: {
-      fontWeight: 'bold',
-      fontSize: '4rem',
-      "@media (max-width: 550px)": {
-        fontSize: '2.8rem',       
-      },       
-    },
-    link: {
-      textDecoration: 'none',
-      color: 'inherit'
-    },
-
-// profile
-    profile: {
-      display: 'flex',
-      position: 'absolute',
-      right: 10, 
-      top: 10, 
-      "@media (max-width: 550px)": {
-        top: 2,
-      }
-    },
-    avatar: {
-      display: 'flex',
-      alignItems: 'center',
-      marginRight: 10,
-      marginTop: 4,
-      "@media (max-width: 550px)": {
-        marginRight: 10,
-        height: 25,
-        width: 25,
-        marginTop: 12,
-      }
-    },
-    userName: {
-      display: 'flex',
-      alignItems: 'center',
-      "@media (max-width: 550px)": {
-        fontSize: '0.9rem',
-      }
-    },    
-  }));
-
-  const classes = useStyles();
 
   return (    
-      <AppBar className={classes.appBar}position="static">
+      <AppBar className={classes.appBar} position="static">
             <div className={classes.title}>              
-                <Typography className={classes.headline} variant='h2'><Link className={classes.link} to="/main">Wörkbook{/*<span style={{color: 'red'}}>(Alpha Testing)</span>*/}</Link></Typography>              
+                <Typography className={classes.headline} variant='h2'><Link className={classes.link} to="/main">Wörkbook</Link></Typography>              
             </div>
             
             {user || signedIn ? (
@@ -150,7 +81,7 @@ const useStyles = makeStyles(() => ({
                         open={Boolean(anchorEl)}                        
                         onClose={handleClose}
                         >
-                        <MenuItem onClick={form}>New post</MenuItem>
+                        <MenuItem onClick={post}>New post</MenuItem>
                         <MenuItem onClick={profile}>My profile</MenuItem>
                         <MenuItem onClick={logout}>Logout</MenuItem>
                       </Menu>                          

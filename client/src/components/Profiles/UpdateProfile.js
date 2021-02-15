@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import FileBase from 'react-file-base64';
 
 // API
-import { updateMyProfile } from '../api/index.js'
+import { updateMyProfile } from '../../api/index.js'
 
 // Styles
 import Avatar from '@material-ui/core/Avatar';
@@ -41,7 +41,7 @@ const UpdateProfile = () => {
                 localStorage.setItem('profileupdated', JSON.stringify({ updated: true }));
                 const token = JSON.parse(localStorage.getItem('profile')).token;    
                 localStorage.setItem('profile', JSON.stringify({ result: res.data, token }));                
-                history.push('/userprofile')
+                history.replace('/userprofile')
                 window.location.reload()
             })                
     };    

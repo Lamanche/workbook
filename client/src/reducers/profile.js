@@ -1,6 +1,7 @@
 import * as actionType from '../actions/types';
 
 const initialState = { name: '', email: ''}
+
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionType.GETPROFILE:            

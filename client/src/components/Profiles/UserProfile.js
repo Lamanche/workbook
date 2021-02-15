@@ -3,17 +3,17 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 
 // API
-import { fetchUserProfile, findUserPosts, fetchComments } from '../api/index.js'
-import { clearProfile } from '../actions/profile.js'
+import { fetchUserProfile, findUserPosts, fetchComments } from '../../api/index.js'
+import { clearProfile } from '../../actions/profile.js'
 
 // Styles
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, TextField, Typography, Container, Avatar, Button, Grid } from '@material-ui/core'
 
 // Components
-import Card from './Card.js'
-import Comment from './Comments/Comment.js'
-import AddComment from './Comments/AddComment.js'
+import Card from '../Card.js'
+import Comment from '../Comments/Comment.js'
+import AddComment from '../Comments/AddComment.js'
 import StarRatingComponent from 'react-star-rating-component';
 
 
@@ -47,7 +47,8 @@ const UserProfile = () => {
 
     const clearProfiles = () => {
         dispatch(clearProfile())
-        history.replace("/main")    
+        history.replace("/main")
+        //history.goBack()    
     };
     
     useEffect(() => {        
