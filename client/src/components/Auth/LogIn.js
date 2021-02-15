@@ -61,7 +61,6 @@ export default function SignIn() {
 
   useEffect(() => {
     if (profile) {
-      console.log(history)
       history.replace('/main')
     }})
 

@@ -39,7 +39,7 @@ function App() {
 
   return (      
         <Container className={classes.container} maxWidth="lg">
-          <Paper className={classes.paper}  elevation={3} square>    
+          <Paper className={classes.paper}  elevation={1} square>    
             <Header />                 
             <Box>                        
               <Switch>                

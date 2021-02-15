@@ -27,7 +27,7 @@ const UserProfile = () => {
     let name;
     let email;
 
-    if (!user || user.email === owner.result.email) {
+    if (!user || user?.email === owner.result.email) {
         name = owner.result.name;
         email = owner.result.email
     }
@@ -47,7 +47,7 @@ const UserProfile = () => {
 
     const clearProfiles = () => {
         dispatch(clearProfile())
-        history.replace("/main")
+        history.push("/main")
         //history.goBack()    
     };
     

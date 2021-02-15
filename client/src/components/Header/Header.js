@@ -16,7 +16,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Avatar } from '@material-ui/core';
 
 
-
 const Header = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
