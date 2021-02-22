@@ -21,9 +21,9 @@ const AddComment = (props) => {
     }));
     const classes = useStyles();
 
-    const author = JSON.parse(localStorage.getItem('profile')).result
+    const author = JSON.parse(localStorage.getItem('profile'))?.result
     const email = props.email
-    const initialState = { author: author.name, authorEmail: author.email, picture: author.picture, forUser: email, comment: '' }
+    const initialState = { author: author?.name, authorEmail: author?.email, picture: author?.picture, forUser: email, comment: '' }
     const [comment, setComment] = useState(initialState)
     
     const handleChange = (e) => {
@@ -32,7 +32,7 @@ const AddComment = (props) => {
     
     const handleSubmit = (e) => {
         e.preventDefault()
-        postComment(comment).then(window.location.reload())
+        postComment(comment)
     }
     
     return (

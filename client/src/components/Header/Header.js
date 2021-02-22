@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOGOUT } from '../../actions/types';
 import { Link } from 'react-router-dom';
-import { clearProfile } from '../../actions/profile.js'
-import { useStyles } from './styles'
+import { clearProfile } from '../../actions/profile.js';
+import { logout } from '../../actions/auth.js'
+import { useStyles } from './styles';
 
 // Styles
 import AppBar from '@material-ui/core/AppBar';
@@ -13,15 +13,14 @@ import Typography from '@material-ui/core/Typography';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Avatar } from '@material-ui/core';
+import { Avatar, Button } from '@material-ui/core';
 
 
 const Header = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  let history = useHistory();
-
-  const signedIn = useSelector(state => state.auth.isLoggedIn);
+  const history = useHistory();
+  const location = useSelector(state => state.location.location);
   const user = JSON.parse(localStorage.getItem('profile'));  
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -33,6 +32,10 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const login = () => {
+    history.push('/login')
+}
   
   const profile = () => {
     dispatch(clearProfile())
@@ -40,9 +43,9 @@ const Header = () => {
     setAnchorEl(null);
   };
 
-  const logout = () => {
-    dispatch({ type: LOGOUT });
-    history.replace("/");
+  const logOut = () => {
+    dispatch(logout());
+    history.push("/");
     setAnchorEl(null);    
   };
 
@@ -51,15 +54,17 @@ const Header = () => {
     setAnchorEl(null);   
   }; 
 
+
+
   return (    
       <AppBar className={classes.appBar} position="static">
             <div className={classes.title}>              
                 <Typography className={classes.headline} variant='h2'><Link className={classes.link} to="/main">Wörkbook</Link></Typography>              
             </div>
             
-            {user || signedIn ? (
+            {user ? (
                 <div className={classes.profile}>
-                  <Avatar className={classes.avatar} alt={user.result.name} src={user.result.picture}>{user.result.name.charAt(0)}</Avatar>
+                  <Avatar className={classes.avatar} alt={user.result.name} src={user.result.picture || user.result.imageUrl}>{user.result.name.charAt(0)}</Avatar>
                   <Typography className={classes.userName} variant="h6">{user.result.name}</Typography>              
                   <IconButton aria-label="display more actions" edge="end" color="inherit">
                     <MoreIcon onClick={handleClick} />
@@ -72,13 +77,23 @@ const Header = () => {
                         >
                         <MenuItem onClick={post}>New post</MenuItem>
                         <MenuItem onClick={profile}>My profile</MenuItem>
-                        <MenuItem onClick={logout}>Logout</MenuItem>
+                        <MenuItem onClick={logOut}>Logout</MenuItem>
                       </Menu>                          
                   </IconButton>                
                 </div>
               ) 
               : 
-              null}
+              ((location ===  "/" || location === "/login" || location === "/register") ?                
+                null
+                :
+                <div className={classes.login}>
+                  <Button variant='contained' color='secondary' onClick={login}>
+                    Log in
+                  </Button>
+                </div>
+              )  
+                            
+            }
       </AppBar>
   );
 }

@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const {fetchAllPosts, createPost, deletePost, findUserPosts, findAllPostsByWord } = require('../controllers/post.js')
+const {fetchAllPosts, createPost, deletePost, findUserPosts, findAllPostsByWord, findPostsByKey } = require('../controllers/post.js')
 const auth = require("../middleware/auth.js")
 
-router.get('/all', auth, fetchAllPosts);
+router.get('/all', fetchAllPosts);
 router.post('/create', auth, createPost);
 router.delete('/delete/:id', auth, deletePost)
-router.get('/userposts', auth, findUserPosts)
-router.get('/find', auth, findAllPostsByWord);
+router.get('/userposts', findUserPosts)
+router.get('/find', findAllPostsByWord);
+router.get('/findposts', findPostsByKey);
 
 module.exports = router;

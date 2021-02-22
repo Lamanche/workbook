@@ -14,7 +14,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 const Comment = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = JSON.parse(localStorage.getItem('profile')).result 
+  const user = JSON.parse(localStorage.getItem('profile'))?.result 
   const id = props.id
 
   const deleteCom = () => {
@@ -25,7 +25,7 @@ const Comment = (props) => {
     const name = props.author
     const email = props.email
     dispatch(getProfile({ name, email }))
-    history.replace("/userprofile")
+    history.push("/userprofile")
   }
 
   //Styles
@@ -74,7 +74,7 @@ const Comment = (props) => {
               </Grid>
             </div>
           </Grid>
-          {user.email === props.email ? <div style={{justifyContent: 'flex-end'}}><Button onClick={deleteCom}><DeleteForeverIcon /></Button></div> : null}       
+          {user?.email === props.email ? <div style={{justifyContent: 'flex-end'}}><Button onClick={deleteCom}><DeleteForeverIcon /></Button></div> : null}       
           </div>
           <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
         </>

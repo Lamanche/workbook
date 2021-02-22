@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     /*"@media (max-width: 550px)": {
       maxWidth: 125
     }*/
+    margin: '0.5rem'
   },
   header: {
     display: 'flex',
@@ -95,8 +96,9 @@ export default function ServiceCard(props) {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const userId = JSON.parse(localStorage.getItem('profile')).result._id;
+  const userId = JSON.parse(localStorage.getItem('profile'))?.result._id;
   const creatorId = props.creator;
+  
   
   const [expanded, setExpanded] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -117,7 +119,7 @@ export default function ServiceCard(props) {
     const name = props.name
     const email = props.email
     dispatch(getProfile({ name, email }))
-    history.replace("/userprofile")
+    history.push("/userprofile")
   }
 
   const categoryImage = () => {

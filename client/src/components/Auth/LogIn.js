@@ -8,18 +8,18 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 //import FormControlLabel from '@material-ui/core/FormControlLabel';
 //import Checkbox from '@material-ui/core/Checkbox';
-//import Link from '@material-ui/core/Link';
+import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
-import { Link as RouteLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import GoogleLogin from 'react-google-login'
 import { useHistory } from 'react-router-dom';
 import { signin } from '../../actions/auth';
+import { location } from '../../actions/location';
 import { AUTH } from '../../actions/types';
 import useStyles from './styles'
 import { Copyright } from './helperFunc'
@@ -43,6 +43,10 @@ export default function SignIn() {
       dispatch(signin(formData, history));      
   };
 
+  const register = () => {
+    history.replace('/register')
+  }
+
   const googleSuccess = async (res) => {
     const result = res?.profileObj;
     const token = res?.tokenId;
@@ -60,9 +64,10 @@ export default function SignIn() {
   }
 
   useEffect(() => {
+    dispatch(location(history.location.pathname))
     if (profile) {
       history.replace('/main')
-    }})
+    }},[history, profile, dispatch])
 
   return (
     <Container component="main" maxWidth="xs">
@@ -130,9 +135,9 @@ export default function SignIn() {
               </Link>*/}
             </Grid>
             <Grid item>              
-              <RouteLink to="/register">              
+              <Link onClick={register}>              
                   {"Don't have an account? Sign Up"}              
-              </RouteLink>            
+              </Link>            
             </Grid>
           </Grid>
         </form>

@@ -63,5 +63,14 @@ export const useStyles = makeStyles(() => ({
       "@media (max-width: 550px)": {
         fontSize: '0.9rem',
       }
-    },    
+    },
+    login: {
+        display: 'flex',
+        position: 'absolute',
+        right: 20, 
+        top: 10, 
+        "@media (max-width: 550px)": {
+          top: 2,
+      },
+    }  
   }));

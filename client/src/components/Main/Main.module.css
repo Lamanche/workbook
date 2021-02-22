@@ -1,0 +1,55 @@
+.container {
+    width: 100%;
+    min-height: 58vh;
+    margin: 1rem;
+}
+.paper {
+    height: 100%
+}
+.contentContainer {
+    display: flex
+}
+
+/* TABS */
+.tabsUpper {
+    font-size: 2rem;
+}
+
+/* HEADER */
+.headerContainer {
+    display: flex;
+    justify-content: center;
+    
+}
+.headerSubContainer {
+    margin-top: .8rem;
+}
+.header:hover {
+    cursor: pointer;
+}
+
+/* SIDEBAR */
+.sideBar {
+    margin-right: 2rem;
+}
+
+/* GRID */
+.grid {
+    
+}
+
+/*  SIDEBARITEM */
+.sideBarItem {
+    display: flex;
+    padding: 1rem;
+    margin-right: 0.8rem;
+    transition: all .03s ease-in-out;
+}
+.sideBarItem:hover {
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;    
+    transform: scale(1.05);
+}
+.sideBarItemText {
+    margin-left: .5rem;
+}

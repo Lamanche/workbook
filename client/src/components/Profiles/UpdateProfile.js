@@ -12,14 +12,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import useStyles from './styles';
 
 
 const UpdateProfile = () => {
     let history = useHistory();
+    const classes = useStyles();
     const user = JSON.parse(localStorage.getItem('profile'));
     //const prevPicture = user.result.picture;   
     const id = user.result._id
@@ -46,49 +47,15 @@ const UpdateProfile = () => {
             })                
     };    
 
-    // Navigation
     const continueToMain = () => {
         localStorage.setItem('profileupdated', JSON.stringify({ updated: true }));
         history.replace("/main");   
-      };
+    };
 
     const back = () => {
         history.replace("/userprofile");   
-    };
-
-// Styles
-    const useStyles = makeStyles((theme) => ({
-        paper: {
-            marginTop: theme.spacing(8),
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            width: '100%'
-        },
-        avatar: {
-            margin: theme.spacing(1),
-            width: 100,
-            height: 100,
-        },
-        form: {
-            width: '100%', // Fix IE 11 issue.
-            marginTop: theme.spacing(3),
-        },
-        btnContainer: {
-            width: '100%'
-        },
-        submit: {
-            margin: theme.spacing(3, 0, 2),
-        },
-        back: {
-            marginBottom: theme.spacing(3),
-        },
-        input: {
-            display: 'none',
-        },
-        }));
-
-    const classes = useStyles();
+    };        
+    
 
     return (
         <Container component="main" maxWidth="xs">
@@ -149,7 +116,7 @@ const UpdateProfile = () => {
                                     fullWidth
                                     variant="contained"
                                     color="primary"
-                                    className={classes.back}
+                                    className={classes.updateBack}
                                     onClick={continueToMain}
                                 >
                                 Later
@@ -171,7 +138,7 @@ const UpdateProfile = () => {
                                     fullWidth
                                     variant="contained"
                                     color="secondary"
-                                    className={classes.back}
+                                    className={classes.updateBack}
                                     onClick={back}
                                 >
                                 Cancel

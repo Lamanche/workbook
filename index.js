@@ -5,6 +5,7 @@ const connectDB = require('./config/db');
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const path = require('path')
+const cookieParser = require('cookie-parser')
 
 dotenv.config({ path: './config/config.env' });
 
@@ -18,7 +19,12 @@ if (process.env.NODE_ENV === 'development'){
 
 app.use(bodyParser.json({ limit: '30mb' }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
-app.use(cors());
+app.use(cookieParser())
+app.use(cors({
+    //Kas seda on vaja? Reactis on proxy. Productionis peab kindlasti ära muutma.
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 //app.use(express.static(path.join(__dirname, "client", "build")))
 
 app.use("/user", require('./routes/user.js'))

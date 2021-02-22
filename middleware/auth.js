@@ -3,8 +3,11 @@ const jwt = require("jsonwebtoken") ;
 const secret = process.env.ACCESS_SECRET;
 
 const auth = async (req, res, next) => {
+  const token = req.cookies.token
+  if (!token) 
+    return res.status(401).send("No access.. No token.")
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    
     const isCustomAuth = token.length < 500;
 
     let decodedData;
@@ -18,7 +21,8 @@ const auth = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    console.log(error);
+    res.clearCookie("token")
+    res.status(401).json(error.message)
   }
 };
 

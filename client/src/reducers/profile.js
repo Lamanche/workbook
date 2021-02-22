@@ -11,6 +11,7 @@ const profileReducer = (state = initialState, action) => {
         case actionType.CLEARPROFILE:
             localStorage.removeItem('user');
             return { ...state, name: '', email: '' }    
+        
         default:
             return state;
     }

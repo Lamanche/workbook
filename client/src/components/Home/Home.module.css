@@ -1,0 +1,33 @@
+.homeContainer {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.textContainer {
+    margin: 8rem 8rem;
+}
+
+.choicesContainer {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.loginContainer {
+    display: flex;
+    width: 20%;
+    justify-content: space-around;
+    margin: 5rem;
+}
+
+.lookingBtn {
+    
+}
+
+.offeringBtn {
+
+}

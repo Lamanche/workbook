@@ -7,7 +7,7 @@ import { fetchUserProfile, findUserPosts, fetchComments } from '../../api/index.
 import { clearProfile } from '../../actions/profile.js'
 
 // Styles
-import { makeStyles } from '@material-ui/core/styles';
+import useStyles from './styles'
 import { Divider, TextField, Typography, Container, Avatar, Button, Grid } from '@material-ui/core'
 
 // Components
@@ -19,7 +19,8 @@ import StarRatingComponent from 'react-star-rating-component';
 
 const UserProfile = () => {
     const dispatch = useDispatch();
-    const history = useHistory();      
+    const history = useHistory();
+    const classes = useStyles();   
     
     const owner = JSON.parse(localStorage.getItem('profile'));
     const user = JSON.parse(localStorage.getItem('user'));
@@ -27,7 +28,7 @@ const UserProfile = () => {
     let name;
     let email;
 
-    if (!user || user?.email === owner.result.email) {
+    if (!user || user?.email === owner?.result.email) {
         name = owner.result.name;
         email = owner.result.email
     }
@@ -47,17 +48,17 @@ const UserProfile = () => {
 
     const clearProfiles = () => {
         dispatch(clearProfile())
-        history.push("/main")
+        history.replace("/main")
         //history.goBack()    
     };
     
     useEffect(() => {        
-        fetchUserProfile({name}).then(res => setProfile(res.data));
-        findUserPosts({params: {name}}).then(res => setPosts(res.data.Posts))
+        fetchUserProfile({email}).then(res => setProfile(res.data));
+        findUserPosts({params: {email}}).then(res => setPosts(res.data.Posts))
         fetchComments({params: {email}}).then(res => {
             const sortedData = res.data.userComments.sort((a, b) => new Date(a) < new Date(b) ? 1 : -1);
             setComments(sortedData)})
-    },[name, email]);    
+    },[email]);    
     
     
     useEffect(() => { 
@@ -70,72 +71,13 @@ const UserProfile = () => {
           unlisten();
         }
       }, [dispatch, history]);
-      
 
-//Styles
-    const useStyles = makeStyles((theme) => ({
-        container: {    
-            display: 'flex',
-            justifyContent: 'center',
-            '@media (max-width: 550px)': {
-                flexDirection: 'column'
-            },
-          },
-          name: {
-              fontWeight: 'bold',
-              '@media (max-width: 550px)': {
-                fontSize: '2rem'
-            },
-          },
-          text: {
-              marginTop: 20,        
-          },
-          boxLeft: {
-              marginTop: theme.spacing(8),
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              width: '100%',
-          },
-          boxRight: {
-            marginTop: theme.spacing(8),
-          },
-          comments: {
-            width: '100%'
-          },
-          grid: {
-            display: 'flex',
-            width: '100%'
-          },
-          gridItem:{
-            padding: theme.spacing(1)
-          },
-          avatar: {
-              margin: theme.spacing(1),
-              width: 100,
-              height: 100,
-              '@media (max-width: 550px)': {
-                width: 90,
-              height: 90,
-            },
-          },
-          update: {
-            marginTop: theme.spacing(3),
-          },
-          back: {
-            margin: theme.spacing(3, 0, 2),
-          },
-          
-    }));
-  
-    const classes = useStyles();
     
     return (
         <Container className={classes.container} component="main" maxWidth="lg">
             <Container className={classes.boxLeft}>
-                <Avatar src={profile.picture} className={classes.avatar}></Avatar>                    
-                <Typography className={classes.name} variant="h3" label="name">{profile.name}</Typography>                    
+                <Avatar src={profile?.picture} className={classes.avatar}></Avatar>                    
+                <Typography className={classes.name} variant="h3" label="name">{profile?.name}</Typography>                    
                 <StarRatingComponent 
                     name="rate2" 
                     editing={false}
@@ -146,7 +88,7 @@ const UserProfile = () => {
                     className={classes.text}
                     id="standard-read-only-input1"
                     label="About"
-                    defaultValue={profile.about}
+                    defaultValue={profile?.about}
                     fullWidth
                     InputProps={{
                         readOnly: true,
@@ -158,7 +100,7 @@ const UserProfile = () => {
                     className={classes.text}
                     id="standard-read-only-input2"
                     label="Experience"
-                    defaultValue={profile.experience}
+                    defaultValue={profile?.experience}
                     fullWidth
                     InputProps={{
                         readOnly: true,
@@ -170,7 +112,7 @@ const UserProfile = () => {
                     className={classes.text}
                     id="standard-read-only-input3"
                     label="References"
-                    defaultValue={profile.references}
+                    defaultValue={profile?.references}
                     fullWidth
                     InputProps={{
                         readOnly: true,
@@ -182,7 +124,7 @@ const UserProfile = () => {
                     className={classes.text}
                     id="standard-read-only-input3"
                     label="Contact me"
-                    defaultValue={profile.email}
+                    defaultValue={profile?.email}
                     fullWidth
                     InputProps={{
                         readOnly: true,
@@ -190,7 +132,7 @@ const UserProfile = () => {
                     multiline
                     InputLabelProps={{ shrink: true }}
                 /> 
-                {profile._id === owner.result._id ? 
+                {profile?._id === owner?.result._id ? 
                     <Button className={classes.update} onClick={updateProfile} variant="contained" fullWidth color="primary">Update profile</Button>
                     :
                     ''}             

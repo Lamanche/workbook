@@ -32,9 +32,9 @@ const deletePost = async (req, res) => {
 }
 
 const findUserPosts = async (req, res) => {
-    const name = req.query.name
+    const email = req.query.email
     try {
-        const Posts = await postModal.find({name: name});
+        const Posts = await postModal.find({email: email});
         res.status(200).json({ Posts });
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -51,5 +51,16 @@ const findAllPostsByWord = async (req, res) => {
     }    
 }
 
+const findPostsByKey = async (req, res) => {
+    const key = req.query
+    try {
+        console.log(key)
+        const posts = await postModal.find(key)
+        res.status(200).json({ posts });
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
 
-module.exports = { fetchAllPosts, createPost, deletePost, findUserPosts, findAllPostsByWord }
+
+module.exports = { fetchAllPosts, createPost, deletePost, findUserPosts, findAllPostsByWord, findPostsByKey }

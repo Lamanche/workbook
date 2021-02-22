@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import decode from 'jwt-decode';
-import { LOGOUT } from '../actions/types';
+import { LOGOUT } from '../../actions/types';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 // API
-import { fetchAllPosts } from '../api/index.js'
-import { findPostsByWord } from '../api/index.js'
+import { fetchAllPosts } from '../../api/index.js'
+import { findPostsByWord } from '../../api/index.js'
 
 // Components
-import Card from './Card.js'
+import Card from '../Card.js'
 
 // Styles
 import { makeStyles, fade } from '@material-ui/core/styles';

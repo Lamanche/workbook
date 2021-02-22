@@ -1,12 +1,14 @@
 import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom';
+import SideBarItem from './Main/SideBarItem'
 //import FileBase from 'react-file-base64';
 
 // API
 import { createPost } from '../api/index.js';
 
 // Styles
+import { Tabs, Tab, RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -20,12 +22,19 @@ import MenuItem from '@material-ui/core/MenuItem';
 //import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import SearchIcon from '@material-ui/icons/Search';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
+import BuildIcon from '@material-ui/icons/Build';
+import SchoolIcon from '@material-ui/icons/School';
+import AcUnitIcon from '@material-ui/icons/AcUnit';
 
 
 const Form = () => {    
     const user = JSON.parse(localStorage.getItem('profile'));
-    const history = useHistory()
-    const initialState = { name: user.result.name, email: user.result.email, creatorId: user.result._id, picture: user.result.picture, category: '', description: '', about: '', price: ''}
+    const history = useHistory();   
+    const initialState = { company: user.result.company, name: user.result.name, email: user.result.email, creatorId: user.result._id, type: 'Otsin', userType: user.result.userType, categoryType: '', picture: user.result.picture, category: '', description: '', about: '', price: ''}
     const [formData, setFormData] = useState(initialState);
 
     const handleSubmit = (e) => {
@@ -38,6 +47,19 @@ const Form = () => {
     
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value})
+        console.log(formData)
+    };
+
+    const [value, setValue] = useState(0);
+
+    const handleTabChange = (event, newValue) => {
+        setValue(newValue);
+        if (value === 1) {
+            setFormData({...formData, type: 'Otsin'})
+        }
+        else if (value === 0) {
+            setFormData({...formData, type: 'Pakun'})
+        }
     };
     
     const back = () => history.replace("/main")
@@ -80,6 +102,23 @@ const Form = () => {
                     </Typography>
                     <form className={classes.form} onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
+                            <Tabs
+                                value={value}
+                                onChange={handleTabChange}
+                                indicatorColor="primary"
+                                textColor="primary"
+                                centered
+                            >
+                                <Tab value={0} icon={<SearchIcon/>} label="Otsin" />
+                                <Tab value={1} icon={<LocalOfferIcon/>} label="Pakun" />
+                            </Tabs>            
+                            <div /*className={styles.sideBar}*/>
+                                <SideBarItem onclick={() => setFormData({...formData, categoryType: 'teenus'})} name='Teenus' value="Teenus" Icon={<BuildIcon />}/>
+                                <SideBarItem onclick={() => setFormData({...formData, categoryType: 'rent' })} value="Rent" Icon={<SettingsApplicationsIcon />}/>
+                                <SideBarItem onclick={() => setFormData({...formData, categoryType: 'koolitus' })} value="Koolitus" Icon={<SchoolIcon />}/>
+                                <SideBarItem onclick={() => setFormData({...formData, categoryType: 'hange' })} value="Hange" Icon={<BusinessCenterIcon />}/>
+                                <SideBarItem onclick={() => setFormData({...formData, categoryType: 'varia' })} value="Varia" Icon={<AcUnitIcon />}/>
+                            </div>
                             <Grid item xs={12}>
                                 <FormControl variant="outlined" fullWidth>
                                     <InputLabel>Category</InputLabel>
@@ -90,7 +129,7 @@ const Form = () => {
                                             <MenuItem value="Construction">Construction</MenuItem>
                                         </Select>
                                 </FormControl>
-                            </Grid>
+                            </Grid>                            
                             <Grid item xs={12}>
                                 <TextField
                                     variant="outlined"
