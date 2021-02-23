@@ -28,7 +28,7 @@ function Register() {
     const profile  = JSON.parse(localStorage.getItem('profile'));
     const [radioValue, setRadioValue] = useState('eraisik');
 
-    const initialState = { userType: 'eraisik', company: '', name: '', email: '', password: '', profile: false}
+    const initialState = { userType: 'eraisik', company: '', firstName: '', lastName: '', email: '', password: '', profile: false}
     const [formData, setFormData] = useState(initialState);
 
     const handleRadioChange = (event) => {
@@ -43,6 +43,7 @@ function Register() {
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value})
+        console.log(formData)
     } 
 
     const login = () => {

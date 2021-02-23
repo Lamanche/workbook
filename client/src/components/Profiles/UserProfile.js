@@ -138,7 +138,7 @@ const UserProfile = () => {
                     ''}             
                 <Button onClick={clearProfiles} className={classes.back} variant="contained" fullWidth >Back</Button>
             
-                <Container className={classes.comments}>
+                {owner ? <Container className={classes.comments}>
                     <AddComment email={email}/>
                     {comments.length > 0 ? 
                         comments.map(comment => (
@@ -147,7 +147,11 @@ const UserProfile = () => {
                         :
                         <Typography style={{marginBottom: 30}}>No comments yet</Typography>
                     }                    
-                </Container>            
+                </Container>  
+                :
+                <h3>Log in to view or write comments</h3>}
+                
+                         
             </Container>
 
             <Divider orientation='vertical' flexItem/>
@@ -155,12 +159,13 @@ const UserProfile = () => {
             <Container className={classes.boxRight} >
                 <Grid className={classes.grid} container>
                     {posts.map(post => (
-                        <Grid className={classes.gridItem} item xs={12} sm={9} md={6} lg={5}> 
+                        <Grid className={classes.gridItem} item xs={12} sm={12} md={8} lg={6}> 
                             <Card key={post._id} id={post._id} date={post.createdAt} name={post.name} email={post.email} category={post.category} description={post.description}  about={post.about} picture={post.picture} creator={post.creatorId} price={post.price}/>
                         </Grid>
                     ))}
                 </Grid>
             </Container>
+
         </Container>
     )
 }

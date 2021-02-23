@@ -124,13 +124,13 @@ export default function ServiceCard(props) {
 
   const categoryImage = () => {
     switch (props.category) {
-      case 'Coding':
+      case 'coding':
         return coding
-      case 'Engineering':
+      case 'engineering':
         return engineering
-      case 'Construction':
+      case 'construction':
         return construction
-      case 'Design':
+      case 'design':
         return design    
       default:
         return ''

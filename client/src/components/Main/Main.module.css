@@ -45,6 +45,14 @@
     margin-right: 0.8rem;
     transition: all .03s ease-in-out;
 }
+.sideBarItemActive {
+    display: flex;
+    padding: 1rem;
+    margin-right: 0.8rem;
+    background-color: rgb(255, 255, 255);
+    border: 2px rgb(78, 43, 207) solid;
+    transform: scale(1.05);
+}
 .sideBarItem:hover {
     background-color: rgb(255, 255, 255);
     cursor: pointer;    

@@ -12,49 +12,15 @@ const Content = () => {
     const [posts, setPosts] = useState([])
     const postType = useSelector(state => state.posts.postType)
     const postUserType = useSelector(state => state.posts.postUserType)
-    const postcategoryType = useSelector(state => state.posts.postCategoryType)
+    const postCategory = useSelector(state => state.posts.postCategory)
+    const postCategoryType = useSelector(state => state.posts.postCategoryType)
     const loadingState = useSelector(state => state.posts.loading)
     
-    /*let type
-    let subCategory
-    let categoryType
-
-    if (!postType === "") {
-        type = postType
-    } else {
-        type = null
-    }
-    
-    }
-    if (loadingState) {
-        categoryType = postcategoryType
-    } else {
-        categoryType = null
-    }*/
-
-    /*const withType = () => {          
-        dispatch(loading())
-        //const type = postType
-        //const category = null
-        findPosts({params: {/*type,*/ /*category*//*}})*/
-    /*        .then(res => {
-                setPosts(res.data.posts)
-                dispatch(finishedLoading())
-            })
-    }*/
-
-    /*const noType = () => {
-        dispatch(loading())
-        findPosts()
-            .then(res => {
-                setPosts(res.data.posts)
-                dispatch(finishedLoading())
-            })
-    }*/
     
     let type
     let userType
-    /*let categoryType*/
+    let category
+    let categoryType    
     
     if (postType === "") {
         type = null
@@ -66,17 +32,27 @@ const Content = () => {
     } else {
         userType = postUserType
     }
+    if (postCategoryType === "") {
+        categoryType = null
+    } else {
+        categoryType = postCategoryType
+    }
+    if (postCategory === "" || postCategory === 'kõik') {
+        category = null
+    } else {
+        category = postCategory
+    }
 
     useEffect(() => {        
         dispatch(loading())
-        findPosts({params: {type, userType/*, categoryType*/}})
+        findPosts({params: {type, userType, category, categoryType}})
             .then(res => {
                 const data = res.data?.posts;
                 const sortedData = data.sort((a, b) => new Date(a) < new Date(b) ? 1 : -1);
                 setPosts(sortedData)
                 dispatch(finishedLoading())
             })            
-    },[dispatch, type, userType/*, categoryType*/]) 
+    },[dispatch, type, userType, category, categoryType]) 
     
     
     return (

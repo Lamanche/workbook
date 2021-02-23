@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import styles from './Main.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { postType } from '../../actions/posts'
+import CategoryTabs from './CategoryTabs'
 
 import { Paper, Tabs, Tab, Divider } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 
 
 
@@ -19,6 +21,10 @@ const TabBar = () => {
         setValue(newValue);
     };
 
+    const all = () => {
+        dispatch(postType())
+    }
+    
     const looking = (e) => {
         dispatch(postType('Otsin'))
     }
@@ -29,13 +35,13 @@ const TabBar = () => {
 
     useEffect(() => {        
         if (!type) {
-            setValue(null)
-        }
-        else if (type === 'Otsin') {
             setValue(0)
         }
-        else if (type === 'Pakun') {
+        else if (type === 'Otsin') {
             setValue(1)
+        }
+        else if (type === 'Pakun') {
+            setValue(2)
         }
     },[type])
     
@@ -50,33 +56,14 @@ const TabBar = () => {
                         textColor="primary"
                         centered
                     >
+                        <Tab onClick={all} icon={<AllInclusiveIcon/>} label="Kõik" />
                         <Tab onClick={looking} icon={<SearchIcon/>} className={styles.tabsUpper} label="Otsin" />
                         <Tab onClick={offering} icon={<LocalOfferIcon/>} label="Pakun" />
                     </Tabs>                
                 </div>
                 <Divider />
                 <div>
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        variant="scrollable"
-                        scrollButtons="auto"
-                        aria-label="category tabs"
-                        >
-                        <Tab label="Item Oneqwdqwdqedqew"  />
-                        <Tab label="Item Two"  />
-                        <Tab label="Item Three"  />
-                        <Tab label="Item Four"  />
-                        <Tab label="Item Five"  />
-                        <Tab label="Item Six"  />
-                        <Tab label="Item Seven"  />
-                        <Tab label="Item Four"  />
-                        <Tab label="Item Five"  />
-                        <Tab label="Item Six"  />
-                        <Tab label="Item Seven"  />
-                    </Tabs>
+                    <CategoryTabs />
                 </div>
             </Paper>    
         </div>

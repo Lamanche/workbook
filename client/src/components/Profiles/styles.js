@@ -4,13 +4,13 @@ const useStyles = makeStyles((theme) => ({
     container: {        
       display: 'flex',
       justifyContent: 'center',
-      '@media (max-width: 550px)': {
+      '@media (max-width: 600px)': {
         flexDirection: 'column'
       },
     },
       name: {
         fontWeight: 'bold',
-        '@media (max-width: 550px)': {
+        '@media (max-width: 600px)': {
           fontSize: '2rem'
         },
       },
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
       },
       boxLeft: {
         backgroundColor: 'white',
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(4),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
       },
       boxRight: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(4),
       },
       comments: {
         width: '100%'
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
           margin: theme.spacing(1),
           width: 100,
           height: 100,
-          '@media (max-width: 550px)': {
+          '@media (max-width: 600px)': {
             width: 90,
           height: 90,
         },

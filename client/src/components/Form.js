@@ -1,7 +1,8 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch  } from 'react-redux'
 import SideBarItem from './Main/SideBarItem'
+import { postCategory } from '../actions/posts'
 //import FileBase from 'react-file-base64';
 
 // API
@@ -33,10 +34,16 @@ import AcUnitIcon from '@material-ui/icons/AcUnit';
 
 const Form = () => {    
     const user = JSON.parse(localStorage.getItem('profile'));
-    const history = useHistory();   
-    const initialState = { company: user.result.company, name: user.result.name, email: user.result.email, creatorId: user.result._id, type: 'Otsin', userType: user.result.userType, categoryType: '', picture: user.result.picture, category: '', description: '', about: '', price: ''}
+    const history = useHistory();
+    const dispatch = useDispatch();  
+    const postCategoryType = useSelector(state => state.posts.postCategoryType)
+    const initialState = { company: user.result.company, name: user.result.name, email: user.result.email, creatorId: user.result._id, type: 'Otsin', userType: user.result.userType, categoryType: postCategoryType, picture: user.result.picture, category: '', description: '', about: '', price: ''}
     const [formData, setFormData] = useState(initialState);
 
+    useEffect(() => {
+        setFormData({...formData, categoryType: postCategoryType})
+    },[postCategoryType])
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         createPost(formData)
@@ -47,7 +54,10 @@ const Form = () => {
     
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value})
-        console.log(formData)
+        if (e.target.name === 'category') {
+            dispatch(postCategory(e.target.value))
+        }
+        console.log(e.target.name)
     };
 
     const [value, setValue] = useState(0);
@@ -78,6 +88,15 @@ const Form = () => {
             width: 100,
             height: 100,
         },
+        tabs: {
+            marginBottom: '2rem'
+        },
+        info: {
+            display: 'flex'
+        },
+        sideBar: {
+            margin: '2rem'
+        },
         form: {
             width: '100%', // Fix IE 11 issue.
             marginTop: theme.spacing(3),
@@ -93,7 +112,7 @@ const Form = () => {
     const classes = useStyles();    
     
     return (
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="sm">
                 <CssBaseline />
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar} src={user.result.picture}></Avatar>
@@ -101,8 +120,8 @@ const Form = () => {
                         Create
                     </Typography>
                     <form className={classes.form} onSubmit={handleSubmit}>
-                        <Grid container spacing={2}>
-                            <Tabs
+                    <Tabs
+                                className={classes.tabs}
                                 value={value}
                                 onChange={handleTabChange}
                                 indicatorColor="primary"
@@ -111,70 +130,73 @@ const Form = () => {
                             >
                                 <Tab value={0} icon={<SearchIcon/>} label="Otsin" />
                                 <Tab value={1} icon={<LocalOfferIcon/>} label="Pakun" />
-                            </Tabs>            
-                            <div /*className={styles.sideBar}*/>
-                                <SideBarItem onclick={() => setFormData({...formData, categoryType: 'teenus'})} name='Teenus' value="Teenus" Icon={<BuildIcon />}/>
-                                <SideBarItem onclick={() => setFormData({...formData, categoryType: 'rent' })} value="Rent" Icon={<SettingsApplicationsIcon />}/>
-                                <SideBarItem onclick={() => setFormData({...formData, categoryType: 'koolitus' })} value="Koolitus" Icon={<SchoolIcon />}/>
-                                <SideBarItem onclick={() => setFormData({...formData, categoryType: 'hange' })} value="Hange" Icon={<BusinessCenterIcon />}/>
-                                <SideBarItem onclick={() => setFormData({...formData, categoryType: 'varia' })} value="Varia" Icon={<AcUnitIcon />}/>
-                            </div>
-                            <Grid item xs={12}>
-                                <FormControl variant="outlined" fullWidth>
-                                    <InputLabel>Category</InputLabel>
-                                        <Select required name="category" defaultValue = "" label="Category" onChange={handleChange}>
-                                            <MenuItem value="Engineering">Engineering</MenuItem>
-                                            <MenuItem value="Coding">Coding</MenuItem>
-                                            <MenuItem value="Design">Design</MenuItem>
-                                            <MenuItem value="Construction">Construction</MenuItem>
-                                        </Select>
-                                </FormControl>
-                            </Grid>                            
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    multiline
-                                    id="description"
-                                    label="Headline"
-                                    name="description"
-                                    autoComplete="description"
-                                    onChange={handleChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    multiline
-                                    name="about"
-                                    label="Description"
-                                    type="about"
-                                    id="about"
-                                    autoComplete="about"
-                                    onChange={handleChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    multiline
-                                    name="price"
-                                    label="Price from .. €"                                    
-                                    id="price"
-                                    autoComplete="price"
-                                    type="number"
-                                    //InputLabelProps={{
-                                       // shrink: true,
-                                    //}}
-                                    onChange={handleChange}
-                                />
-                            </Grid>
-                        </Grid>
+                            </Tabs>        
+                    <div className={classes.info}> 
+                        <Grid container spacing={2}>                                                           
+                                <Grid item xs={12}>
+                                    <FormControl variant="outlined" fullWidth>
+                                        <InputLabel>Category</InputLabel>
+                                            <Select required name="category" defaultValue = "" label="Category" onChange={handleChange}>
+                                                <MenuItem value="engineering">Engineering</MenuItem>
+                                                <MenuItem value="coding">Coding</MenuItem>
+                                                <MenuItem value="design">Design</MenuItem>
+                                                <MenuItem value="construction">Construction</MenuItem>
+                                            </Select>
+                                    </FormControl>
+                                </Grid>                            
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        multiline
+                                        id="description"
+                                        label="Headline"
+                                        name="description"
+                                        autoComplete="description"
+                                        onChange={handleChange}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        multiline
+                                        name="about"
+                                        label="Description"
+                                        type="about"
+                                        id="about"
+                                        autoComplete="about"
+                                        onChange={handleChange}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        multiline
+                                        name="price"
+                                        label="Price from .. €"                                    
+                                        id="price"
+                                        autoComplete="price"
+                                        type="number"
+                                        //InputLabelProps={{
+                                        // shrink: true,
+                                        //}}
+                                        onChange={handleChange}
+                                    />                                
+                                </Grid>                            
+                        </Grid> 
+                                <div className={classes.sideBar}>
+                                    <SideBarItem value="Teenus" Icon={<BuildIcon />}/>
+                                    <SideBarItem value="Rent" Icon={<SettingsApplicationsIcon />}/>
+                                    <SideBarItem value="Koolitus" Icon={<SchoolIcon />}/>
+                                    <SideBarItem value="Hange" Icon={<BusinessCenterIcon />}/>
+                                    <SideBarItem value="Varia" Icon={<AcUnitIcon />}/>
+                                </div> 
+                            </div>               
                         <Button
                             type="submit"
                             fullWidth

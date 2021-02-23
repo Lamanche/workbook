@@ -22,10 +22,11 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cookieParser())
 app.use(cors({
     //Kas seda on vaja? Reactis on proxy. Productionis peab kindlasti ära muutma.
-    origin: 'http://localhost:3000',
+    //origin: 'http://localhost:3000',
     credentials: true
 }));
-//app.use(express.static(path.join(__dirname, "client", "build")))
+//Heroku jaoks
+app.use(express.static(path.join(__dirname, "client", "build")))
 
 app.use("/user", require('./routes/user.js'))
 app.use("/post", require('./routes/post.js'))
@@ -34,8 +35,9 @@ app.use("/comments", require('./routes/comments.js'))
 
 const PORT = process.env.PORT || 3001;
 
-//app.get("*", (req, res) => {
-   // res.sendFile(path.join(__dirname, "client", "build", "index.html"))
-//})
+//Heroku jaoks
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"))
+})
 
 app.listen(PORT, console.log(`server running in ${process.env.NODE_ENV} mode on ${PORT}`)); 

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom'
 import './App.css'
-import { useSelector } from 'react-redux'
+//import { useSelector } from 'react-redux'
 
 // Styles
 import { Container, Paper, Box } from '@material-ui/core';
@@ -21,7 +21,7 @@ import Form from './components/Form.js';
 function App() {  
   const history = useHistory();
   const profile  = JSON.parse(localStorage.getItem('profile'));
-  const user = useSelector(state => state.auth.isLoggedIn)
+  //const user = useSelector(state => state.auth.isLoggedIn)
   //Styles
   const useStyles = makeStyles(() => ({
     container: {    
