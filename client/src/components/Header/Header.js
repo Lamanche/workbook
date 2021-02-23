@@ -57,7 +57,8 @@ const Header = () => {
 
 
   return (    
-      <AppBar className={classes.appBar} position="static">
+        <div className={classes.container}>
+          <AppBar className={classes.appBar} position="static">
             <div className={classes.title}>              
                 <Typography className={classes.headline} variant='h2'><Link className={classes.link} to="/main">Wörkbook</Link></Typography>              
             </div>
@@ -94,7 +95,8 @@ const Header = () => {
               )  
                             
             }
-      </AppBar>
+          </AppBar>
+        </div>
   );
 }
 

@@ -5,6 +5,8 @@ export const useStyles = makeStyles(() => ({
     appBar: {
       height: 158,
       position: 'relative',
+      top: 0,
+      left: 0,
       display: 'flex',
       paddingTop: 8, 
       "@media (max-width: 550px)": {
@@ -19,7 +21,7 @@ export const useStyles = makeStyles(() => ({
       bottom: 10,
       left: 20,
       "@media (max-width: 550px)": {
-        left: 10       
+        left: 10   
       },          
     },
     headline: {
