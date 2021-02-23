@@ -5,8 +5,6 @@ export const useStyles = makeStyles(() => ({
     appBar: {
       height: 158,
       position: 'relative',
-      top: 0,
-      left: 0,
       display: 'flex',
       paddingTop: 8, 
       "@media (max-width: 550px)": {
