@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { clearProfile } from '../../actions/profile.js';
 import { logout } from '../../actions/auth.js'
-import { useStyles } from './styles';
+//import { useStyles } from './styles';
 
 // Styles
 import AppBar from '@material-ui/core/AppBar';
@@ -14,9 +14,88 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Avatar, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+
 
 
 const Header = () => {
+  
+  const useStyles = makeStyles(() => ({
+    appBar: {
+      height: 158,
+      position: 'relative',
+      display: 'flex',
+      paddingTop: 8, 
+      "@media (max-width: 550px)": {
+        flexDirection: 'column',
+        height: 120,
+      }  
+    },
+    
+  // Title
+    title: {
+      position: 'absolute',
+      bottom: 10,
+      left: 20,
+      "@media (max-width: 550px)": {
+        left: 10   
+      },          
+    },
+    headline: {
+      fontWeight: 'bold',
+      fontSize: '4rem',
+      textShadow: '2px 2px 4px #000000',
+      "@media (max-width: 550px)": {
+        fontSize: '2.8rem',       
+      },       
+    },
+    link: {
+      textDecoration: 'none',
+      color: 'inherit'
+    },
+  
+  // profile
+    profile: {
+      display: 'flex',
+      position: 'absolute',
+      right: 20, 
+      top: 10, 
+      "@media (max-width: 550px)": {
+        top: 2,
+      }
+    },
+    avatar: {
+      display: 'flex',
+      alignItems: 'center',
+      marginRight: 10,
+      marginTop: 4,
+      "@media (max-width: 550px)": {
+        marginRight: 10,
+        height: 25,
+        width: 25,
+        marginTop: 12,
+      }
+    },
+    userName: {
+      display: 'flex',
+      alignItems: 'center',
+      "@media (max-width: 550px)": {
+        fontSize: '0.9rem',
+      }
+    },
+    login: {
+        display: 'flex',
+        position: 'absolute',
+        right: 20, 
+        top: 10, 
+        "@media (max-width: 550px)": {
+          top: 2,
+      },
+    }  
+  }));
+  
+  
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -58,7 +137,7 @@ const Header = () => {
 
   return (    
         <div className={classes.container}>
-          <AppBar className={classes.appBar} /*position="static"*/>
+          <AppBar className={classes.appBar} position="static">
             <div className={classes.title}>              
                 <Typography className={classes.headline} variant='h2'><Link className={classes.link} to="/main">Wörkbook</Link></Typography>              
             </div>
