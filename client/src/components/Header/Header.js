@@ -58,7 +58,7 @@ const Header = () => {
 
   return (    
         <div className={classes.container}>
-          <AppBar className={classes.appBar} position="static">
+          <AppBar className={classes.appBar} /*position="static"*/>
             <div className={classes.title}>              
                 <Typography className={classes.headline} variant='h2'><Link className={classes.link} to="/main">Wörkbook</Link></Typography>              
             </div>
