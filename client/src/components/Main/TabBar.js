@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styles from './Main.module.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { postType } from '../../actions/posts'
+import { postType, postCategoryType, postUserType, postCategory } from '../../actions/posts'
 import CategoryTabs from './CategoryTabs'
 
 import { Paper, Tabs, Tab, Divider } from '@material-ui/core';
@@ -22,19 +22,22 @@ const TabBar = () => {
     };
 
     const all = () => {
-        dispatch(postType())
+        dispatch(postType(''))
+        dispatch(postCategoryType(''))
+        dispatch(postUserType(''))
+        dispatch(postCategory(''))
     }
     
-    const looking = (e) => {
+    const looking = () => {
         dispatch(postType('Otsin'))
     }
 
-    const offering = (e) => {
+    const offering = () => {
         dispatch(postType('Pakun'))
     }
 
     useEffect(() => {        
-        if (!type) {
+        if (type === 'Kõik') {
             setValue(0)
         }
         else if (type === 'Otsin') {
@@ -57,7 +60,7 @@ const TabBar = () => {
                         centered
                     >
                         <Tab onClick={all} icon={<AllInclusiveIcon/>} label="Kõik" />
-                        <Tab onClick={looking} icon={<SearchIcon/>} className={styles.tabsUpper} label="Otsin" />
+                        <Tab onClick={looking} icon={<SearchIcon/>} label="Otsin" />
                         <Tab onClick={offering} icon={<LocalOfferIcon/>} label="Pakun" />
                     </Tabs>                
                 </div>

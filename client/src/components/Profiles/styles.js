@@ -25,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'flex-start',
         width: '100%',
+        padding: 0,
+      },
+      leftContainer: {
+        padding: '.5rem',
+        width: '100%',
       },
       boxRight: {
         marginTop: theme.spacing(4),
@@ -40,7 +45,8 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1)
       },
       avatar: {
-          margin: theme.spacing(1),
+        marginTop: 50,  
+        margin: theme.spacing(1),
           width: 100,
           height: 100,
           '@media (max-width: 600px)': {
@@ -55,7 +61,14 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 0, 2),
       },
 
-
+      leftPaper: {
+        padding: '.8rem',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        width: '100%',
+      },
 
 
       paper: {

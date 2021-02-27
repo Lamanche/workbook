@@ -5,6 +5,7 @@ const auth = require("../middleware/auth.js")
 
 
 // User
+router.post('/loggedin', auth)
 router.post('/register', registerHandler);
 router.post('/signin', signInHandler);
 router.get('/logout', logOutHandler);

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styles from './Home.module.css';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { postType } from '../../actions/posts'
 import { location } from '../../actions/location';
 
@@ -12,9 +12,9 @@ import NavigationIcon from '@material-ui/icons/Navigation';
 const Home = () => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const profile  = JSON.parse(localStorage.getItem('profile'));
+    const loggedIn = useSelector(state => state.auth.isLoggedIn)
 
-    const looking = (e) => {
+    const looking = () => {
         dispatch(postType('Otsin'))
         history.push('/main')
     }
@@ -34,9 +34,9 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(location(history.location.pathname))
-        if (profile) {
+        if (loggedIn === true) {
             history.replace('/main')}
-        },[history, dispatch, profile])
+        },[])
 
         
     
@@ -44,7 +44,8 @@ const Home = () => {
     return (
         <div className={styles.homeContainer}>
             <div className={styles.textContainer}>
-                <h3>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore ipsa in minima vitae excepturi odio accusantium maxime pariatur rem esse repellat ea similique ut, non accusamus? Possimus voluptatem earum adipisci quo consectetur facere, neque numquam esse sapiente officia? Ea, ex?</h3>
+                <h3>Otsid või pakud teenust? Vajad, et keegi sind koolitaks või hoopis tahad oma oskusi teistega jagada? Soovid midagi välja rentida?</h3>
+                <h3>Alusta siit!</h3>
             </div>            
             <div className={styles.choicesContainer}>
                 <Fab onClick={looking} className={styles.lookingBtn} variant="extended">

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Card from '../Card';
+import Card from '../Posts/Card';
+
 import { findPosts } from '../../api/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { loading, finishedLoading } from '../../actions/posts';
@@ -56,7 +57,7 @@ const Content = () => {
     
     
     return (
-        <Grid className={styles.grid} container> 
+        <Grid className={styles.grid} container spacing={1}> 
             {loadingState === true ? 
                 <p>Loading...</p> 
                 :                 
@@ -64,9 +65,9 @@ const Content = () => {
                     {posts.length === 0 ? 
                     <h3>Nothing to show yet</h3>
                     : 
-                    posts.map(post => (
-                        <Grid key={post._id} item lg={3} md={4} sm={6} xs={12}>
-                            <Card id={post._id} date={post.createdAt} name={post.name} company={post.company} email={post.email} category={post.category} description={post.description}  about={post.about} picture={post.picture} creator={post.creatorId} price={post.price}/>                            
+                    posts.map(post => (                        
+                        <Grid key={post._id} item >
+                            <Card data={post}/>                            
                         </Grid>
                     ))} 
                 </>

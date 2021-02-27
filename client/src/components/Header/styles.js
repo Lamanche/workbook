@@ -7,7 +7,7 @@ export const useStyles = makeStyles(() => ({
       position: 'relative',
       display: 'flex',
       paddingTop: 8, 
-      "@media (max-width: 550px)": {
+      "@media (max-width: 600px)": {
         flexDirection: 'column',
         height: 120,
       }  
@@ -26,7 +26,7 @@ export const useStyles = makeStyles(() => ({
       fontWeight: 'bold',
       fontSize: '4rem',
       textShadow: '2px 2px 4px #000000',
-      "@media (max-width: 550px)": {
+      "@media (max-width: 600px)": {
         fontSize: '2.8rem',       
       },       
     },
@@ -41,7 +41,7 @@ export const useStyles = makeStyles(() => ({
       position: 'absolute',
       right: 20, 
       top: 10, 
-      "@media (max-width: 550px)": {
+      "@media (max-width: 600px)": {
         top: 2,
       }
     },
@@ -50,7 +50,7 @@ export const useStyles = makeStyles(() => ({
       alignItems: 'center',
       marginRight: 10,
       marginTop: 4,
-      "@media (max-width: 550px)": {
+      "@media (max-width: 600px)": {
         marginRight: 10,
         height: 25,
         width: 25,
@@ -60,7 +60,7 @@ export const useStyles = makeStyles(() => ({
     userName: {
       display: 'flex',
       alignItems: 'center',
-      "@media (max-width: 550px)": {
+      "@media (max-width: 600px)": {
         fontSize: '0.9rem',
       }
     },
@@ -69,8 +69,8 @@ export const useStyles = makeStyles(() => ({
         position: 'absolute',
         right: 20, 
         top: 10, 
-        "@media (max-width: 550px)": {
-          top: 2,
+        "@media (max-width: 600px)": {
+          top: 10,
       },
     }  
   }));

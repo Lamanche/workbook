@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch  } from 'react-redux'
 import SideBarItem from './Main/SideBarItem'
-import { postCategory } from '../actions/posts'
+import { postCategory, postUserType, postType, postCategoryType } from '../actions/posts'
 //import FileBase from 'react-file-base64';
 
 // API
 import { createPost } from '../api/index.js';
 
 // Styles
-import { Tabs, Tab, RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
+import { Tabs, Tab } from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -33,32 +33,16 @@ import AcUnitIcon from '@material-ui/icons/AcUnit';
 
 
 const Form = () => {    
-    const user = JSON.parse(localStorage.getItem('profile'));
+    const user = useSelector(state => state.auth.authData)
     const history = useHistory();
     const dispatch = useDispatch();  
-    const postCategoryType = useSelector(state => state.posts.postCategoryType)
-    const initialState = { company: user.result.company, name: user.result.name, email: user.result.email, creatorId: user.result._id, type: 'Otsin', userType: user.result.userType, categoryType: postCategoryType, picture: user.result.picture, category: '', description: '', about: '', price: ''}
+    
+    const categoryType = useSelector(state => state.posts.postCategoryType)
+    const type = useSelector(state => state.posts.postType)
+    
+    const initialState = { company: user.result.company, name: user.result.name, email: user.result.email, creatorId: user.result._id, type: type, userType: user.result.userType, categoryType: categoryType, picture: user.result.picture, category: '', description: '', about: '', price: ''}
+    
     const [formData, setFormData] = useState(initialState);
-
-    useEffect(() => {
-        setFormData({...formData, categoryType: postCategoryType})
-    },[postCategoryType])
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        createPost(formData)
-        .then(res => {
-            if (res.status === 201){
-                history.push('/main')}
-        }).catch(error => console.log(error))};
-    
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value})
-        if (e.target.name === 'category') {
-            dispatch(postCategory(e.target.value))
-        }
-        console.log(e.target.name)
-    };
 
     const [value, setValue] = useState(0);
 
@@ -66,11 +50,58 @@ const Form = () => {
         setValue(newValue);
         if (value === 1) {
             setFormData({...formData, type: 'Otsin'})
+            dispatch(postType('Otsin'))
         }
         else if (value === 0) {
             setFormData({...formData, type: 'Pakun'})
+            dispatch(postType('Pakun'))
         }
     };
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value})
+        if (e.target.name === 'category') {
+            dispatch(postCategory(e.target.value))
+        }
+        console.log(formData)
+    };
+
+    
+    useEffect(() => {        
+        if (categoryType === '') {
+            dispatch(postCategoryType('Teenus'))
+            setFormData({...formData, categoryType: 'Teenus'})
+        }
+        setFormData({...formData, categoryType: categoryType})
+    },[categoryType])
+
+    useEffect(() => {        
+        if (type === "") {
+            dispatch(postType('Otsin'))
+            setFormData({...formData, type: 'Otsin'})
+        }        
+    },[type])
+
+    useEffect(() => {        
+        if (type === 'Otsin') {
+            setValue(0)
+        }
+        else if (type === 'Pakun') {
+            setValue(1)
+        }
+    },[type])
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(postUserType(user.result.userType))
+        createPost(formData)
+        .then(res => {
+            if (res.status === 201){
+                history.push('/main')}
+        }).catch(error => console.log(error))};
+    
+    
+    
     
     const back = () => history.replace("/main")
     
@@ -121,16 +152,16 @@ const Form = () => {
                     </Typography>
                     <form className={classes.form} onSubmit={handleSubmit}>
                     <Tabs
-                                className={classes.tabs}
-                                value={value}
-                                onChange={handleTabChange}
-                                indicatorColor="primary"
-                                textColor="primary"
-                                centered
-                            >
-                                <Tab value={0} icon={<SearchIcon/>} label="Otsin" />
-                                <Tab value={1} icon={<LocalOfferIcon/>} label="Pakun" />
-                            </Tabs>        
+                        className={classes.tabs}
+                        value={value}
+                        onChange={handleTabChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        centered
+                    >
+                        <Tab value={0} icon={<SearchIcon/>} label="Otsin" />
+                        <Tab value={1} icon={<LocalOfferIcon/>} label="Pakun" />
+                    </Tabs>        
                     <div className={classes.info}> 
                         <Grid container spacing={2}>                                                           
                                 <Grid item xs={12}>

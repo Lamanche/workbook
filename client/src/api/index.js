@@ -2,12 +2,13 @@ import axios from 'axios';
 
 const API = axios.create({ 
   baseURL: '',
-  //Seotud cors'i settinguteda back-endis
+  //Seotud cors'i settingutega back-endis
   withCredetials: true
 });
 
   
 // Auth
+export const isLoggedIn = () => API.post('/user/loggedin')
 export const signIn = (formData) => API.post('/user/signin', formData)
 export const register = (formData) => API.post('/user/register', formData)
 export const logout = () => API.get('user/logout')

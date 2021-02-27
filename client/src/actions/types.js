@@ -1,5 +1,6 @@
 export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';
+export const LOGGED_IN = 'LOGGED_IN'
 
 export const GETPROFILE = 'GETPROFILE';
 export const CLEARPROFILE = 'CLEARPROFILE';
@@ -13,3 +14,5 @@ export const LOADING = 'LOADING'
 export const FINISHED_LOADING = 'FINISHED_LOADING'
 
 export const LOCATION = 'LOCATION'
+
+export const UPDATE = 'UPDATE'

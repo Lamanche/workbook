@@ -12,7 +12,7 @@
 
 /* TABS */
 .tabsUpper {
-    font-size: 2rem;
+    
 }
 
 /* HEADER */
@@ -35,7 +35,7 @@
 
 /* GRID */
 .grid {
-    
+    justify-content: center;
 }
 
 /*  SIDEBARITEM */

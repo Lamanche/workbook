@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { Route, Switch, Redirect, useHistory } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { isLoggedIn } from './actions/auth';
+import { useDispatch, useSelector } from 'react-redux'
 import './App.css'
-//import { useSelector } from 'react-redux'
 
 // Styles
 import { Container, Paper, Box } from '@material-ui/core';
@@ -19,9 +20,9 @@ import Form from './components/Form.js';
 
 
 function App() {  
-  const history = useHistory();
-  const profile  = JSON.parse(localStorage.getItem('profile'));
-  //const user = useSelector(state => state.auth.isLoggedIn)
+  const dispatch = useDispatch();
+  const loggedIn = useSelector(state => state.auth.isLoggedIn)
+  
   //Styles
   const useStyles = makeStyles(() => ({
     container: {    
@@ -36,24 +37,24 @@ function App() {
 
   const classes = useStyles();
 
+
   useEffect(() => {
-    if (profile) {
-      history.replace('/main')
-  }},[history, profile])
+    dispatch(isLoggedIn())
+  },[loggedIn])
 
   return (      
         <Container className={classes.container} maxWidth="lg">
-          <Paper className={classes.paper}  /*elevation={5}*/ variant="outlined" square>    
+          <Paper className={classes.paper} variant="outlined" square>    
             <Header />                 
             <Box>                        
               <Switch>
                   <Route path="/" exact component={Home} />            
                   <Route path="/login" exact component={LogIn} />                                                
-                  <Route path="/register" component={Register} />
-                  <Route path="/main" component={Main} />
-                  <Route path="/userprofile" component={UserProfile} /> 
-                  {profile ? <Route path="/updateprofile" component={UpdateProfile} /> : <Redirect to="/" exact component={LogIn} />}                                
-                  {profile /*|| user*/ ? <Route path="/form" component={Form} /> : <Redirect to="/" exact component={LogIn} />}                   
+                  <Route path="/register" exact component={Register} />
+                  <Route path="/main" exact component={Main} />
+                  <Route path="/userprofile" exact component={UserProfile} /> 
+                  {loggedIn === true ? <Route path="/updateprofile" exact component={UpdateProfile} /> : <Redirect to="/main" exact component={Main} />}                                
+                  {loggedIn === true ? <Route path="/form" exact component={Form} /> : <Redirect to="/main" exact component={Main} />}                   
               </Switch>            
             </Box>
           </Paper>

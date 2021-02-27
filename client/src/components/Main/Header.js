@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './Main.module.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { postUserType } from '../../actions/posts'
@@ -16,6 +16,10 @@ const Header = () => {
         setValue(event.target.value);
         dispatch(postUserType(event.target.value))        
     };
+
+    useEffect(() => {
+        setValue(userType);
+    },[userType])
 
     
     return (

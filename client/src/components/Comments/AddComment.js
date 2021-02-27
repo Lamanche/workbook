@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { update } from '../../actions/update.js'
 
 // Styles
 import { TextField, Button, makeStyles, Divider } from '@material-ui/core'
@@ -9,6 +11,8 @@ import { postComment } from '../../api/index.js'
 
 
 const AddComment = (props) => {
+    const dispatch = useDispatch();
+    
     const useStyles = makeStyles(() => ({
         container: {
             marginTop: 30,
@@ -33,6 +37,12 @@ const AddComment = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         postComment(comment)
+            .then(res => {
+                if (res.status === 201) {
+                    dispatch(update(1))
+                }
+                
+            })
     }
     
     return (

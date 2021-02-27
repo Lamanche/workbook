@@ -1,0 +1,70 @@
+.container {
+    position: relative;
+    width: 14rem;
+    height: 17rem;
+    
+}
+
+.paper {
+    height: 100%;
+    width: 100%;
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header {
+    padding: .5rem;
+}
+
+.headerText {
+    font-weight: bold;
+}
+
+.headerText:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.avatar {
+    height: 30px;
+    width: 30px;
+    background-color: red;
+}
+
+.media {
+    height: 40%;
+    padding-top: '56.25%';
+}
+
+.info {
+    margin: 10px;
+}
+
+.description {
+    font-weight: bolder;
+}
+
+.description:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 5px 10px;
+}
+
+
+
+
+@media (max-width: 600px) {
+    .container {
+        width: 12rem;
+        height: 14rem;
+    }
+}

@@ -27,7 +27,7 @@ const Header = () => {
       position: 'relative',
       display: 'flex',
       paddingTop: 8, 
-      "@media (max-width: 550px)": {
+      "@media (max-width: 600px)": {
         flexDirection: 'column',
         height: 120,
       }  
@@ -38,7 +38,7 @@ const Header = () => {
       position: 'absolute',
       bottom: 10,
       left: 20,
-      "@media (max-width: 550px)": {
+      "@media (max-width: 600px)": {
         left: 10   
       },          
     },
@@ -46,7 +46,7 @@ const Header = () => {
       fontWeight: 'bold',
       fontSize: '4rem',
       textShadow: '2px 2px 4px #000000',
-      "@media (max-width: 550px)": {
+      "@media (max-width: 600px)": {
         fontSize: '2.8rem',       
       },       
     },
@@ -61,7 +61,7 @@ const Header = () => {
       position: 'absolute',
       right: 20, 
       top: 10, 
-      "@media (max-width: 550px)": {
+      "@media (max-width: 600px)": {
         top: 2,
       }
     },
@@ -70,7 +70,7 @@ const Header = () => {
       alignItems: 'center',
       marginRight: 10,
       marginTop: 4,
-      "@media (max-width: 550px)": {
+      "@media (max-width: 600px)": {
         marginRight: 10,
         height: 25,
         width: 25,
@@ -80,7 +80,7 @@ const Header = () => {
     userName: {
       display: 'flex',
       alignItems: 'center',
-      "@media (max-width: 550px)": {
+      "@media (max-width: 600px)": {
         fontSize: '0.9rem',
       }
     },
@@ -89,8 +89,8 @@ const Header = () => {
         position: 'absolute',
         right: 20, 
         top: 10, 
-        "@media (max-width: 550px)": {
-          top: 2,
+        "@media (max-width: 600px)": {
+          top: 8,
       },
     }  
   }));
@@ -100,7 +100,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useSelector(state => state.location.location);
-  const user = JSON.parse(localStorage.getItem('profile'));  
+  const loggedIn = useSelector(state => state.auth.isLoggedIn)
+  const user = useSelector(state => state.auth.authData)
 
   const [anchorEl, setAnchorEl] = useState(null);
   
@@ -113,7 +114,8 @@ const Header = () => {
   };
 
   const login = () => {
-    history.push('/login')
+    history.push('/login');
+    setAnchorEl(null);
 }
   
   const profile = () => {
@@ -134,7 +136,6 @@ const Header = () => {
   }; 
 
 
-
   return (    
         <div className={classes.container}>
           <AppBar className={classes.appBar} position="static">
@@ -142,10 +143,10 @@ const Header = () => {
                 <Typography className={classes.headline} variant='h2'><Link className={classes.link} to="/main">Wörkbook</Link></Typography>              
             </div>
             
-            {user ? (
+            {loggedIn === true ? (
                 <div className={classes.profile}>
-                  <Avatar className={classes.avatar} alt={user.result.name} src={user.result.picture || user.result.imageUrl}>{user.result.name.charAt(0)}</Avatar>
-                  <Typography className={classes.userName} variant="h6">{user.result.name}</Typography>              
+                  <Avatar className={classes.avatar} alt={user?.result.name} src={user?.result.picture || user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
+                  <Typography className={classes.userName} variant="h6">{user?.result.name}</Typography>              
                   <IconButton aria-label="display more actions" edge="end" color="inherit">
                     <MoreIcon onClick={handleClick} />
                       <Menu

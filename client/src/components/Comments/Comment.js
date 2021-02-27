@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { update } from '../../actions/update.js'
 
 // API
 import { deleteComment } from '../../api/index.js'
@@ -18,7 +19,7 @@ const Comment = (props) => {
   const id = props.id
 
   const deleteCom = () => {
-    deleteComment(id).then(window.location.reload())
+    deleteComment(id).then(dispatch(update(1)))
   }
 
   const getProfiles = () => {

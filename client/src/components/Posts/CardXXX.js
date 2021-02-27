@@ -140,7 +140,7 @@ export default function ServiceCard(props) {
   const deletePost = () => {
     deletePosts(props.id)
     setAnchorEl(null);
-    window.location.reload()
+    //window.location.reload()
   }
   
   return (
