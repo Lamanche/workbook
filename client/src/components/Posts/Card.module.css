@@ -1,8 +1,7 @@
 .container {
     position: relative;
     width: 14rem;
-    height: 17rem;
-    
+    height: 17rem;    
 }
 
 .paper {
@@ -12,7 +11,11 @@
 
 .headerContainer {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+}
+
+.typeIcon {
+    padding: .5rem;
 }
 
 .header {
@@ -56,11 +59,16 @@
     position: absolute;
     bottom: 0;
     left: 0;
+    width: 100%;
     padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
-
-
+.addToFav:hover {
+    cursor: pointer;
+    transform: scale(1.1);   
+}
 
 @media (max-width: 600px) {
     .container {

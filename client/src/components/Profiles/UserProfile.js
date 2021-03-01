@@ -96,7 +96,7 @@ const UserProfile = () => {
         <Container className={classes.container} component="main" maxWidth="lg">
             <Container className={classes.boxLeft}>
                 <div className={classes.leftContainer}>
-                    <Paper className={classes.leftPaper}>
+                    <Paper className={classes.leftPaper} elevation={3}>
                         <Avatar src={profile?.picture} className={classes.avatar}></Avatar>                    
                         <Typography className={classes.name} variant="h3" label="name">{profile?.company === "" ? profile?.name : profile?.company}</Typography>                    
                         <StarRatingComponent 
@@ -161,7 +161,7 @@ const UserProfile = () => {
                     </Paper>
                 </div>
                 
-                {owner ? <Container className={classes.comments}>
+                {owner ? <div className={classes.comments}>
                     <AddComment email={email}/>
                     {comments.length > 0 ? 
                         comments.map(comment => (
@@ -170,7 +170,7 @@ const UserProfile = () => {
                         :
                         <Typography style={{marginBottom: 30}}>No comments yet</Typography>
                     }                    
-                </Container>  
+                </div>  
                 :
                 <h3>Log in to view or write comments</h3>}                         
             </Container>

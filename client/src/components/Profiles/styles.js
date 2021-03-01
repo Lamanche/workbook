@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 
 const useStyles = makeStyles((theme) => ({
     container: {        
@@ -18,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 20,        
       },
       boxLeft: {
-        backgroundColor: 'white',
         marginTop: theme.spacing(4),
         display: 'flex',
         flexDirection: 'column',
@@ -26,10 +26,13 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-start',
         width: '100%',
         padding: 0,
+        marginRight: '1.5rem',
       },
       leftContainer: {
+        backgroundColor: 'white',
         padding: '.5rem',
         width: '100%',
+        marginBottom: '1rem'
       },
       boxRight: {
         marginTop: theme.spacing(4),

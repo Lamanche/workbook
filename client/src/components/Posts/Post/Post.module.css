@@ -1,14 +1,54 @@
 .container {
     background-color: white;
     padding: .5rem;
-    background-color: black;
-
 }
 
 .text {
     margin-top: 1.6rem;
 }
 
+.description {
+    font-weight: bold;
+}
+
 .paper {
-   padding: .8rem; 
+   padding: .8rem;
+   position: relative; 
+}
+
+.close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: .2rem;
+}
+
+.close:hover {
+    cursor: pointer;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.buttons {
+    margin-top: .8rem
+}
+
+.button {
+    margin-right: 0.8rem;
+}
+
+.addToFav {
+    position: absolute;
+    right: 0;
+    bottom: 0;  
+}
+
+.addToFav:hover {
+    cursor: pointer;
+    transform: scale(1.1);   
 }

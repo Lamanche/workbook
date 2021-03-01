@@ -1,0 +1,74 @@
+/* Add comment */
+.addCommentContainer {
+    background-color: white;
+    padding: .5rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.paper {
+    padding: .8rem;
+}
+
+
+/* Comment */
+.commentContainer {
+    margin-bottom: 1rem;;
+}
+
+.commentPaper {
+    padding: 0.8rem;
+}
+
+.commentHeader {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.headerProfile {
+    display: flex;
+}
+
+.avatar {
+    margin-right: .6rem;;
+}
+
+.name {
+    font-weight: bold; 
+    font-size: .95rem;
+}
+
+.name:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.commentBody {
+    min-height: 3rem;
+    padding: 0.8rem;
+    margin-top: .5rem;
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+.deleteIcon:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+    .avatar {
+        
+    }
+    .name {
+        font-size: .85rem;
+    }
+    .date {        
+        font-size: .8rem;     
+      }
+    .comment {        
+        font-size: .85rem;
+      }
+    
+}

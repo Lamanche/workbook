@@ -1,30 +1,14 @@
 import React, { useState } from 'react'
+import styles from './Comments.module.css'
 import { useDispatch } from 'react-redux';
 import { update } from '../../actions/update.js'
-
-// Styles
-import { TextField, Button, makeStyles, Divider } from '@material-ui/core'
-
-// API
 import { postComment } from '../../api/index.js'
 
+import { TextField, Button, Paper } from '@material-ui/core'
 
 
 const AddComment = (props) => {
     const dispatch = useDispatch();
-    
-    const useStyles = makeStyles(() => ({
-        container: {
-            marginTop: 30,
-            marginBottom: 30
-        },
-        form: {
-            marginTop: 30,
-            marginBottom: 20
-        }
-    }));
-    const classes = useStyles();
-
     const author = JSON.parse(localStorage.getItem('profile'))?.result
     const email = props.email
     const initialState = { author: author?.name, authorEmail: author?.email, picture: author?.picture, forUser: email, comment: '' }
@@ -36,23 +20,23 @@ const AddComment = (props) => {
     
     const handleSubmit = (e) => {
         e.preventDefault()
+        //e.target.value = ''
         postComment(comment)
             .then(res => {
                 if (res.status === 201) {
                     dispatch(update(1))
-                }
-                
+                }                
             })
     }
     
     return (
-        <div className={classes.container}>
-            <Divider />
-            <form onSubmit={handleSubmit} className={classes.form}>
-                <TextField onChange={handleChange} name='comment' label='Add comment...' variant="outlined" fullWidth multiline rows={4} required/>
-                <Button style={{marginTop: 10}} variant="contained" type='submit' color="primary">Add comment</Button>
-            </form>
-            <Divider />
+        <div className={styles.addCommentContainer}>
+            <Paper className={styles.paper} elevation={3}>
+                <form onSubmit={handleSubmit} className={styles.form}>
+                    <TextField onChange={handleChange} name='comment' label='Add comment...' variant="outlined" fullWidth multiline rows={4} required/>
+                    <Button style={{marginTop: 10}} variant="contained" type='submit' color="primary">Add comment</Button>
+                </form>
+            </Paper>
         </div>
     )
 }

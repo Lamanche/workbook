@@ -8,12 +8,10 @@ import BuildIcon from '@material-ui/icons/Build';
 import SchoolIcon from '@material-ui/icons/School';
 import AcUnitIcon from '@material-ui/icons/AcUnit';
 
-const SideBar = () => {
-    
-    
+const SideBar = () => {    
     return (
         <div className={styles.sideBar}>
-            <SideBarItem  name='Teenus' value="Teenus" Icon={<BuildIcon />}/>
+            <SideBarItem name='Teenus' value="Teenus" Icon={<BuildIcon />}/>
             <SideBarItem value="Rent" Icon={<SettingsApplicationsIcon />}/>
             <SideBarItem value="Koolitus" Icon={<SchoolIcon />}/>
             <SideBarItem value="Hange" Icon={<BusinessCenterIcon />}/>

@@ -31,7 +31,8 @@ function App() {
     },
     paper: {
       minHeight: '99vh',
-      backgroundColor: 'rgb(245, 244, 243)'    
+      backgroundColor: 'rgb(245, 244, 243)'  
+      //backgroundColor: '#263238'  
     }  
   }));
 

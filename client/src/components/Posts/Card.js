@@ -1,34 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './Card.module.css';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getProfile } from '../../actions/profile.js';
-import { deletePosts } from '../../api/index';
 
-import coding from '../../images/coding.jpg'
-import design from '../../images/design.jpg'
-import engineering from '../../images/engineering.jpg'
-import construction from '../../images/construction.jpg'
 
-import { CardHeader, Avatar, CardMedia, Typography, Paper, IconButton, Menu, MenuItem } from '@material-ui/core';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import coding from '../../images/coding.jpg';
+import design from '../../images/design.jpg';
+import engineering from '../../images/engineering.jpg';
+import construction from '../../images/construction.jpg';
+
+import { CardHeader, Avatar, CardMedia, Typography, Paper, Tooltip } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import QueueIcon from '@material-ui/icons/Queue';
+
 
 const Card = ({data}) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const userId = JSON.parse(localStorage.getItem('profile'))?.result._id;
-    const creatorId = data.creatorId;
-
-    const [anchorEl, setAnchorEl] = useState(null);
-    
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-  
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
     
     const categoryImage = () => {
         switch (data.category) {
@@ -45,18 +36,12 @@ const Card = ({data}) => {
         }
       }
     
-      const profileData = () => {
+      const userProfile = () => {
         const name = data.name
         const email = data.email
         dispatch(getProfile({ name, email }))
         history.push("/userprofile")
-      }  
-
-      const deletePost = () => {
-        deletePosts(data._id)
-        setAnchorEl(null);
-        //window.location.reload()
-      }
+      }      
 
       const openPost = () => {
         const name = data.name
@@ -66,6 +51,10 @@ const Card = ({data}) => {
         history.push('/userprofile')
         
       }
+
+      const addToFav = () => {
+
+      }
     
     return (
         <div className={styles.container}>
@@ -74,45 +63,42 @@ const Card = ({data}) => {
                   <CardHeader
                       className={styles.header}
                       classes={{ title: styles.headerText, subheader: styles.subheader}}
-                      onClick={profileData}
+                      onClick={userProfile}
                       avatar={
                           <Avatar src={data.picture} className={styles.avatar}></Avatar>
                       }
                       title={data.company === "" ? data.name : data.company}
                       subheader={moment(data.createdAt).fromNow()}
                   />
-                  {userId === creatorId ? 
-                    <IconButton edge="end" color="inherit">
-                      <MoreIcon onClick={handleClick}/>
-                        <Menu
-                          id="simple-menu"
-                          anchorEl={anchorEl}
-                          keepMounted
-                          open={Boolean(anchorEl)}
-                          onClose={handleClose}
-                        >
-                          <MenuItem onClick={deletePost}>Delete</MenuItem>
-                        </Menu>                          
-                    </IconButton> 
-                    : 
-                    null
+                  {data.type === 'Otsin' ? 
+                    <div className={styles.typeIcon}>
+                      <SearchIcon/>
+                    </div>
+                    :
+                    <div className={styles.typeIcon}>
+                      <LocalOfferIcon/>
+                    </div>  
                   }
                 </div>
-
                 <CardMedia
                     className={styles.media}
                     image={categoryImage()}
                     title="category"
                 />
-
                 <div className={styles.info}>
                     <Typography className={styles.description} onClick={openPost}>
                         {data.description}
                     </Typography>
-                </div>
-                
+                </div>                
                 <footer className={styles.footer}>
-                  <Typography variant='h6'>Price: {data.price}€</Typography>
+                  <div className={styles.price}>
+                    <Typography variant='h6'>Price: {data.price}€</Typography>
+                  </div>
+                  <div className={styles.addToFav}>
+                    <Tooltip title="Add to favorites">
+                      <QueueIcon onClick={addToFav} />
+                    </Tooltip>
+                  </div>
                 </footer>
             </Paper>    
         </div>
