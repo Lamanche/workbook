@@ -5,7 +5,7 @@ import { loading, finishedLoading } from '../../actions/posts';
 import Post from '../Posts/Post/Post.js'
 
 // API
-import { fetchUserProfile, findUserPosts, fetchComments } from '../../api/index.js'
+import { fetchUserProfile, findUserPosts } from '../../api/index.js'
 import { clearProfile } from '../../actions/profile.js'
 
 // Styles
@@ -14,8 +14,7 @@ import { Paper, Divider, TextField, Typography, Container, Avatar, Button, Grid 
 
 // Components
 import Card from '../Posts/Card.js'
-import Comment from '../Comments/Comment.js'
-import AddComment from '../Comments/AddComment.js'
+import Comments from '../Comments/Comments.js'
 import StarRatingComponent from 'react-star-rating-component';
 
 
@@ -26,8 +25,7 @@ const UserProfile = () => {
     
     const owner = useSelector(state => state.auth.authData)
     const user = useSelector(state => state.profile)
-    const loadingState = useSelector(state => state.posts.loading)
-    const update = useSelector(state => state.update)
+    const loadingState = useSelector(state => state.posts.loading)    
     const post = JSON.parse(localStorage.getItem('post'))
 
     let email;
@@ -44,7 +42,7 @@ const UserProfile = () => {
     
     const [profile, setProfile] = useState({})
     const [posts, setPosts] = useState([])
-    const [comments, setComments] = useState([])
+    
 
 
     const updateProfile = () => {
@@ -70,13 +68,7 @@ const UserProfile = () => {
         
     },[email]);
     
-    useEffect(() => {
-        console.log(update)
-        fetchComments({params: {email}})
-            .then(res => {
-                const sortedData = res.data.userComments.sort((a, b) => new Date(a) < new Date(b) ? 1 : -1);
-                setComments(sortedData)})
-    },[update, email])
+    
     
     
     useEffect(() => { 
@@ -162,17 +154,11 @@ const UserProfile = () => {
                 </div>
                 
                 {owner ? <div className={classes.comments}>
-                    <AddComment email={email}/>
-                    {comments.length > 0 ? 
-                        comments.map(comment => (
-                            <Comment key={comment._id} id={comment._id} date={comment.createdAt} author={comment.author} picture={comment.picture} comment={comment.comment} email={comment.authorEmail}/>
-                        ))                        
-                        :
-                        <Typography style={{marginBottom: 30}}>No comments yet</Typography>
-                    }                    
-                </div>  
-                :
-                <h3>Log in to view or write comments</h3>}                         
+                    <Comments email={email}/>             
+                    </div>  
+                    :
+                    <h3>Log in to view or write comments</h3>
+                }                         
             </Container>
 
             <Divider orientation='vertical' flexItem/>

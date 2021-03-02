@@ -1,29 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './Comments.module.css'
 import moment from 'moment'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { update } from '../../actions/update.js'
 import { deleteComment } from '../../api/index.js'
 import { getProfile } from '../../actions/profile.js'
 
-import { Avatar, Typography, Paper } from '@material-ui/core'
+import { Avatar, Typography, Paper, CircularProgress } from '@material-ui/core'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-const Comment = (props) => {
+const Comment = ({data}) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = JSON.parse(localStorage.getItem('profile'))?.result 
-  const id = props.id
+  const user = useSelector(state => state.auth.authData.result) 
+  const id = data._id
+
+  const [loading, setLoading] = useState(false)
 
   const deleteCom = () => {
+    setLoading(true)
     deleteComment(id)
-      .then(dispatch(update(1)))
+      .then(setLoading(false))
+      .then(dispatch(update(1)))      
   }
 
   const getUserProfile = () => {
-    const name = props.author
-    const email = props.email
+    const name = data.author
+    const email = data.authorEmail
     dispatch(getProfile({ name, email }))
     history.push(`/userprofile`)
   }  
@@ -33,20 +37,24 @@ const Comment = (props) => {
             <Paper className={styles.commentPaper} elevation={3}>
               <div className={styles.commentHeader}>
                 <div className={styles.headerProfile}>
-                  <Avatar className={styles.avatar} src={props.picture} />
+                  <Avatar className={styles.avatar} src={data.picture} />
                   <div className={styles.headerText}>
-                    <Typography onClick={getUserProfile} className={styles.name}>{props.author}</Typography>
-                    <Typography className={styles.date} variant='subtitle2'>{moment(props.date).fromNow()}</Typography>
+                    <Typography onClick={getUserProfile} className={styles.name}>{data.author}</Typography>
+                    <Typography className={styles.date} variant='subtitle2'>{moment(data.createdAt).fromNow()}</Typography>
                   </div>
                 </div> 
-                {user?.email === props.email ? 
-                  <div onClick={deleteCom} className={styles.deleteIcon}><DeleteForeverIcon /></div> 
+                {user.email === data.authorEmail ? 
+                  (loading === false ? 
+                    <div onClick={deleteCom} className={styles.deleteIcon}><DeleteForeverIcon /></div>
+                  :
+                  <CircularProgress />
+                  )                  
                   : 
                   null
                 }
               </div>
               <div className={styles.commentBody}>
-                <Typography className={styles.comment} variant='body1'>{props.comment}</Typography>
+                <Typography className={styles.comment} variant='body1'>{data.comment}</Typography>
               </div>
             </Paper>
           </div>

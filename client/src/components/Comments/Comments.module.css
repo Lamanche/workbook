@@ -10,10 +10,19 @@
     padding: .8rem;
 }
 
+.addButton {
+    margin-top: .8rem;
+    position: relative;
+}
+
+.buttonProgress {
+    position: absolute;    
+}
+
 
 /* Comment */
 .commentContainer {
-    margin-bottom: 1rem;;
+    margin-bottom: 1rem;
 }
 
 .commentPaper {
@@ -47,14 +56,19 @@
 .commentBody {
     min-height: 3rem;
     padding: 0.8rem;
-    margin-top: .5rem;
-    border: 1px solid;
+    margin-top: .5rem;    
     border-radius: 5px;
+    background-color: rgb(221, 219, 217);
 }
 
 .deleteIcon:hover {
     cursor: pointer;
     transform: scale(1.05);
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
 }
 
 @media (max-width: 600px) {

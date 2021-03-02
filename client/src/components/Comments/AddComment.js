@@ -1,40 +1,55 @@
 import React, { useState } from 'react'
 import styles from './Comments.module.css'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { update } from '../../actions/update.js'
+import { tokenExpired } from '../../actions/auth.js'
 import { postComment } from '../../api/index.js'
 
-import { TextField, Button, Paper } from '@material-ui/core'
+import { TextField, Button, Paper, CircularProgress } from '@material-ui/core';
+
 
 
 const AddComment = (props) => {
     const dispatch = useDispatch();
-    const author = JSON.parse(localStorage.getItem('profile'))?.result
+    const author = useSelector(state => state.auth.authData.result)
     const email = props.email
-    const initialState = { author: author?.name, authorEmail: author?.email, picture: author?.picture, forUser: email, comment: '' }
+    
+    const initialState = { author: author.name, authorEmail: author.email, picture: author.picture, forUser: email, comment: '' }
     const [comment, setComment] = useState(initialState)
+    const [loading, setLoading] = useState(false)
+    const [value, setValue] = useState('')
     
     const handleChange = (e) => {
         setComment({...comment, [e.target.name]: e.target.value})
+        setValue(e.target.value)
     }
     
     const handleSubmit = (e) => {
         e.preventDefault()
-        //e.target.value = ''
+        setLoading(true)
         postComment(comment)
-            .then(res => {
+            .then(res => {console.log(res.status)
                 if (res.status === 201) {
                     dispatch(update(1))
+                    setLoading(false)
                 }                
+            }).catch(error => {
+                if (error.response.status === 401) {
+                    dispatch(tokenExpired());
+                    setLoading(false)
+               }                           
             })
+        setValue('')
     }
     
     return (
         <div className={styles.addCommentContainer}>
             <Paper className={styles.paper} elevation={3}>
                 <form onSubmit={handleSubmit} className={styles.form}>
-                    <TextField onChange={handleChange} name='comment' label='Add comment...' variant="outlined" fullWidth multiline rows={4} required/>
-                    <Button style={{marginTop: 10}} variant="contained" type='submit' color="primary">Add comment</Button>
+                    <TextField value={value} onChange={handleChange} name='comment' label='Add comment...' variant="outlined" fullWidth multiline rows={4} required/>
+                    <div className={styles.addButton}>
+                        <Button disabled={loading} variant="contained" type='submit' color="primary">{loading && <CircularProgress size={24} className={styles.buttonProgress} />}Add comment</Button>                        
+                    </div>
                 </form>
             </Paper>
         </div>

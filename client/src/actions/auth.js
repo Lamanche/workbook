@@ -2,9 +2,7 @@ import { AUTH, LOGOUT, LOGGED_IN } from './types.js';
 import * as api from '../api/index.js';
 
 export const isLoggedIn = () => async (dispatch) => {    
-  try {
-    //await api.isLoggedIn().then(res => console.log(res.message))
-    
+  try {    
     await api.isLoggedIn().catch(err => {
       if (err.response.status === 401) {
         dispatch({ type: LOGOUT });
@@ -48,6 +46,8 @@ export const logout = () => async (dispatch) => {
   } catch (error) {
     console.log(error.message)
   }
-  
-  
+}
+
+export const tokenExpired = () => (dispatch) => {
+  dispatch({ type: LOGOUT });
 }

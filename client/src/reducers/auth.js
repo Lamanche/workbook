@@ -12,7 +12,7 @@ const authReducer = (state = initialState, action) => {
       localStorage.clear();
       return { ...state, isLoggedIn: false, authData: null, loading: false, errors: null };
     case action.type.LOGGED_IN:
-      return { ...state, isLoggedIn: true/*JSON.parse(localStorage.getItem('loggedIn'))*//*, authData: JSON.parse(localStorage.getItem('profile'))*/ }
+      return { ...state, isLoggedIn: true }
       default:
       return state;
   }
