@@ -65,9 +65,9 @@ const updateUserProfileHandler = async (req, res) => {
 }
 
 const findProfileHandler = async (req, res) => {
-  const email = req.body.email;
+  const userId = req.body.userId;
   try {
-      const profile = await UserModal.findOne({ email });        
+      const profile = await UserModal.findOne({ _id: userId });        
       res.status(200).json(profile);
   } catch (error) {
       res.send(error.message)

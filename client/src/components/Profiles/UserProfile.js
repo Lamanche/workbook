@@ -1,88 +1,55 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom';
-import { loading, finishedLoading } from '../../actions/posts';
-import Post from '../Posts/Post/Post.js'
-
-// API
-import { fetchUserProfile, findUserPosts } from '../../api/index.js'
-import { clearProfile } from '../../actions/profile.js'
+import { useSelector, useDispatch } from 'react-redux'
+import { useHistory, useParams, useLocation } from 'react-router-dom';
+import { loading } from '../../actions/posts';
+import Posts from '../Posts/Posts.js'
+import Comments from '../Comments/Comments.js'
+import { fetchUserProfile } from '../../api/index.js'
+import { clearPostData } from '../../actions/postData.js'
+import StarRatingComponent from 'react-star-rating-component';
 
 // Styles
 import useStyles from './styles'
-import { Paper, Divider, TextField, Typography, Container, Avatar, Button, Grid } from '@material-ui/core'
-
-// Components
-import Card from '../Posts/Card.js'
-import Comments from '../Comments/Comments.js'
-import StarRatingComponent from 'react-star-rating-component';
+import { Paper, Divider, TextField, Typography, Container, Avatar, Button } from '@material-ui/core'
 
 
 const UserProfile = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const classes = useStyles();   
-    
-    const owner = useSelector(state => state.auth.authData)
-    const user = useSelector(state => state.profile)
-    const loadingState = useSelector(state => state.posts.loading)    
-    const post = JSON.parse(localStorage.getItem('post'))
-
-    let email;
-
-    if (user?.email === "") {
-        email = owner?.result.email
-    }
-    else if (user?.email === owner?.result.email) {
-        email = owner?.result.email
-    }
-    else {
-        email = user.email
-    }
-    
+    const classes = useStyles();    
+    const isLoggedIn = useSelector(state => state.auth?.isLoggedIn)
+    let {userId}= useParams()
+    const loggedInUserId = useSelector(state => state.auth.authData?.result._id)
+   
     const [profile, setProfile] = useState({})
-    const [posts, setPosts] = useState([])
-    
-
 
     const updateProfile = () => {
-        history.replace('/updateprofile')
+        history.replace(`/updateprofile`)
     }
 
-    const clearProfiles = () => {
-        dispatch(clearProfile())
+    const back = () => {
+        dispatch(clearPostData())
         history.replace("/main")   
     };
     
     useEffect(() => {
-        fetchUserProfile({email})
-            .then(res => {setProfile(res.data)});
-        
-        dispatch(loading())
-        findUserPosts({params: {email}})
-            .then(res => {
-                setPosts(res.data.Posts)
-                dispatch(finishedLoading())
-        })
-        
-        
-    },[email]);
+        fetchUserProfile({ userId })
+            .then(res => {setProfile(res.data)});        
+        dispatch(loading())        
+    },[userId]);
     
     
-    
-    
+    // kõik muidu töötab aga kui back nuppu vajutada siis ei kustu postData ära
     useEffect(() => { 
         const unlisten = history.listen((location) => {
-            if(location.pathname !== '/userprofile'){
-                dispatch(clearProfile())
-                localStorage.removeItem('post')
+            if(location.pathname !== `/userprofile/${userId}`){
+                dispatch(clearPostData())
             }          
         });
         return () => {
           unlisten();
         }
-      }, [history]);
-
+      }, [history, userId]);
     
     return (
         <Container className={classes.container} component="main" maxWidth="lg">
@@ -145,16 +112,16 @@ const UserProfile = () => {
                             multiline
                             InputLabelProps={{ shrink: true }}
                         /> 
-                        {profile?._id === owner?.result._id ? 
+                        {userId === loggedInUserId ? 
                             <Button className={classes.update} onClick={updateProfile} variant="contained" fullWidth color="primary">Update profile</Button>
                             :
-                            ''}             
-                        <Button onClick={clearProfiles} className={classes.back} variant="contained" fullWidth >Back</Button>
+                            null}             
+                        <Button onClick={back} className={classes.back} variant="contained" fullWidth >Back</Button>
                     </Paper>
                 </div>
                 
-                {owner ? <div className={classes.comments}>
-                    <Comments email={email}/>             
+                {isLoggedIn ? <div className={classes.comments}>
+                    <Comments key={userId} userId={userId}/>             
                     </div>  
                     :
                     <h3>Log in to view or write comments</h3>
@@ -163,23 +130,9 @@ const UserProfile = () => {
 
             <Divider orientation='vertical' flexItem/>
             
-            <Container className={classes.boxRight} >
-                
-                {post ? <Post data={post}/> : null}
-                
-                <Grid className={classes.grid} container>                    
-                    {loadingState === true ? 
-                        <p>Loading...</p> 
-                        :                
-                        posts.map(post => (                        
-                            <Grid key={post._id} className={classes.gridItem} item > 
-                                <Card data={post} />
-                            </Grid>
-                    ))}                    
-                </Grid>
-            
+            <Container className={classes.boxRight} >                
+                <Posts key={userId} userId={userId} />            
             </Container>
-
         </Container>
     )
 }

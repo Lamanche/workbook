@@ -32,9 +32,9 @@ const deletePost = async (req, res) => {
 }
 
 const findUserPosts = async (req, res) => {
-    const email = req.query.email
+    const id = req.query.userId
     try {
-        const Posts = await postModal.find({email: email});
+        const Posts = await postModal.find({ creatorId: id });
         res.status(200).json({ Posts });
     } catch (error) {
         res.status(404).json({ message: error.message });

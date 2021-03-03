@@ -16,3 +16,6 @@ export const FINISHED_LOADING = 'FINISHED_LOADING'
 export const LOCATION = 'LOCATION'
 
 export const UPDATE = 'UPDATE'
+
+export const SET_POSTDATA = 'SET_POSTDATA'
+export const CLEAR_POSTDATA = 'CLEAR_POSTDATA'

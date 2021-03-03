@@ -2,10 +2,11 @@ const mongoose = require('mongoose')
 
 const commentSchema = new mongoose.Schema({
     author: String,
+    authorId: String,
     authorEmail: String,        
     picture: String,
     comment: String,
-    forUser: String,
+    forUserId: String,
     createdAt: {
         type: Date,
         default: new Date(),

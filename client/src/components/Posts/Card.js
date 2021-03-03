@@ -3,8 +3,7 @@ import styles from './Card.module.css';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getProfile } from '../../actions/profile.js';
-
+import { setPostData } from '../../actions/postData.js';
 
 import coding from '../../images/coding.jpg';
 import design from '../../images/design.jpg';
@@ -37,19 +36,12 @@ const Card = ({data}) => {
       }
     
       const userProfile = () => {
-        const name = data.name
-        const email = data.email
-        dispatch(getProfile({ name, email }))
-        history.push("/userprofile")
+        history.push(`/userprofile/${data.creatorId}`)
       }      
 
       const openPost = () => {
-        const name = data.name
-        const email = data.email
-        dispatch(getProfile({ name, email }))
-        localStorage.setItem('post', JSON.stringify(data))
-        history.push('/userprofile')
-        
+        dispatch(setPostData(data))
+        history.push(`/userprofile/${data.creatorId}`)        
       }
 
       const addToFav = () => {

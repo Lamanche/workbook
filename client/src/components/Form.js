@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch  } from 'react-redux'
 import SideBarItem from './Main/SideBarItem'
 import { postCategory, postUserType, postType, postCategoryType } from '../actions/posts'
+import { v4 as uuid } from 'uuid';
 //import FileBase from 'react-file-base64';
 
 // API
@@ -40,7 +41,7 @@ const Form = () => {
     const categoryType = useSelector(state => state.posts.postCategoryType)
     const type = useSelector(state => state.posts.postType)
     
-    const initialState = { company: user.result.company, name: user.result.name, email: user.result.email, creatorId: user.result._id, type: type, userType: user.result.userType, categoryType: categoryType, picture: user.result.picture, category: '', description: '', about: '', price: ''}
+    const initialState = { id: uuid(), company: user.result.company, name: user.result.name, email: user.result.email, creatorId: user.result._id, type: type, userType: user.result.userType, categoryType: categoryType, picture: user.result.picture, category: '', description: '', about: '', price: ''}
     
     const [formData, setFormData] = useState(initialState);
 
@@ -63,7 +64,6 @@ const Form = () => {
         if (e.target.name === 'category') {
             dispatch(postCategory(e.target.value))
         }
-        console.log(formData)
     };
 
     
@@ -98,10 +98,8 @@ const Form = () => {
         .then(res => {
             if (res.status === 201){
                 history.push('/main')}
-        }).catch(error => console.log(error))};
-    
-    
-    
+        }).catch(error => console.log(error))
+    };    
     
     const back = () => history.replace("/main")
     

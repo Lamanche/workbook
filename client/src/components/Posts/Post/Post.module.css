@@ -1,6 +1,7 @@
 .container {
     background-color: white;
     padding: .5rem;
+    margin-bottom: 1rem;
 }
 
 .text {
@@ -52,3 +53,4 @@
     cursor: pointer;
     transform: scale(1.1);   
 }
+

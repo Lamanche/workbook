@@ -53,7 +53,7 @@ function App() {
                   <Route path="/login" exact component={LogIn} />                                                
                   <Route path="/register" exact component={Register} />
                   <Route path="/main" exact component={Main} />
-                  <Route path="/userprofile" exact component={UserProfile} /> 
+                  <Route path="/userprofile/:userId" exact component={UserProfile} /> 
                   {loggedIn === true ? <Route path="/updateprofile" exact component={UpdateProfile} /> : <Redirect to="/main" exact component={Main} />}                                
                   {loggedIn === true ? <Route path="/form" exact component={Form} /> : <Redirect to="/main" exact component={Main} />}                   
               </Switch>            

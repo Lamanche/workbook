@@ -13,9 +13,9 @@ const postComment = async (req, res) => {
 }
 
 const findComments = async (req, res) => {
-    const email = req.query.email
+    const userId = req.query.userId
     try {
-        const userComments = await CommentModal.find({ forUser: email });
+        const userComments = await CommentModal.find({ forUserId: userId });
         res.status(200).json({ userComments });
     } catch (error) {
         console.log(error)

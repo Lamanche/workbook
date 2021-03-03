@@ -53,7 +53,7 @@ const Content = () => {
                 setPosts(sortedData)
                 dispatch(finishedLoading())
             })            
-    },[dispatch, type, userType, category, categoryType]) 
+    },[type, userType, category, categoryType]) 
     
     
     return (

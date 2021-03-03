@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import FileBase from 'react-file-base64';
+import { useSelector } from 'react-redux'
 
 // API
 import { updateMyProfile } from '../../api/index.js'
@@ -21,6 +22,7 @@ import useStyles from './styles';
 const UpdateProfile = () => {
     let history = useHistory();
     const classes = useStyles();
+    const userId = useSelector(state => state.auth.authData.result._id)
     const user = JSON.parse(localStorage.getItem('profile'));
     //const prevPicture = user.result.picture;   
     const id = user.result._id
@@ -42,7 +44,7 @@ const UpdateProfile = () => {
                 localStorage.setItem('profileupdated', JSON.stringify({ updated: true }));
                 const token = JSON.parse(localStorage.getItem('profile')).token;    
                 localStorage.setItem('profile', JSON.stringify({ result: res.data, token }));                
-                history.replace('/userprofile')
+                history.replace('/main')
                 window.location.reload()
             })                
     };    
@@ -53,7 +55,7 @@ const UpdateProfile = () => {
     };
 
     const back = () => {
-        history.replace("/userprofile");   
+        history.replace(`/userprofile/${userId}`);   
     };        
     
 

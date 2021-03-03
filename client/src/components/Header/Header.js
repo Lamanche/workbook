@@ -120,7 +120,7 @@ const Header = () => {
   
   const profile = () => {
     dispatch(clearProfile())
-    history.push("/userprofile");
+    history.push(`/userprofile/${user.result._id}`);
     setAnchorEl(null);
   };
 

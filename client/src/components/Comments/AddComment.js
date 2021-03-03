@@ -8,13 +8,12 @@ import { postComment } from '../../api/index.js'
 import { TextField, Button, Paper, CircularProgress } from '@material-ui/core';
 
 
-
 const AddComment = (props) => {
     const dispatch = useDispatch();
     const author = useSelector(state => state.auth.authData.result)
-    const email = props.email
+    const forUserId = props.userId
     
-    const initialState = { author: author.name, authorEmail: author.email, picture: author.picture, forUser: email, comment: '' }
+    const initialState = { author: author.name, authorId: author._id, authorEmail: author.email, picture: author.picture, forUserId: forUserId, comment: '' }
     const [comment, setComment] = useState(initialState)
     const [loading, setLoading] = useState(false)
     const [value, setValue] = useState('')
@@ -28,7 +27,7 @@ const AddComment = (props) => {
         e.preventDefault()
         setLoading(true)
         postComment(comment)
-            .then(res => {console.log(res.status)
+            .then(res => {
                 if (res.status === 201) {
                     dispatch(update(1))
                     setLoading(false)
