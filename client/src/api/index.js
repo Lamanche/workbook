@@ -24,7 +24,7 @@ export const findPosts = (key) => API.get(`/post/findposts`, key)
 // User profiles
 export const fetchUserProfile = (userId) => API.post('/user/find', userId);
 //export const fetchMyProfile = (id) => API.get(`user/user/${id}`)
-export const updateMyProfile = (id, formData) => API.patch(`user/update/${id}`, formData)
+export const updateMyProfile = (id, formData) => API.patch(`/user/update/${id}`, formData)
 
 // Comments
 export const postComment = (comment) => API.post('/comments/post', comment)

@@ -15,8 +15,7 @@ const Content = () => {
     const postUserType = useSelector(state => state.posts.postUserType)
     const postCategory = useSelector(state => state.posts.postCategory)
     const postCategoryType = useSelector(state => state.posts.postCategoryType)
-    const loadingState = useSelector(state => state.posts.loading)
-    
+    const loadingState = useSelector(state => state.posts.loading)    
     
     let type
     let userType

@@ -24,21 +24,25 @@ const Posts = (props) => {
                 setPosts(res.data.Posts)
                 dispatch(finishedLoading())
         })
-    },[update])
+    },[update, userId])
     
     return (
-        <div>
+        <div className={styles.postsContainer}>
             {post ? <Post key={post.id} data={post} /> : null}
             <Grid className={styles.grid} container spacing={1}>                    
                     {loadingState === true ? 
                         <p>Loading...</p> 
                         :                
-                        posts.map(post => (                        
-                            <Grid key={post._id} className={styles.gridItem} item > 
-                                <Card data={post} />
-                            </Grid>
-                        ))
-                    }                    
+                        (posts.length === 0 ?                        
+                            <h3>Nothing to show from this user</h3>
+                            :
+                            posts.map(post => (                        
+                                <Grid key={post._id} className={styles.gridItem} item > 
+                                    <Card data={post} />
+                                </Grid>
+                            ))
+                        )
+                    }                
                 </Grid>
         
         

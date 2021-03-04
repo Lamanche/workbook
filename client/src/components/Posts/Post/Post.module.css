@@ -4,11 +4,20 @@
     margin-bottom: 1rem;
 }
 
+.grid {
+    justify-content: center;
+}
+
 .text {
     margin-top: 1.6rem;
 }
 
 .description {
+    font-weight: bold;
+}
+
+.textModify {
+    color: rgb(219, 44, 44);
     font-weight: bold;
 }
 
@@ -40,6 +49,11 @@
 }
 
 .button {
+    margin-right: 0.8rem;
+}
+
+.updateBtn {
+    background-color: rgb(7, 173, 118);
     margin-right: 0.8rem;
 }
 

@@ -8,6 +8,7 @@ import { clearPostData } from '../../../actions/postData.js';
 import { TextField, Paper, Button, Tooltip } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close';
 import QueueIcon from '@material-ui/icons/Queue';
+import CreateIcon from '@material-ui/icons/Create';
 
 const Post = ({data}) => {
     const dispatch = useDispatch()
@@ -24,6 +25,10 @@ const Post = ({data}) => {
     }
 
     const updatePost = () => {
+        setModify(false)
+    }
+
+    const cancelUpdate = () => {
         setModify(false)
     }
     
@@ -53,12 +58,15 @@ const Post = ({data}) => {
                         className={styles.text}
                         label="Description"
                         defaultValue={data?.description}
-                        fullWidth
+                        fullWidth                        
                         InputProps={{
                             readOnly: modify === true ? false : true,
                             classes: {
-                                input: styles.description
-                            }
+                                root: modify === true ? styles.textModify : styles.description,
+                            },
+                            endAdornment: (
+                                modify === true ? <CreateIcon/> : null
+                               ),
                         }}
                         multiline
                         InputLabelProps={{ shrink: true }}
@@ -67,20 +75,32 @@ const Post = ({data}) => {
                         className={styles.text}
                         label="Details"
                         defaultValue={data?.about}
-                        fullWidth
+                        fullWidth                        
                         InputProps={{
-                            readOnly: true,
+                            readOnly: modify === true ? false : true,
+                            classes: {
+                                root: modify === true ? styles.textModify : styles.description,
+                            },
+                            endAdornment: (
+                                modify === true ? <CreateIcon/> : null
+                               ),
                         }}
                         multiline
                         InputLabelProps={{ shrink: true }}
-                    />                    
+                    />
                     <TextField
                         className={styles.text}
                         label="Price"
                         defaultValue={`${data?.price}€`}
-                        fullWidth
+                        fullWidth                        
                         InputProps={{
-                            readOnly: true,
+                            readOnly: modify === true ? false : true,
+                            classes: {
+                                root: modify === true ? styles.textModify : styles.description,
+                            },
+                            endAdornment: (
+                                modify === true ? <CreateIcon/> : null
+                               ),
                         }}
                         multiline
                         InputLabelProps={{ shrink: true }}
@@ -90,11 +110,15 @@ const Post = ({data}) => {
                     {userId === creatorId ?
                         <div className={styles.buttons}>                 
                             {modify === true ? 
-                                <Button onClick ={updatePost} className={styles.button} variant='contained' color='primary'>Update</Button>
+                                <Button onClick ={updatePost} classes={{root: styles.updateBtn}} className={styles.updateBtn} variant='contained' color='primary'>Update</Button>
                                 :
                                 <Button onClick ={modifyPost} className={styles.button} variant='contained' color='primary'>Modify</Button>
                             }
-                            <Button onClick={deletePost} className={styles.button} variant='contained' color='secondary'>Delete</Button>
+                            {modify === false ? 
+                                <Button onClick={deletePost} className={styles.button} variant='contained' color='secondary'>Delete</Button>
+                                :
+                                <Button onClick={cancelUpdate} className={styles.button} variant='contained' color='secondary'>cancel</Button>
+                            }
                         </div>
                         : 
                         <div className={styles.buttons}>

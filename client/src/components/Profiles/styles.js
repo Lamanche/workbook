@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 
 const useStyles = makeStyles((theme) => ({
     container: {        

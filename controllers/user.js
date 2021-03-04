@@ -56,6 +56,7 @@ const logOutHandler = async (req, res) => {
 const updateUserProfileHandler = async (req, res) => {
     const {id} = req.params;    
     try {
+      console.log(id)
       const updatedUser = await UserModal.findByIdAndUpdate({_id: id}, req.body, {new: true});
       res.json(updatedUser);
     } catch (error) {
