@@ -53,15 +53,16 @@ const TabBar = () => {
             <Paper square>   
                 <div className={styles.tabsUpper}>                
                     <Tabs
+                        className={styles.typeTabs}
                         value={value}
                         onChange={handleChange}
                         indicatorColor="primary"
                         textColor="primary"
                         centered
                     >
-                        <Tab onClick={all} icon={<AllInclusiveIcon/>} label="Kõik" />
-                        <Tab onClick={looking} icon={<SearchIcon/>} label="Otsin" />
-                        <Tab onClick={offering} icon={<LocalOfferIcon/>} label="Pakun" />
+                        <Tab className={styles.typeTab} onClick={all} icon={<AllInclusiveIcon/>} label="Kõik" />
+                        <Tab className={styles.typeTab} onClick={looking} icon={<SearchIcon/>} label="Otsin" />
+                        <Tab className={styles.typeTab} onClick={offering} icon={<LocalOfferIcon/>} label="Pakun" />
                     </Tabs>                
                 </div>
                 <Divider />

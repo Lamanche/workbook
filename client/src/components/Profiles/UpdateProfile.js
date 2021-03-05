@@ -23,7 +23,7 @@ const UpdateProfile = () => {
     let history = useHistory();
     const classes = useStyles();
     const userId = useSelector(state => state.auth.authData.result._id)
-    const user = JSON.parse(localStorage.getItem('profile'));
+    const user = useSelector(state => state.auth.authData);
     //const prevPicture = user.result.picture;   
     const id = user.result._id
     const updated = JSON.parse(localStorage.getItem('profileupdated'));
@@ -42,10 +42,10 @@ const UpdateProfile = () => {
         updateMyProfile(id, formData)
             .then(res => {
                 localStorage.setItem('profileupdated', JSON.stringify({ updated: true }));
-                const token = JSON.parse(localStorage.getItem('profile')).token;    
-                localStorage.setItem('profile', JSON.stringify({ result: res.data, token }));                
+                //const token = JSON.parse(localStorage.getItem('profile')).token;    
+                //localStorage.setItem('profile', JSON.stringify({ result: res.data, token }));                
                 history.replace('/main')
-                window.location.reload()
+                //window.location.reload()
             })                
     };    
 

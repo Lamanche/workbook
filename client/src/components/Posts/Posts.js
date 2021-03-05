@@ -34,7 +34,7 @@ const Posts = (props) => {
                         <p>Loading...</p> 
                         :                
                         (posts.length === 0 ?                        
-                            <h3>Nothing to show from this user</h3>
+                            <h3 className={styles.noPosts}>Nothing to show from this user</h3>
                             :
                             posts.map(post => (                        
                                 <Grid key={post._id} className={styles.gridItem} item > 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import styles from './Comments.module.css'
 import AddComment from './AddComment'
 import Comment from './Comment'
 import Loading from './Loading'
@@ -38,7 +39,9 @@ const Comments = (props) => {
                         <Comment key={comment._id} data={comment} />
                     ))                        
                     :
-                    <h3>No comments yet</h3>
+                    <div className={styles.noComments}>
+                        <h3 className={styles.noCommentsText}>No comments yet</h3>
+                    </div>
                 )
             :
             <Loading />

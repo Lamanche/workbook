@@ -68,3 +68,21 @@
     transform: scale(1.1);   
 }
 
+.noPosts {
+    padding: 1rem;
+    background-color: white;
+    margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+    .button {
+        font-size: .7rem;
+    }
+    .updateBtn {
+        font-size: .7rem;
+    }
+    .textField {
+        font-size: .9rem;
+    }
+}
+

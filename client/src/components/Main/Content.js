@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Card from '../Posts/Card';
-
 import { findPosts } from '../../api/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { loading, finishedLoading } from '../../actions/posts';
-
 import styles from './Main.module.css';
+
 import { Grid } from '@material-ui/core';
 
 const Content = () => {
@@ -62,12 +61,14 @@ const Content = () => {
                 :                 
                 <>
                     {posts.length === 0 ? 
-                    <h3>Nothing to show yet</h3>
+                        <div className={styles.noPostsYet}>
+                            <h3>Nothing to show yet</h3>
+                        </div>
                     : 
-                    posts.map(post => (                        
-                        <Grid key={post._id} item >
-                            <Card data={post}/>                            
-                        </Grid>
+                        posts.map(post => (                        
+                            <Grid key={post._id} item >
+                                <Card data={post}/>                            
+                            </Grid>
                     ))} 
                 </>
             }                    

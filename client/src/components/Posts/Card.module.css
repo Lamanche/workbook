@@ -73,6 +73,27 @@
 @media (max-width: 600px) {
     .container {
         width: 12rem;
-        height: 14rem;
+        height: 15rem;
+    }
+    .avatar {
+        height: 1.6rem;
+        width: 1.6rem;
+    }
+    .headerText {
+        font-size: 0.8rem;
+    }    
+    .subheader {
+        font-size: .7rem;
+    }    
+    .description {
+        font-size: .9rem;
+        font-weight: bolder;
+    }
+    .priceText {
+        font-size: 1rem;
+        font-weight: bold;
+    }
+    .addToFav {
+
     }
 }

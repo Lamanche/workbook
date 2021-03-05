@@ -25,9 +25,7 @@ const Header = () => {
     return (
         <div className={styles.headerContainer}>
             <div className={styles.headerSubContainer}>
-                <Typography className={styles.header}variant='h4'>
-                    {type ? <span>{type} teenust</span> : "Kõik viimased postitused"}    
-                </Typography>
+                <Typography className={styles.headerText}variant='h4'>{type ? <span>{type} teenust</span> : "Kõik viimased postitused"}</Typography>
                 <RadioGroup value={value} onChange={handleChange} row >
                     <FormControlLabel value="" control={<Radio color='primary'/>} label="Kõik" />
                     <FormControlLabel value="eraisik" control={<Radio color='primary'/>} label="Eraisik" />

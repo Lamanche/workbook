@@ -5,7 +5,7 @@ import { deletePosts } from '../../../api/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearPostData } from '../../../actions/postData.js';
 
-import { TextField, Paper, Button, Tooltip } from '@material-ui/core'
+import { TextField, Paper, Button, Tooltip, InputAdornment } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close';
 import QueueIcon from '@material-ui/icons/Queue';
 import CreateIcon from '@material-ui/icons/Create';
@@ -14,8 +14,14 @@ const Post = ({data}) => {
     const dispatch = useDispatch()
     const userId = useSelector(state => state.auth.authData?.result._id);
     const creatorId = data.creatorId;    
-    const [modify, setModify] = useState(false)
     
+    const [modify, setModify] = useState(false)
+    const [formData, setFormData] = useState({ description: data.description, about: data.about, price: data.about });
+    
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value})
+    };
+
     const makeOffer = () => {
 
     }
@@ -26,17 +32,19 @@ const Post = ({data}) => {
 
     const updatePost = () => {
         setModify(false)
+        console.log(formData)
     }
 
     const cancelUpdate = () => {
         setModify(false)
+        setFormData({ description: data.description, about: data.about, price: data.about })
+        console.log(formData)
     }
     
     const deletePost = () => {
         deletePosts(data._id)
             .then(dispatch(update(1)))
-            .then(dispatch(clearPostData()))
-        
+            .then(dispatch(clearPostData()))        
     }
 
     const close = () => {
@@ -56,13 +64,17 @@ const Post = ({data}) => {
                 <div>
                     <TextField
                         className={styles.text}
+                        onChange={handleChange}
                         label="Description"
+                        name= 'description'
                         defaultValue={data?.description}
+                        value={modify === false ? data.description : undefined}
                         fullWidth                        
                         InputProps={{
                             readOnly: modify === true ? false : true,
                             classes: {
                                 root: modify === true ? styles.textModify : styles.description,
+                                input: styles.textField,
                             },
                             endAdornment: (
                                 modify === true ? <CreateIcon/> : null
@@ -73,13 +85,17 @@ const Post = ({data}) => {
                     />
                     <TextField
                         className={styles.text}
+                        onChange={handleChange}
                         label="Details"
+                        name= 'about'
                         defaultValue={data?.about}
+                        value={modify === false ? data.about : undefined}
                         fullWidth                        
                         InputProps={{
                             readOnly: modify === true ? false : true,
                             classes: {
                                 root: modify === true ? styles.textModify : styles.description,
+                                input: styles.textField,
                             },
                             endAdornment: (
                                 modify === true ? <CreateIcon/> : null
@@ -90,17 +106,22 @@ const Post = ({data}) => {
                     />
                     <TextField
                         className={styles.text}
+                        onChange={handleChange}
                         label="Price"
-                        defaultValue={`${data?.price}€`}
+                        name= 'price'
+                        defaultValue={data?.price}
+                        value={modify === false ? data.price : undefined}                        
                         fullWidth                        
                         InputProps={{
                             readOnly: modify === true ? false : true,
                             classes: {
                                 root: modify === true ? styles.textModify : styles.description,
+                                input: styles.textField,                                
                             },
                             endAdornment: (
                                 modify === true ? <CreateIcon/> : null
                                ),
+                            startAdornment: <InputAdornment position="start">€</InputAdornment>,
                         }}
                         multiline
                         InputLabelProps={{ shrink: true }}

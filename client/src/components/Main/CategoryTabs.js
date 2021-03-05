@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postCategory } from '../../actions/posts'
+import styles from './Main.module.css';
 
 import { Tabs, Tab } from '@material-ui/core';
 
@@ -32,6 +33,7 @@ const CategoryTabs = () => {
     
     return (
         <Tabs
+            className={styles.categoryTabs}
             value={value}
             onChange={handleChange}
             indicatorColor="primary"
@@ -40,18 +42,18 @@ const CategoryTabs = () => {
             scrollButtons="auto"
             aria-label="category tabs"
         >
-            <Tab onClick={tabValue} label="Kõik"  />
-            <Tab onClick={tabValue} label="Engineering"  />
-            <Tab onClick={tabValue} label="Coding"  />
-            <Tab onClick={tabValue} label="Design"  />
-            <Tab onClick={tabValue} label="Construction"  />
-            <Tab label="Item Five"  />
-            <Tab label="Item Six"  />
-            <Tab label="Item Seven"  />
-            <Tab label="Item Four"  />
-            <Tab label="Item Five"  />
-            <Tab label="Item Six"  />
-            <Tab label="Item Seven"  />
+            <Tab className={styles.categoryTab} onClick={tabValue} label="Kõik"  />
+            <Tab className={styles.categoryTab} onClick={tabValue} label="Engineering"  />
+            <Tab className={styles.categoryTab} onClick={tabValue} label="Coding"  />
+            <Tab className={styles.categoryTab} onClick={tabValue} label="Design"  />
+            <Tab className={styles.categoryTab} onClick={tabValue} label="Construction"  />
+            <Tab className={styles.categoryTab} label="Item Five"  />
+            <Tab className={styles.categoryTab} label="Item Six"  />
+            <Tab className={styles.categoryTab} label="Item Seven"  />
+            <Tab className={styles.categoryTab} label="Item Four"  />
+            <Tab className={styles.categoryTab} label="Item Five"  />
+            <Tab className={styles.categoryTab} label="Item Six"  />
+            <Tab className={styles.categoryTab} label="Item Seven"  />
         </Tabs>
     )
 }

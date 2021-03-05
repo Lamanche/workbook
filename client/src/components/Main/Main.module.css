@@ -3,27 +3,37 @@
     min-height: 58vh;
     margin: 1rem;
 }
+
 .paper {
     height: 100%
 }
+
 .contentContainer {
     display: flex
 }
 
 /* TABS */
 .tabsUpper {
-    
+
 }
 
 /* HEADER */
 .headerContainer {
     display: flex;
-    justify-content: center;
-    
+    justify-content: center;    
 }
+
+.headerText {
+    font-weight: bold;
+}
+
 .headerSubContainer {
     margin-top: .8rem;
+    display: flex;
+    flex-direction: column;    
+    align-items: center;
 }
+
 .header:hover {
     cursor: pointer;
 }
@@ -38,6 +48,12 @@
     justify-content: center;
 }
 
+.noPostsYet {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: white;
+}
+
 /*  SIDEBARITEM */
 .sideBarItem {
     display: flex;
@@ -45,19 +61,57 @@
     margin-right: 0.8rem;
     transition: all .03s ease-in-out;
 }
+
 .sideBarItemActive {
     display: flex;
     padding: 1rem;
     margin-right: 0.8rem;
     background-color: rgb(255, 255, 255);
-    border: 2px rgb(78, 43, 207) solid;
+    border: 1px rgb(46, 3, 202) solid;
     transform: scale(1.05);
 }
+
 .sideBarItem:hover {
     background-color: rgb(255, 255, 255);
     cursor: pointer;    
     transform: scale(1.05);
 }
+
 .sideBarItemText {
     margin-left: .5rem;
+}
+
+@media (max-width: 600px) {
+    .typeTabs {
+        height: 2rem;
+    }    
+    .typeTab {
+        font-size: .4rem;        
+    }
+    .categoryTabs {
+        height: 1rem;
+    }
+    .categoryTab {
+        font-size: .7rem;
+    }
+    .headerText {
+        font-size: 1.5rem;        
+    }
+    .sideBar {
+        margin-left: .6rem;
+    }
+    .sideBarItem {
+        display: flex;
+        padding: .3rem;
+        margin-left: 0rem;
+        transition: all .03s ease-in-out;
+    }
+    .sideBarItemText {
+        font-size: .9rem;
+    }
+    .sideBarItemActive {        
+        background-color: rgb(255, 255, 255);
+        border: 1px rgb(46, 3, 202) solid;
+        padding: .4rem;
+    }
 }

@@ -73,7 +73,7 @@ const User = (props) => {
                         value={8}
                     />
                 </div>
-                <form onSubmit={submitProfileUpdate} classname={styles.form}>
+                <form onSubmit={submitProfileUpdate} className={styles.form}>
                     <TextField
                         onChange={handleChange}
                         className={styles.text}

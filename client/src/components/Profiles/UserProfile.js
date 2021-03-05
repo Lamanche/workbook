@@ -43,7 +43,9 @@ const UserProfile = () => {
                     <Comments key={userId} userId={userId}/>             
                     </div>  
                     :
-                    <h3>Log in to view or write comments</h3>
+                    <div className={styles.logInForComments}>
+                        <h3 className={styles.noCommentText} >Log in to view or write comments</h3>
+                    </div>
                 }                         
             </div>        
         </div>

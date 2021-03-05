@@ -71,18 +71,30 @@
     justify-content: center;
 }
 
+.noComments {
+    margin-top: .8rem;
+    padding: 1rem;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+}
+
 @media (max-width: 600px) {
     .avatar {
-        
+        height: 2rem;
+        width: 2rem;
     }
     .name {
         font-size: .85rem;
     }
     .date {        
-        font-size: .8rem;     
-      }
+        font-size: .7rem;     
+    }
     .comment {        
         font-size: .85rem;
-      }
+    }
+    .addBtn {
+        font-size: .7rem;
+    }
     
 }

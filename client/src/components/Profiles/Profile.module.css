@@ -40,10 +40,7 @@
 
 .userName {
     font-weight: bolder;
-}
-
-.form {
-
+    
 }
 
 .text {
@@ -72,6 +69,15 @@
     margin-bottom: .8rem;
 }
 
+.logInForComments {
+     margin-top: 1rem;
+     margin-bottom: 2rem;
+     display: flex;
+     justify-content: center;
+     background-color: white;
+     padding: 1rem;   
+}
+
 @media (max-width: 790px) {
     .profileContainer {
         flex-direction: column;
@@ -82,4 +88,33 @@
     .rightSide {
         width: 100%;
     }
+}
+
+@media (max-width: 600px) {
+    .avatar {
+        height: 6rem;
+        width: 6rem;
+    }
+    .userName {
+        font-size: 2.5rem;
+    }
+    .textField {        
+        font-size: .9rem;
+        height: 1rem;
+    }
+    .backBtn {
+        font-size: .8rem;
+    }
+    .modifyBtn {
+        font-size: .8rem;
+    }    
+    .updateBtn {
+        font-size: .8rem;
+    }
+    .cancelUpdateBtn {
+        font-size: .8rem;
+    }
+    .noCommentText {
+        font-size: 1.2rem;
+    }    
 }

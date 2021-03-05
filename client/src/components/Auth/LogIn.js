@@ -54,11 +54,9 @@ export default function SignIn() {
         await googleSignIn({code: code})
           .then((res) => {
             if (res.status === 200) {
-              const data = res
-              console.log(data)
+              const data = res.data
               dispatch({ type: AUTH, data });    
               history.replace('/main');
-              return res.json();
             } else {
               return Promise.reject(res);
             }

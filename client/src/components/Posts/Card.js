@@ -78,13 +78,11 @@ const Card = ({data}) => {
                     title="category"
                 />
                 <div className={styles.info}>
-                    <Typography className={styles.description} onClick={openPost}>
-                        {data.description}
-                    </Typography>
+                    <Typography className={styles.description} onClick={openPost}>{data.description}</Typography>
                 </div>                
                 <footer className={styles.footer}>
                   <div className={styles.price}>
-                    <Typography variant='h6'>Price: {data.price}€</Typography>
+                    <Typography className={styles.priceText} variant='h6'>Price: {data.price}€</Typography>
                   </div>
                   <div className={styles.addToFav}>
                     <Tooltip title="Add to favorites">
