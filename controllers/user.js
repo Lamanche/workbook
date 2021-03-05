@@ -1,7 +1,8 @@
-
+const getGoogleProfileInfo = require('../utils/googleOAuth');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
-const UserModal = require('../models/users.js')
+const UserModal = require('../models/users.js');
+//const { updateMyProfile } = require('../client/src/api');
 
 
 const secret = process.env.ACCESS_SECRET;
@@ -44,6 +45,34 @@ const signInHandler = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: "Something went wrong" });
   }
+};
+
+const googleSignInHandler = async (req, res) => {
+  try {
+    const code = req.body.code;
+    const profile = await getGoogleProfileInfo(code);
+    const email = profile.email
+    /*const user = {
+      googleId: profile.sub,
+      name: profile.name,
+      firstName: profile.given_name,
+      lastName: profile.family_name,
+      email: profile.email,
+      profilePic: profile.picture,
+    };*/
+    const oldUser = await UserModal.findOne({ email });
+    if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });
+    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: "1h" });
+    res.cookie('token', token, {      
+      httpOnly: true,
+      //Un-comment for production
+      //secure: true 
+    })
+    res.status(200).json({ result: oldUser });
+  } catch (e) {
+    console.log(e);
+    res.status(401).send();
+  }
 }
 
 const logOutHandler = async (req, res) => {
@@ -76,4 +105,4 @@ const findProfileHandler = async (req, res) => {
 }
 
 
-module.exports = { registerHandler, signInHandler, updateUserProfileHandler, findProfileHandler, logOutHandler }
+module.exports = { registerHandler, signInHandler, googleSignInHandler, updateUserProfileHandler, findProfileHandler, logOutHandler }

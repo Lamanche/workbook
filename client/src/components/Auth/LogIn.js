@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Icon from './icon';
 
 // Styles
 import Avatar from '@material-ui/core/Avatar';
@@ -20,6 +19,7 @@ import GoogleLogin from 'react-google-login'
 import { useHistory } from 'react-router-dom';
 import { signin } from '../../actions/auth';
 import { location } from '../../actions/location';
+import { googleSignIn } from'../../api/index'
 import { AUTH } from '../../actions/types';
 import useStyles from './styles'
 import { Copyright } from './helperFunc'
@@ -47,21 +47,29 @@ export default function SignIn() {
     history.replace('/register')
   }
 
-  const googleSuccess = async (res) => {
-    const result = res?.profileObj;
-    const token = res?.tokenId;
+  const responseGoogle = async (authResult) => {
     try {
-      dispatch({ type: AUTH, data: { result, token } });
-      history.replace('/main');
-      localStorage.setItem('profileupdated', JSON.stringify({ updated: true }));
-    } catch (error) {
-      alert(error);
-    }
+      if (authResult['code']) {
+        const code = authResult['code']
+        await googleSignIn({code: code})
+          .then((res) => {
+            if (res.status === 200) {
+              const data = res
+              console.log(data)
+              dispatch({ type: AUTH, data });    
+              history.replace('/main');
+              return res.json();
+            } else {
+              return Promise.reject(res);
+            }
+      })
+      } else {
+        throw new Error(authResult);
+      }
+    } catch (e) {
+      console.log(e);
+      }
   };
-
-  const googleError = () => {
-    alert('Google Sign In was unsuccessful. Try again later');
-  }
 
   useEffect(() => {
     dispatch(location(history.location.pathname))
@@ -104,10 +112,6 @@ export default function SignIn() {
             autoComplete="current-password"
             onChange={handleChange}
           />
-          {/*<FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />*/}
             <Button
               type="submit"
               fullWidth
@@ -116,18 +120,16 @@ export default function SignIn() {
               className={classes.submit}
             >
               Sign In
-            </Button>
-            <GoogleLogin 
-              clientId={process.env.GOOGLE_CLIENT_ID}              
-              render={(renderProps) => (
-                <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
-                  Google Sign In
-                </Button>
-              )}
-              onSuccess={googleSuccess}
-              onFailure={googleError}
-              cookiePolicy="single_host_origin"
-              />
+            </Button>            
+            <GoogleLogin
+              clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+              buttonText="Login with google"
+              responseType="code"
+              redirectUri="postmessage"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={'single_host_origin'}
+            />
           <Grid container>
             <Grid item xs>
               {/*<Link href="#" variant="body2">

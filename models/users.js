@@ -8,6 +8,9 @@ const userSchema = new mongoose.Schema({
     company: {
         type: String
     },
+    googleId: {
+        type: String
+    },    
     name: {
         type: String, 
         required: true
