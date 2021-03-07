@@ -70,12 +70,29 @@
 }
 
 .logInForComments {
-     margin-top: 1rem;
-     margin-bottom: 2rem;
-     display: flex;
-     justify-content: center;
-     background-color: white;
-     padding: 1rem;   
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    padding: 1rem;   
+}
+
+/* UPDATE PROFILE */
+.updateContainer {
+    margin-top: 3rem;
+}
+
+.btnContainer {
+    margin-top: 2rem;
+}
+
+.button {
+    margin-bottom: 1.5rem;
+}
+
+.inputContainer {
+    /*display: none;*/
 }
 
 @media (max-width: 790px) {
@@ -102,6 +119,9 @@
         font-size: .9rem;
         height: 1rem;
     }
+    .button {
+        font-size: .8rem;
+    }
     .backBtn {
         font-size: .8rem;
     }
@@ -116,5 +136,11 @@
     }
     .noCommentText {
         font-size: 1.2rem;
-    }    
+    } 
+    .introText {
+        font-size: 1.3rem;
+    }  
+    .updateContainer {
+        margin-top: 1rem;
+    }
 }

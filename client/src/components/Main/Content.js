@@ -9,12 +9,12 @@ import { Grid } from '@material-ui/core';
 
 const Content = () => {
     const dispatch = useDispatch();
-    const [posts, setPosts] = useState([])
-    const postType = useSelector(state => state.posts.postType)
-    const postUserType = useSelector(state => state.posts.postUserType)
-    const postCategory = useSelector(state => state.posts.postCategory)
-    const postCategoryType = useSelector(state => state.posts.postCategoryType)
-    const loadingState = useSelector(state => state.posts.loading)    
+    const [posts, setPosts] = useState([]);
+    const postType = useSelector(state => state.posts.postType);
+    const postUserType = useSelector(state => state.posts.postUserType);
+    const postCategory = useSelector(state => state.posts.postCategory);
+    const postCategoryType = useSelector(state => state.posts.postCategoryType);
+    const loadingState = useSelector(state => state.posts.loading);   
     
     let type
     let userType
@@ -25,33 +25,33 @@ const Content = () => {
         type = null
     } else {
         type = postType
-    }
+    };
     if (postUserType === "") {
         userType = null
     } else {
         userType = postUserType
-    }
+    };
     if (postCategoryType === "") {
         categoryType = null
     } else {
         categoryType = postCategoryType
-    }
+    };
     if (postCategory === "" || postCategory === 'kõik') {
         category = null
     } else {
         category = postCategory
-    }
+    };
 
     useEffect(() => {        
-        dispatch(loading())
+        dispatch(loading());
         findPosts({params: {type, userType, category, categoryType}})
             .then(res => {
                 const data = res.data?.posts;
                 const sortedData = data.sort((a, b) => new Date(a) < new Date(b) ? 1 : -1);
-                setPosts(sortedData)
-                dispatch(finishedLoading())
-            })            
-    },[type, userType, category, categoryType]) 
+                setPosts(sortedData);
+                dispatch(finishedLoading());
+            });           
+    },[type, userType, category, categoryType]);
     
     
     return (

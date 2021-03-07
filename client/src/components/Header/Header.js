@@ -10,12 +10,12 @@ import { Button, Typography, AppBar } from '@material-ui/core';
 const Header = () => { 
   const history = useHistory();
   const location = useSelector(state => state.location.location);
-  const loggedIn = useSelector(state => state.auth.isLoggedIn)
-  const user = useSelector(state => state.auth.authData)  
+  const loggedIn = useSelector(state => state.auth.isLoggedIn);
+  const user = useSelector(state => state.auth.authData); 
 
   const login = () => {
     history.push('/login');
-  }  
+  }; 
 
   return (    
         <div className={styles.container}>

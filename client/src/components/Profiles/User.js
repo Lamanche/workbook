@@ -1,54 +1,56 @@
-import React, { useEffect, useState } from 'react'
-import styles from './Profile.module.css'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import styles from './Profile.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { AUTH } from '../../actions/types';
 import { useHistory } from 'react-router-dom';
-import { fetchUserProfile } from '../../api/index.js'
+import { fetchUserProfile } from '../../api/index.js';
 import { loading } from '../../actions/posts';
-import { clearPostData } from '../../actions/postData.js'
-import { updateMyProfile } from '../../api/index.js'
+import { clearPostData } from '../../actions/postData.js';
+import { updateMyProfile } from '../../api/index.js';
 import StarRatingComponent from 'react-star-rating-component';
 
-import { Paper, TextField, Typography, Avatar, Button } from '@material-ui/core'
+import { Paper, TextField, Typography, Avatar, Button } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 
 
 const User = (props) => {
-    const userId = props.userId
-    const loggedInUserId = useSelector(state => state.auth.authData?.result._id)
+    const userId = props.userId;
+    const loggedInUserId = useSelector(state => state.auth.authData?.result._id);
     const dispatch = useDispatch();
     const history = useHistory();
     
-    const [profile, setProfile] = useState({})
-    const [modify, setModify] = useState(false)
+    const [profile, setProfile] = useState({});
+    const [modify, setModify] = useState(false);
     
-    const [formData, setFormData] = useState({ about: '', experience: '', references: '' });
+    const [formData, setFormData] = useState({ about: '', experience: '', references: '', profile: true });
     
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value})
+        setFormData({ ...formData, [e.target.name]: e.target.value});
     };
     
     const updateProfile = () => {
-        setModify(true)
-    }
+        setModify(true);
+    };
 
     const cancelUpdate = () => {
-        setModify(false)
-        setFormData({ about: profile.about, experience: profile.experience, references: profile.references})
-    }
+        setModify(false);
+        setFormData({ about: profile.about, experience: profile.experience, references: profile.references});
+    };
 
     const submitProfileUpdate = (e) => {
         e.preventDefault();
         updateMyProfile(loggedInUserId, formData)
             .then(res => {
-                setProfile(res.data)
-                setModify(false)
-                localStorage.setItem('profileupdated', JSON.stringify({ updated: true }));
-            })
-    }
+                setProfile(res.data);
+                setModify(false);
+                const data = res.data;
+                dispatch({ type: AUTH, data });
+            });
+    };
     
     const back = () => {
-        dispatch(clearPostData())
-        history.replace("/main")   
+        dispatch(clearPostData());
+        history.replace("/main");  
     };
 
     useEffect(() => {
@@ -57,7 +59,7 @@ const User = (props) => {
                 setProfile(res.data)
                 setFormData({ about: res.data.about, experience: res.data.experience, references: res.data.references})
             });        
-        dispatch(loading())        
+        dispatch(loading());        
     },[userId]);
     
     return (

@@ -74,6 +74,10 @@
     margin-top: 1rem;
 }
 
+.buttonProgress {
+    position: absolute;    
+}
+
 @media (max-width: 600px) {
     .button {
         font-size: .7rem;

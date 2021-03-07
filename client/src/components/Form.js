@@ -101,7 +101,13 @@ const Form = () => {
         }).catch(error => console.log(error))
     };    
     
-    const back = () => history.replace("/main")
+    const back = () => {
+        dispatch(postType(''));
+        dispatch(postCategoryType(''));
+        dispatch(postUserType(''));
+        dispatch(postCategory(''));
+        history.replace("/main");
+    };
     
 // Styles
     const useStyles = makeStyles((theme) => ({

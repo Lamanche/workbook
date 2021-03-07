@@ -1,31 +1,31 @@
-import React, { useEffect } from 'react'
-import styles from './Profile.module.css'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect } from 'react';
+import styles from './Profile.module.css';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import User from './User'
-import Posts from '../Posts/Posts.js'
-import Comments from '../Comments/Comments.js'
-import { clearPostData } from '../../actions/postData.js'
+import User from './User';
+import Posts from '../Posts/Posts.js';
+import Comments from '../Comments/Comments.js';
+import { clearPostData } from '../../actions/postData.js';
 
-import { Divider } from '@material-ui/core'
+import { Divider } from '@material-ui/core';
 
 
 const UserProfile = () => {
-    let {userId}= useParams()
+    let {userId}= useParams();
     const dispatch = useDispatch();
     const history = useHistory();  
-    const isLoggedIn = useSelector(state => state.auth?.isLoggedIn)
+    const isLoggedIn = useSelector(state => state.auth?.isLoggedIn);
     
     // kõik muidu töötab aga kui back nuppu vajutada siis ei kustu postData ära
     useEffect(() => { 
         const unlisten = history.listen((location) => {
-            if(location.pathname !== `/userprofile/${userId}`){
-                dispatch(clearPostData())
-            }          
+            if(location.pathname !== `/userprofile/${userId}`) {
+                dispatch(clearPostData());
+            };          
         });
         return () => {
           unlisten();
-        }
+        };
       }, [history, userId]);
     
     return (

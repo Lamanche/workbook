@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Card.module.css';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setPostData } from '../../actions/postData.js';
 
 import coding from '../../images/coding.jpg';
@@ -19,37 +19,39 @@ import QueueIcon from '@material-ui/icons/Queue';
 const Card = ({data}) => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const currentPostId = data._id
+    const selectedPostId = useSelector(state => state.postData.post?._id);
     
     const categoryImage = () => {
         switch (data.category) {
           case 'coding':
-            return coding
+            return coding;
           case 'engineering':
-            return engineering
+            return engineering;
           case 'construction':
-            return construction
+            return construction;
           case 'design':
-            return design    
+            return design;   
           default:
-            return ''
+            return '';
         }
-      }
+      };
     
       const userProfile = () => {
-        history.push(`/userprofile/${data.creatorId}`)
-      }      
+        history.push(`/userprofile/${data.creatorId}`);
+      };     
 
       const openPost = () => {
-        dispatch(setPostData(data))
-        history.push(`/userprofile/${data.creatorId}`)        
-      }
+        dispatch(setPostData(data));
+        history.push(`/userprofile/${data.creatorId}`);        
+      };
 
       const addToFav = () => {
 
-      }
+      };
     
     return (
-        <div className={styles.container}>
+        <div className={currentPostId === selectedPostId ? styles.containerSelected : styles.container}>
             <Paper className={styles.paper} variant="outlined" square>
                 <div className={styles.headerContainer}> 
                   <CardHeader

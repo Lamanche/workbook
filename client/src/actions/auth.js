@@ -16,13 +16,10 @@ export const isLoggedIn = () => async (dispatch) => {
   }    
 };
 
-
-
 export const signin = (formData, history) => async (dispatch) => {
  try {
     const { data } = await api.signIn(formData);
     dispatch({ type: AUTH, data });
-    localStorage.setItem('profileupdated', JSON.stringify({ updated: true }));
     history.replace('/main');
   } catch (error) {
     alert(error.message)

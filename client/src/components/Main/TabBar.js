@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import styles from './Main.module.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { postType, postCategoryType, postUserType, postCategory } from '../../actions/posts'
-import CategoryTabs from './CategoryTabs'
+import React, { useState, useEffect } from 'react';
+import styles from './Main.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { postType, postCategoryType, postUserType, postCategory } from '../../actions/posts';
+import CategoryTabs from './CategoryTabs';
 
 import { Paper, Tabs, Tab, Divider } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
@@ -12,8 +12,8 @@ import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 
 
 const TabBar = () => {
-    const dispatch = useDispatch()
-    const type = useSelector(state => state.posts.postType)
+    const dispatch = useDispatch();
+    const type = useSelector(state => state.posts.postType);
     
     const [value, setValue] = useState(0);
 
@@ -22,31 +22,31 @@ const TabBar = () => {
     };
 
     const all = () => {
-        dispatch(postType(''))
-        dispatch(postCategoryType(''))
-        dispatch(postUserType(''))
-        dispatch(postCategory(''))
-    }
+        dispatch(postType(''));
+        dispatch(postCategoryType(''));
+        dispatch(postUserType(''));
+        dispatch(postCategory(''));
+    };
     
     const looking = () => {
-        dispatch(postType('Otsin'))
-    }
+        dispatch(postType('Otsin'));
+    };
 
     const offering = () => {
-        dispatch(postType('Pakun'))
-    }
+        dispatch(postType('Pakun'));
+    };
 
     useEffect(() => {        
         if (type === 'Kõik') {
-            setValue(0)
+            setValue(0);
         }
         else if (type === 'Otsin') {
-            setValue(1)
+            setValue(1);
         }
         else if (type === 'Pakun') {
-            setValue(2)
+            setValue(2);
         }
-    },[type])
+    },[type]);
     
     return (
         <div>

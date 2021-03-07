@@ -8,7 +8,7 @@ const fetchAllPosts = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: error.message });
     }    
-}
+};
 
 const createPost = async (req, res) => {
     const post = req.body;
@@ -19,17 +19,27 @@ const createPost = async (req, res) => {
     } catch (error) {
         res.status(409).json({ message: error.message });
     }    
-}
+};
+
+const updatePost = async (req, res) => {
+    const {id} = req.params;    
+    try {
+        const updatedPost = await postModal.findByIdAndUpdate({_id: id}, req.body, {new: true});
+        res.status(200).json({ updatedPost });
+    } catch (error) {
+        res.send(error.message)
+    }    
+};
 
 const deletePost = async (req, res) => {
     const {id} = req.params;
     try {        
         await postModal.findOneAndDelete({_id: id});
-        res.status(204);
+        res.status(200).json({ message: 'Post deleted' });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }    
-}
+};
 
 const findUserPosts = async (req, res) => {
     const id = req.query.userId
@@ -39,7 +49,7 @@ const findUserPosts = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: error.message });
     }    
-}
+};
 
 const findAllPostsByWord = async (req, res) => {
     const word = req.query.word
@@ -49,7 +59,7 @@ const findAllPostsByWord = async (req, res) => {
     } catch (error) {
         console.log(error)
     }    
-}
+};
 
 const findPostsByKey = async (req, res) => {
     const key = req.query
@@ -60,7 +70,7 @@ const findPostsByKey = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
-}
+};
 
 
-module.exports = { fetchAllPosts, createPost, deletePost, findUserPosts, findAllPostsByWord, findPostsByKey }
+module.exports = { fetchAllPosts, createPost, updatePost, deletePost, findUserPosts, findAllPostsByWord, findPostsByKey }

@@ -38,12 +38,12 @@ function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(formData)
         dispatch(signup(formData, history));
     };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value})
-        console.log(formData)
     } 
 
     const login = () => {

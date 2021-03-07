@@ -10,12 +10,12 @@ const secret = process.env.ACCESS_SECRET;
 
 // Users
 const registerHandler = async (req, res) => {
-    const { userType, email, password, firstName, lastName, company } = req.body;
+    const { userType, email, password, firstName, lastName, company, profile } = req.body;
     try {
       const oldUser = await UserModal.findOne({ email });
       if (oldUser) return res.status(400).json({ message: "User already exists" });
       const hashedPassword = await bcrypt.hash(password, 12);
-      const result = await UserModal.create({ userType, email, password: hashedPassword, name: `${firstName} ${lastName}`, company });
+      const result = await UserModal.create({ userType, email, password: hashedPassword, name: `${firstName} ${lastName}`, company, profile });
       const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: "1h" });      
       res.cookie('token', token, {
         httpOnly: true,
@@ -85,13 +85,11 @@ const logOutHandler = async (req, res) => {
 const updateUserProfileHandler = async (req, res) => {
     const {id} = req.params;    
     try {
-      console.log(id)
       const updatedUser = await UserModal.findByIdAndUpdate({_id: id}, req.body, {new: true});
-      res.json(updatedUser);
+      res.status(200).json({ result: updatedUser });
     } catch (error) {
       res.send(error.message)
-    }
-    
+    }    
 }
 
 const findProfileHandler = async (req, res) => {

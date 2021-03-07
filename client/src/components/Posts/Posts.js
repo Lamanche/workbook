@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import styles from './Post/Post.module.css'
-import Post from './Post/Post'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styles from './Post/Post.module.css';
+import Post from './Post/Post';
 import { finishedLoading } from '../../actions/posts';
-import { findUserPosts } from '../../api/index.js'
-import Card from '../Posts/Card.js'
+import { findUserPosts } from '../../api/index.js';
+import Card from '../Posts/Card.js';
 
-import { Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core';
 
 const Posts = (props) => {
-    let userId= props.userId   
+    let userId= props.userId;  
     const dispatch = useDispatch();
-    const update = useSelector(state => state.update)
+    const update = useSelector(state => state.update);
     
-    const post = useSelector(state => state.postData.post)    
-    const loadingState = useSelector(state => state.posts.loading) 
+    const post = useSelector(state => state.postData.post);    
+    const loadingState = useSelector(state => state.posts.loading); 
     
-    const [posts, setPosts] = useState([])
+    const [posts, setPosts] = useState([]);
 
-    useEffect(() => {
+    useEffect(() => {        
         findUserPosts({params: { userId }})
             .then(res => {
-                setPosts(res.data.Posts)
-                dispatch(finishedLoading())
-        })
-    },[update, userId])
+                setPosts(res.data.Posts);
+                dispatch(finishedLoading());
+        });
+    },[update, userId, dispatch]);
     
     return (
         <div className={styles.postsContainer}>

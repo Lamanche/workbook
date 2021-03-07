@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Main.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { postCategoryType } from '../../actions/posts'
+import { postCategoryType } from '../../actions/posts';
 
 const SideBarItem = ({value, Icon}) => {
     const dispatch = useDispatch();
-    const categoryType = useSelector(state => state.posts.postCategoryType)
+    const categoryType = useSelector(state => state.posts.postCategoryType);
 
-    const [active, setActive] = useState(styles.sideBarItem)
+    const [active, setActive] = useState(styles.sideBarItem);
     
     useEffect(() => {
         if (value === categoryType ) {
-            setActive(styles.sideBarItemActive)
+            setActive(styles.sideBarItemActive);
         } else {
-            setActive(styles.sideBarItem)
-        }
-    },[categoryType, value])
+            setActive(styles.sideBarItem);
+        };
+    },[categoryType, value]);
     
 
     const getValue = () => {
-        dispatch(postCategoryType(value))
-    }    
+        dispatch(postCategoryType(value));
+    }; 
     
     return (
         <div onClick={getValue} className={active}>

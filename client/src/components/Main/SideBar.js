@@ -1,6 +1,6 @@
-import React from 'react'
-import styles from './Main.module.css'
-import SideBarItem from './SideBarItem'
+import React from 'react';
+import styles from './Main.module.css';
+import SideBarItem from './SideBarItem';
 
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';

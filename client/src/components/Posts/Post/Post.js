@@ -1,59 +1,74 @@
-import React, { useState } from 'react'
-import styles from './Post.module.css'
-import { update } from '../../../actions/update.js'
-import { deletePosts } from '../../../api/index';
+import React, { useState } from 'react';
+import styles from './Post.module.css';
+import { update } from '../../../actions/update.js';
+import { deletePosts, updatePost } from '../../../api/index';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearPostData } from '../../../actions/postData.js';
+import { clearPostData, setPostData } from '../../../actions/postData.js';
 
-import { TextField, Paper, Button, Tooltip, InputAdornment } from '@material-ui/core'
+import { TextField, Paper, Button, Tooltip, InputAdornment, CircularProgress } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import QueueIcon from '@material-ui/icons/Queue';
 import CreateIcon from '@material-ui/icons/Create';
 
 const Post = ({data}) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const userId = useSelector(state => state.auth.authData?.result._id);
-    const creatorId = data.creatorId;    
+    const creatorId = data.creatorId;
+    const postId = data._id    
     
-    const [modify, setModify] = useState(false)
+    const [modify, setModify] = useState(false);
     const [formData, setFormData] = useState({ description: data.description, about: data.about, price: data.about });
-    
+    const [loading, setLoading] = useState(false)
+
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value})
+        setFormData({ ...formData, [e.target.name]: e.target.value});
     };
 
     const makeOffer = () => {
 
-    }
+    };
     
     const modifyPost = () => {
-        setModify(true)
-    }
+        setModify(true);
+    };
 
-    const updatePost = () => {
-        setModify(false)
-        console.log(formData)
-    }
+    const updateP = () => {
+        setLoading(true);
+        updatePost(postId, formData)            
+            .then(res => {
+                if (res.status === 200) {
+                    setModify(false);
+                    dispatch(update(1));                   
+                    dispatch(setPostData(res.data.updatedPost));
+                    setLoading(false);                    
+                };
+            });
+    };
 
     const cancelUpdate = () => {
-        setModify(false)
-        setFormData({ description: data.description, about: data.about, price: data.about })
-        console.log(formData)
-    }
+        setModify(false);
+        setFormData({ description: data.description, about: data.about, price: data.about });
+    };
     
     const deletePost = () => {
+        setLoading(true);
         deletePosts(data._id)
-            .then(dispatch(update(1)))
-            .then(dispatch(clearPostData()))        
-    }
+            .then(res => {
+                if (res.status === 200) {
+                    dispatch(update(1));
+                    dispatch(clearPostData());                    
+                    setLoading(false);
+                };
+            });                   
+    };
 
     const close = () => {
-        dispatch(clearPostData())
-    }  
+        dispatch(clearPostData());
+    }; 
     
     const addToFav = () => {
 
-    }
+    };
     
     return (
         <div className={styles.container}>
@@ -131,12 +146,12 @@ const Post = ({data}) => {
                     {userId === creatorId ?
                         <div className={styles.buttons}>                 
                             {modify === true ? 
-                                <Button onClick ={updatePost} classes={{root: styles.updateBtn}} className={styles.updateBtn} variant='contained' color='primary'>Update</Button>
+                                <Button onClick ={updateP} classes={{root: styles.updateBtn}} className={styles.updateBtn} disabled={loading} variant='contained' color='primary'>{loading && <CircularProgress size={24} className={styles.buttonProgress}/>}Update</Button>
                                 :
                                 <Button onClick ={modifyPost} className={styles.button} variant='contained' color='primary'>Modify</Button>
                             }
                             {modify === false ? 
-                                <Button onClick={deletePost} className={styles.button} variant='contained' color='secondary'>Delete</Button>
+                                <Button onClick={deletePost} className={styles.button} disabled={loading} variant='contained' color='secondary'>{loading && <CircularProgress size={24} className={styles.buttonProgress}/>}Delete</Button>
                                 :
                                 <Button onClick={cancelUpdate} className={styles.button} variant='contained' color='secondary'>cancel</Button>
                             }

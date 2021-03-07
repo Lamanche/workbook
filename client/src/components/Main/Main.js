@@ -4,11 +4,11 @@ import { useDispatch } from 'react-redux';
 import { location } from '../../actions/location';
 
 import Header from './Header';
-import TabBar from './TabBar'
+import TabBar from './TabBar';
 import SideBar from './SideBar';
-import Content from './Content'
+import Content from './Content';
 
-import styles from './Main.module.css'
+import styles from './Main.module.css';
 
 
 const Main = () => {
@@ -16,8 +16,8 @@ const Main = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(location(history.location.pathname))
-        },[history, dispatch])
+        dispatch(location(history.location.pathname));
+        },[history, dispatch]);
 
     
     return (

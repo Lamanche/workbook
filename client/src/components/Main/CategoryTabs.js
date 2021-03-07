@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { postCategory } from '../../actions/posts'
+import { postCategory } from '../../actions/posts';
 import styles from './Main.module.css';
 
 import { Tabs, Tab } from '@material-ui/core';
 
 const CategoryTabs = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     
-    const category = useSelector(state => state.posts.postCategory)
+    const category = useSelector(state => state.posts.postCategory);
 
-    const cats = ['', 'engineering', 'coding', 'design', 'construction']
+    const cats = ['', 'engineering', 'coding', 'design', 'construction'];
     
     const [value, setValue] = useState(0);
 
@@ -20,15 +20,15 @@ const CategoryTabs = () => {
 
     const tabValue = (e) => {
         if (e.target.innerText === 'KÕIK') {
-            dispatch(postCategory(''))
+            dispatch(postCategory(''));
         } else {
-            dispatch(postCategory(e.target.innerText.toLowerCase()))
-        }       
-    }
+            dispatch(postCategory(e.target.innerText.toLowerCase()));
+        };      
+    };
 
     useEffect(() => {
-        setValue(cats.indexOf(category))
-    },[category])
+        setValue(cats.indexOf(category));
+    },[category]);
 
     
     return (

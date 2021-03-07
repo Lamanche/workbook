@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import styles from './Header.module.css';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -24,7 +24,7 @@ const Profile = ({user}) => {
     };
 
     const profile = () => {
-        dispatch(clearProfile())
+        dispatch(clearProfile());
         history.push(`/userprofile/${user.result._id}`);
         setAnchorEl(null);
       };
@@ -42,17 +42,17 @@ const Profile = ({user}) => {
 
       const favorites = () => {
 
-      }
+      };
 
       const deleteAccount = () => {
           
-      }
+      };
     
     
     return (
         <div className={styles.profileContainer}>
             <Avatar className={styles.avatar} alt={user?.result.name} src={user?.result.picture || user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
-            <Typography className={styles.userName} variant="h6">{user?.result.name}</Typography>              
+            <Typography className={styles.userName} variant="h6">{user?.result.company === "" ? user?.result.name : user?.result.company}</Typography>              
             <IconButton edge="end" color="inherit">
                 <MoreIcon onClick={handleClick} />
                 <Menu
@@ -62,11 +62,11 @@ const Profile = ({user}) => {
                     open={Boolean(anchorEl)}                        
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={post}>New post</MenuItem>
-                    <MenuItem onClick={profile}>My profile</MenuItem>
-                    <MenuItem onClick={favorites}>Favorites</MenuItem>
-                    <MenuItem onClick={logOut}>Logout</MenuItem>
-                    <MenuItem onClick={deleteAccount}>Delete account</MenuItem>
+                    <MenuItem onClick={post}>Uus keika</MenuItem>
+                    <MenuItem onClick={profile}>Minu profiil</MenuItem>
+                    <MenuItem onClick={favorites}>Lemmikud</MenuItem>
+                    <MenuItem onClick={logOut}>Logi välja</MenuItem>
+                    <MenuItem onClick={deleteAccount}>Kustuta konto</MenuItem>
                 </Menu>                     
             </IconButton>        
         </div>

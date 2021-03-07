@@ -1,32 +1,32 @@
-import React, { useState } from 'react'
-import styles from './Comments.module.css'
-import moment from 'moment'
+import React, { useState } from 'react';
+import styles from './Comments.module.css';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { update } from '../../actions/update.js'
-import { deleteComment } from '../../api/index.js'
+import { update } from '../../actions/update.js';
+import { deleteComment } from '../../api/index.js';
 
-import { Avatar, Typography, Paper, CircularProgress } from '@material-ui/core'
+import { Avatar, Typography, Paper, CircularProgress } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const Comment = ({data}) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const loggedInUserId = useSelector(state => state.auth.authData?.result._id) 
-  const id = data._id
+  const loggedInUserId = useSelector(state => state.auth.authData?.result._id);
+  const id = data._id;
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const deleteCom = () => {
-    setLoading(true)
+    setLoading(true);
     deleteComment(id)
       .then(setLoading(false))
-      .then(dispatch(update(1)))      
-  }
+      .then(dispatch(update(1)));     
+  };
 
   const userProfile = () => {
-    history.push(`/userprofile/${data.authorId}`)
-  }  
+    history.push(`/userprofile/${data.authorId}`);
+  };
   
   return (
           <div className={styles.commentContainer}>
