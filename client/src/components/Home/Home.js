@@ -41,7 +41,7 @@ const Home = () => {
     return (
         <div className={styles.homeContainer}>
             <div className={styles.textContainer}>
-                <h3>Otsid või pakud teenust? Vajad, et keegi sind koolitaks või hoopis tahad oma oskusi teistega jagada? Soovid midagi välja rentida?</h3>
+                <h3>Otsid või pakud teenust? Vajad, et keegi sind koolitaks või hoopis tahad oma oskusi teistega jagada? Soovid midagi välja rentida? Võid kindel olla, et see on selleks maailma parim koht.</h3>
                 <h3>Alusta siit!</h3>
             </div>            
             <div className={styles.choicesContainer}>
