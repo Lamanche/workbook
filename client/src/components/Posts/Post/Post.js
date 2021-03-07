@@ -17,7 +17,7 @@ const Post = ({data}) => {
     const postId = data._id    
     
     const [modify, setModify] = useState(false);
-    const [formData, setFormData] = useState({ description: data.description, about: data.about, price: data.about });
+    const [formData, setFormData] = useState({ description: data.description, about: data.about, price: data.price });
     const [loading, setLoading] = useState(false)
 
     const handleChange = (e) => {

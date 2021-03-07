@@ -64,8 +64,8 @@ export default function SignIn() {
       } else {
         throw new Error(authResult);
       }
-    } catch (e) {
-      alert('error');
+    } catch (error) {
+      alert(error.response);
       }
   };
 
