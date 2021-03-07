@@ -22,7 +22,7 @@ export const signin = (formData, history) => async (dispatch) => {
     dispatch({ type: AUTH, data });
     history.replace('/main');
   } catch (error) {
-    alert(error.message)
+    alert("Vale kasutajanimi või salasõna")
   }
 };
 
