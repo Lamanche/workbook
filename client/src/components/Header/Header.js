@@ -33,7 +33,7 @@ const Header = () => {
                 null
                 :
                 <div className={styles.loginBtnContainer}>
-                  <Button variant='contained' color='secondary' onClick={login}>Log in</Button>
+                  <Button className={styles.loginBtn} variant='contained' color='secondary' onClick={login}>Log in</Button>
                 </div>
               )                            
             }
