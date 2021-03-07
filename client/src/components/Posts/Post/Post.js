@@ -47,7 +47,7 @@ const Post = ({data}) => {
 
     const cancelUpdate = () => {
         setModify(false);
-        setFormData({ description: data.description, about: data.about, price: data.about });
+        setFormData({ description: data.description, about: data.about, price: data.price });
     };
     
     const deletePost = () => {
