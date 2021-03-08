@@ -21,6 +21,8 @@ const Card = ({data}) => {
     const dispatch = useDispatch();
     const currentPostId = data._id
     const selectedPostId = useSelector(state => state.postData.post?._id);
+    const userId = useSelector(state => state.auth.authData?.result._id);
+    const creatorId = data.creatorId;
     
     const categoryImage = () => {
         switch (data.category) {
@@ -86,11 +88,15 @@ const Card = ({data}) => {
                   <div className={styles.price}>
                     <Typography className={styles.priceText} variant='h6'>Price: {data.price}€</Typography>
                   </div>
-                  <div className={styles.addToFav}>
-                    <Tooltip title="Add to favorites">
-                      <QueueIcon onClick={addToFav} />
-                    </Tooltip>
-                  </div>
+                  {creatorId === userId ?
+                    null
+                    :
+                    <div className={styles.addToFav}>
+                      <Tooltip title="Add to favorites">
+                        <QueueIcon onClick={addToFav} />
+                      </Tooltip>
+                    </div>
+                  }
                 </footer>
             </Paper>    
         </div>

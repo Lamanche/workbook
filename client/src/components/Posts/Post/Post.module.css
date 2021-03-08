@@ -38,18 +38,20 @@
 }
 
 .buttonContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    /*display: flex;
+    justify-content: space-between;*/
+    /*align-items: center;*/
     position: relative;
 }
 
 .buttons {
-    margin-top: .8rem
+    margin-top: .8rem;
+    display: flex;
+    justify-content: space-between;
 }
 
-.button {
-    margin-right: 0.8rem;
+.contactBtn {
+    margin-right: 2.2rem;
 }
 
 .updateBtn {
@@ -60,7 +62,7 @@
 .addToFav {
     position: absolute;
     right: 0;
-    bottom: 0;  
+    bottom: 0; 
 }
 
 .addToFav:hover {
@@ -80,6 +82,9 @@
 
 @media (max-width: 600px) {
     .button {
+        font-size: .7rem;
+    }
+    .contactBtn {
         font-size: .7rem;
     }
     .updateBtn {

@@ -1,0 +1,41 @@
+.makeOfferContainer {
+    margin-top: .5rem;
+}
+
+.makeOfferPaper {
+    padding: .8rem;
+}
+
+.makeOfferHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.userName {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.makeOfferText {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.2rem;
+}
+
+.makeOfferFooter {
+    margin-top: .8rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.makeOfferText {
+    margin-top: .5rem;
+}
+
+@media (max-width: 600px) {
+    .button {
+        font-size: .7rem;
+    }
+}

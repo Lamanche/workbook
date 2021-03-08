@@ -34,7 +34,7 @@ const User = (props) => {
 
     const cancelUpdate = () => {
         setModify(false);
-        setFormData({ about: profile.about, experience: profile.experience, references: profile.references});
+        setFormData({ about: profile.about, experience: profile.experience, references: profile.references, profile: true});
     };
 
     const submitProfileUpdate = (e) => {
@@ -57,7 +57,7 @@ const User = (props) => {
         fetchUserProfile({ userId })
             .then(res => {
                 setProfile(res.data)
-                setFormData({ about: res.data.about, experience: res.data.experience, references: res.data.references})
+                setFormData({ about: res.data.about, experience: res.data.experience, references: res.data.references, profile: true})
             });        
         dispatch(loading());        
     },[userId]);
