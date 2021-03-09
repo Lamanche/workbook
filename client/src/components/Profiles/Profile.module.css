@@ -67,6 +67,8 @@
 
 .updateBtnContainer {
     margin-bottom: .8rem;
+    display: flex;
+    justify-content: space-between;
 }
 
 .logInForComments {

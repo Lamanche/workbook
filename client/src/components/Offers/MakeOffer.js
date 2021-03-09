@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styles from './Offer.module.css';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import { postOffer } from '../../api/index'
 
-import { Paper, TextField, Button, Select, MenuItem, Typography, InputAdornment } from '@material-ui/core';
+import { Paper, TextField, Button, Select, MenuItem, Typography, InputAdornment, CircularProgress } from '@material-ui/core';
 
 const MakeOffer = (props) => {
     const userName = useSelector(state => state.auth.authData?.result.name);
@@ -30,9 +31,16 @@ const MakeOffer = (props) => {
     };
 
     const submitOffer = (e) => {
-        e.preventDefault()
-        setLoading(true)
-        console.log(offer)
+        e.preventDefault();
+        setLoading(true);
+        postOffer(offer)
+            .then(res => {
+                if (res.status === 200) {
+                    setLoading(false);
+                    /*Siia setTimeoutiga midagi mis näitab paar sekki, et pakkumine saadetud*/                    
+                    props.setOffer(false);
+                };
+            });
     };
 
     const cancel = () => {
@@ -52,10 +60,10 @@ const MakeOffer = (props) => {
                 <form className={styles.makeOfferForm} onSubmit={submitOffer}>
                     <div className={styles.makeOfferText}>
                         <TextField onChange={handleChange} className={styles.makeOfferText} name='information' label='Lisainfo' variant="outlined" multiline/>
-                        <TextField onChange={handleChange} className={styles.makeOfferText} name='price' label='Hind' required inputProps={{startAdornment: <InputAdornment position="start">€</InputAdornment>}} />                
+                        <TextField onChange={handleChange} className={styles.makeOfferText} name='price' label='Hind' required />                
                     </div>
                     <div className={styles.makeOfferFooter}>
-                        <Button className={styles.button} type='submit' variant='contained' color='primary'>Submit</Button>
+                        <Button disabled={loading} className={styles.button} type='submit' variant='contained' color='primary'>{loading && <CircularProgress size={24} className={styles.buttonProgress} />}Submit</Button>
                         <Button className={styles.button} onClick={cancel} variant='contained' color='secondary'>Cancel</Button>
                     </div>
                 </form>

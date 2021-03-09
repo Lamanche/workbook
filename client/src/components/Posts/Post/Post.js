@@ -5,6 +5,7 @@ import { deletePosts, updatePost } from '../../../api/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearPostData, setPostData } from '../../../actions/postData.js';
 import MakeOffer from '../../Offers/MakeOffer';
+import ContactMe from '../../Messages/ContactMe';
 
 import { TextField, Paper, Button, Tooltip, InputAdornment, CircularProgress } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
@@ -22,17 +23,20 @@ const Post = ({data}) => {
     const [formData, setFormData] = useState({ description: data.description, about: data.about, price: data.price });
     const [loading, setLoading] = useState(false);
     const [offer, setOffer] = useState(false);
+    const [message, setMessage] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value});
     };
 
     const makeOffer = () => {
+        setMessage(false)
         setOffer(true);
     };
 
     const contactMe = () => {
-
+        setOffer(false)
+        setMessage(true)
     };
     
     const modifyPost = () => {
@@ -167,26 +171,35 @@ const Post = ({data}) => {
                         (isLoggedIn === true ?
                             <div className={styles.buttons}>
                                 <Button disabled={offer} onClick ={makeOffer} className={styles.button} variant='contained' color='primary'>Make offer</Button>
-                                <Button onClick ={contactMe} className={styles.contactBtn} variant='contained' color='primary'>Contact me</Button>
+                                <Button disabled={message} onClick ={contactMe} className={styles.contactBtn} variant='contained' color='primary'>Contact me</Button>
                             </div>
                             :
                             null
                         )
 
                     }
-                    {creatorId === userId ?
-                        null
-                        :
-                        <div className={styles.addToFav}>
-                            <Tooltip title="Add to favorites">
-                                <QueueIcon onClick={addToFav} />
-                            </Tooltip>
-                        </div>
-                    }                    
+                    {isLoggedIn ? 
+                        (creatorId === userId ?
+                            null
+                            :
+                            <div className={styles.addToFav}>
+                                <Tooltip title="Add to favorites">
+                                    <QueueIcon onClick={addToFav} />
+                                </Tooltip>
+                            </div>
+                        )
+                    :
+                    null
+                  }              
                 </div>             
             </Paper>
             {offer ? 
-                <MakeOffer setOffer={setOffer} postId={postId} postAuthor={creatorId} />
+                <MakeOffer setOffer={setOffer} setMessage={setMessage} postId={postId} postAuthor={creatorId} />
+                :
+                null
+            }
+            {message ? 
+                <ContactMe setMessage={setMessage} setOffer={setOffer} postId={postId} postAuthor={creatorId} />
                 :
                 null
             }

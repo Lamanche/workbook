@@ -38,10 +38,16 @@ const Profile = ({user}) => {
       const post = () => {
         history.push("/form");
         setAnchorEl(null);   
-      }; 
+      };
+
+      const messages = () => {
+        history.push('/messages');
+        setAnchorEl(null); 
+      };
 
       const favorites = () => {
-
+        history.push('/favourites');
+        setAnchorEl(null); 
       };
 
       const deleteAccount = () => {
@@ -64,6 +70,7 @@ const Profile = ({user}) => {
                 >
                     <MenuItem onClick={post}>Uus keika</MenuItem>
                     <MenuItem onClick={profile}>Minu profiil</MenuItem>
+                    <MenuItem onClick={messages}>Teated</MenuItem>
                     <MenuItem onClick={favorites}>Lemmikud</MenuItem>
                     <MenuItem onClick={logOut}>Logi välja</MenuItem>
                     <MenuItem onClick={deleteAccount}>Kustuta konto</MenuItem>

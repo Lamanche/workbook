@@ -31,3 +31,9 @@ export const updateMyProfile = (id, formData) => API.patch(`/user/update/${id}`,
 export const postComment = (comment) => API.post('/comments/post', comment);
 export const fetchComments = (userId) => API.get('/comments/find', userId);
 export const deleteComment = (id) => API.delete(`/comments/delete/${id}`);
+
+// Messages
+export const postMessage = (message) => API.post('', message);
+
+// Offers
+export const postOffer = (offer) => API.post('', offer);

@@ -20,6 +20,7 @@ const Card = ({data}) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const currentPostId = data._id
+    const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
     const selectedPostId = useSelector(state => state.postData.post?._id);
     const userId = useSelector(state => state.auth.authData?.result._id);
     const creatorId = data.creatorId;
@@ -88,15 +89,19 @@ const Card = ({data}) => {
                   <div className={styles.price}>
                     <Typography className={styles.priceText} variant='h6'>Price: {data.price}€</Typography>
                   </div>
-                  {creatorId === userId ?
-                    null
+                  {isLoggedIn ? 
+                    (creatorId === userId ?
+                      null
+                      :
+                      <div className={styles.addToFav}>
+                        <Tooltip title="Add to favorites">
+                          <QueueIcon onClick={addToFav} />
+                        </Tooltip>
+                      </div>
+                    )
                     :
-                    <div className={styles.addToFav}>
-                      <Tooltip title="Add to favorites">
-                        <QueueIcon onClick={addToFav} />
-                      </Tooltip>
-                    </div>
-                  }
+                    null
+                  }                  
                 </footer>
             </Paper>    
         </div>

@@ -8,7 +8,9 @@ import LogIn from './components/Auth/LogIn.js';
 import Register from './components/Auth/Register.js';
 import Main from './components/Main/Main';
 import UserProfile from './components/Profiles/UserProfile';
-import UpdateProfile from './components/Profiles/UpdateProfile.js'; 
+import UpdateProfile from './components/Profiles/UpdateProfile.js';
+import Favourites from './components/Favourites/Favourites';
+import MyMessages from './components/Messages/MyMessages' ;
 import Form from './components/Form.js';
 
 import { Container, Paper, Box } from '@material-ui/core';
@@ -43,14 +45,16 @@ function App() {
             <Header />                 
             <Box>                        
               <Switch>
-                  <Route path="/" exact component={Home} />            
-                  <Route path="/login" exact component={LogIn} />                                                
-                  <Route path="/register" exact component={Register} />
-                  <Route path="/main" exact component={Main} />
-                  <Route path="/userprofile/:userId" exact component={UserProfile} /> 
-                  {loggedIn === true ? <Route path="/form" exact component={Form} /> : <Redirect to="/main" exact component={Main} />} 
-                  {loggedIn === true && profileUpdated === false ? <Route path="/updateprofile" exact component={UpdateProfile} /> : <Redirect to="/main" exact component={Main} />}                                
-                                    
+                  <Route path="/" exact component={Home} />;            
+                  <Route path="/login" exact component={LogIn} />;                                                
+                  <Route path="/register" exact component={Register} />;
+                  <Route path="/main" exact component={Main} />;
+                  <Route path="/userprofile/:userId" exact component={UserProfile} />; 
+                  {loggedIn === true ? <Route path="/form" exact component={Form} /> : <Redirect to="/main" exact component={Main} />}; 
+                  {loggedIn === true ? <Route path="/favourites" exact component={Favourites} /> : <Redirect to="/main" exact component={Main} />};
+                  {loggedIn === true ? <Route path="/messages" exact component={MyMessages} /> : <Redirect to="/main" exact component={Main} />};
+                  {loggedIn === true && profileUpdated === false ? <Route path="/updateprofile" exact component={UpdateProfile} /> : <Redirect to="/main" exact component={Main} />};                               
+                      
               </Switch>            
             </Box>
           </Paper>

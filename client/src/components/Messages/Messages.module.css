@@ -1,12 +1,23 @@
-.makeOfferContainer {
+.myMessagesContainer {
+    width: 100%;
+    height: 100%;
+    padding: .8rem;  
+}
+
+.messagesContainer {
+    background-color: white;
+    height: 78vh;
+}
+
+.contactContainer {
     margin-top: .5rem;
 }
 
-.makeOfferPaper {
+.contactPaper {
     padding: .8rem;
 }
 
-.makeOfferHeader {
+.contactHeader {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -17,20 +28,20 @@
     font-size: 1.5rem;
 }
 
-.makeOfferText {
+.contactText {
     display: flex;
     flex-direction: column;
     margin-top: 1.2rem;
 }
 
-.makeOfferFooter {
+.contactFooter {
     margin-top: .8rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.makeOfferText {
+.contactText {
     margin-top: .5rem;
 }
 
