@@ -6,7 +6,38 @@
 
 .messagesContainer {
     background-color: white;
-    height: 78vh;
+    min-height: 78vh;
+    display: flex;
+}
+
+.messageListContainer {
+    min-width: 20rem;
+    margin: 1rem;
+}
+
+.messageListItemContainer {
+    margin-bottom: .3rem;
+    overflow: hidden;
+}
+
+.messageListItemContainer:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+}
+
+.senderName {
+    font-weight: bold;
+}
+
+.messageListItemPaper {
+    padding: .5rem;
+}
+
+.messageContainer {
+    background-color: aqua;
+    width: 100%;
+    height: 30rem;
+    margin: 1rem 1rem 1rem 0;
 }
 
 .contactContainer {
@@ -47,6 +78,10 @@
 
 .buttonProgress {
     position: absolute;    
+}
+
+.success {
+    position: absolute;
 }
 
 @media (max-width: 600px) {

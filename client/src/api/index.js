@@ -7,14 +7,14 @@ const API = axios.create({
 });
 
   
-// Auth
+/* Auth */
 export const isLoggedIn = () => API.post('/user/loggedin');
 export const signIn = (formData) => API.post('/user/signin', formData);
 export const googleSignIn = (code) => API.post('/user/googlesignin', code);
 export const register = (formData) => API.post('/user/register', formData);
 export const logout = () => API.get('user/logout');
 
-// Posts
+/* Posts */
 export const fetchAllPosts = () => API.get('/post/all');
 export const createPost = (formData) => API.post('/post/create', formData);
 export const updatePost = (id, formData) => API.patch(`/post/update/${id}`, formData);
@@ -23,17 +23,26 @@ export const findUserPosts = (userId) => API.get('/post/userposts', userId);
 export const findPostsByWord = (word) => API.get('/post/find', word);
 export const findPosts = (key) => API.get(`/post/findposts`, key);
 
-// User profiles
+/* User profiles */
 export const fetchUserProfile = (userId) => API.post('/user/find', userId);
 export const updateMyProfile = (id, formData) => API.patch(`/user/update/${id}`, formData);
 
-// Comments
+/* Comments */
 export const postComment = (comment) => API.post('/comments/post', comment);
 export const fetchComments = (userId) => API.get('/comments/find', userId);
 export const deleteComment = (id) => API.delete(`/comments/delete/${id}`);
 
-// Messages
-export const postMessage = (message) => API.post('', message);
+/* Messages */
+export const fetchMessages = (id) => API.get('/messages/findmessages', id);
+export const postMessage = (message) => API.post('/messages/newmessage', message);
+export const deleteMessage = (messageId) => API.delete('/messages/deletemessage', messageId);
 
-// Offers
-export const postOffer = (offer) => API.post('', offer);
+/* Offers */
+export const fetchOffers = (id) => API.get('/messages/findoffers', id);
+export const postOffer = (offer) => API.post('/messages/newoffer', offer);
+export const deleteOffer = (offerId) => API.delete('/messages/deleteoffer', offerId);
+
+/* Favourites */
+export const fetchFavourites = (id) => API.get('/favourites/find', id);
+export const addFavourite = (favourite) => API.post('/favourites/add', favourite);
+export const deleteFavourite = (favourite) => API.delete('/favourites/delete', favourite);

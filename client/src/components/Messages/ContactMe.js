@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import styles from './Messages.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { postMessage } from '../../api/index'
+import { tokenExpired } from '../../actions/auth';
 
 import { Paper, TextField, Button, Typography, CircularProgress } from '@material-ui/core';
+import DoneIcon from '@material-ui/icons/Done';
 
 const ContactMe = (props) => {
+    const dispatch = useDispatch();
     const userName = useSelector(state => state.auth.authData?.result.name);
     const userId = useSelector(state => state.auth.authData?.result._id);
-    const [message, setMessage] = useState({author: userId, forUser: props.postAuthor, forUserPost: props.postId, message: ''});
+    const [message, setMessage] = useState({ type: 'message', author: userId, authorName: userName, forUser: props.postAuthor, forUserPost: props.postId, message: '', seen: false });
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
 
-        const handleChange = (event) => {        
+    const handleChange = (event) => {        
         setMessage({...message, [event.target.name]: event.target.value});
     };
 
@@ -20,9 +24,19 @@ const ContactMe = (props) => {
         setLoading(true);
         postMessage(message)
             .then(res => {
-                if (res.status === 200) {
+                if (res.status === 201) {
                     setLoading(false);
-                    /*Siia setTimeoutiga midagi mis näitab paar sekki, et sõnum saadetud*/                    
+                    setSuccess(true);
+                    setTimeout(() => {
+                        setSuccess(false);
+                        props.setMessage(false);
+                    }, 1500);                    
+                };
+            })
+            .catch(error => {
+                if (error.response.status === 401) {
+                    dispatch(tokenExpired());
+                    setLoading(false);
                     props.setMessage(false);
                 };
             });
@@ -43,7 +57,7 @@ const ContactMe = (props) => {
                         <TextField onChange={handleChange} className={styles.contactText} name='message' label='message' variant="outlined" multiline rows={4}/>                
                     </div>
                     <div className={styles.contactFooter}>
-                        <Button disabled={loading} className={styles.button} type='submit' variant='contained' color='primary'>{loading && <CircularProgress size={24} className={styles.buttonProgress} />}Send</Button>
+                        <Button disabled={loading || success} className={styles.button} type='submit' variant='contained' color='primary'>{loading && <CircularProgress size={24} className={styles.buttonProgress}/>}{success && <DoneIcon color="primary" className={styles.success}/>}Send</Button>
                         <Button className={styles.button} onClick={cancel} variant='contained' color='secondary'>Cancel</Button>
                     </div>
                 </form>

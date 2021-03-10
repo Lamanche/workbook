@@ -32,7 +32,8 @@ app.use(express.static(path.join(__dirname, "client", "build")))
 app.use("/user", require('./routes/user.js'))
 app.use("/post", require('./routes/post.js'))
 app.use("/comments", require('./routes/comments.js'))
-
+app.use("/messages", require('./routes/messages.js'))
+app.use("/favourites", require('./routes/favourites.js'))
 
 const PORT = process.env.PORT || 3001;
 

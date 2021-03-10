@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { clearPostData, setPostData } from '../../../actions/postData.js';
 import MakeOffer from '../../Offers/MakeOffer';
 import ContactMe from '../../Messages/ContactMe';
+import { tokenExpired } from '../../../actions/auth';
 
 import { TextField, Paper, Button, Tooltip, InputAdornment, CircularProgress } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
@@ -53,6 +54,13 @@ const Post = ({data}) => {
                     dispatch(setPostData(res.data.updatedPost));
                     setLoading(false);                    
                 };
+            })
+            .catch(error => {
+                if (error.response.status === 401) {
+                    dispatch(tokenExpired());
+                    setLoading(false);
+                    setModify(false);
+                };
             });
     };
 
@@ -70,7 +78,14 @@ const Post = ({data}) => {
                     dispatch(clearPostData());                    
                     setLoading(false);
                 };
-            });                   
+            })
+            .catch(error => {
+                if (error.response.status === 401) {
+                    dispatch(tokenExpired());
+                    setLoading(false);
+                    setModify(false);
+                };
+            });                
     };
 
     const close = () => {

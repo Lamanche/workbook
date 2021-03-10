@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { registerHandler, signInHandler, googleSignInHandler, findProfileHandler, updateUserProfileHandler, logOutHandler } = require('../controllers/user.js')
+const { registerHandler, signInHandler, googleSignInHandler, findProfileHandler, updateUserProfileHandler, logOutHandler, newMessageHandler } = require('../controllers/user.js')
 const auth = require("../middleware/auth.js")
 
 

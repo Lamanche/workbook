@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
 import styles from './Offer.module.css';
-import { useSelector } from 'react-redux';
-import { postOffer } from '../../api/index'
+import { useSelector, useDispatch } from 'react-redux';
+import { postOffer } from '../../api/index';
+import { tokenExpired } from '../../actions/auth';
 
-import { Paper, TextField, Button, Select, MenuItem, Typography, InputAdornment, CircularProgress } from '@material-ui/core';
+import { Paper, TextField, Button, Select, MenuItem, Typography, CircularProgress } from '@material-ui/core';
+import DoneIcon from '@material-ui/icons/Done';
+
 
 const MakeOffer = (props) => {
+    const dispatch = useDispatch();
     const userName = useSelector(state => state.auth.authData?.result.name);
     const userId = useSelector(state => state.auth.authData?.result._id);
     const [offerType, setOfferType] = useState('avalik');
     const [open, setOpen] = useState(false);
-    const [offer, setOffer] = useState({author: userId, forUser: props.postAuthor, forUserPost: props.postId, offerType: offerType, information: '', price: ''});
-    const [loading, setLoading] = useState(false)
+    const [offer, setOffer] = useState({ type: 'offer', author: userId, authorName: userName, forUser: props.postAuthor, forUserPost: props.postId, offerType: offerType, information: '', price: '', seen: false });
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     const handleSelectChange = (event) => {
         setOfferType(event.target.value);
@@ -35,9 +40,19 @@ const MakeOffer = (props) => {
         setLoading(true);
         postOffer(offer)
             .then(res => {
-                if (res.status === 200) {
+                if (res.status === 201) {
                     setLoading(false);
-                    /*Siia setTimeoutiga midagi mis näitab paar sekki, et pakkumine saadetud*/                    
+                    setSuccess(true);
+                    setTimeout(() => {
+                        setSuccess(false);
+                        props.setOffer(false);
+                    }, 1500);                    
+                };
+            })
+            .catch(error => {                
+                if (error.response.status === 401) {
+                    dispatch(tokenExpired());
+                    setLoading(false);
                     props.setOffer(false);
                 };
             });
@@ -63,7 +78,7 @@ const MakeOffer = (props) => {
                         <TextField onChange={handleChange} className={styles.makeOfferText} name='price' label='Hind' required />                
                     </div>
                     <div className={styles.makeOfferFooter}>
-                        <Button disabled={loading} className={styles.button} type='submit' variant='contained' color='primary'>{loading && <CircularProgress size={24} className={styles.buttonProgress} />}Submit</Button>
+                        <Button disabled={loading || success} className={styles.button} type='submit' variant='contained' color='primary'>{loading && <CircularProgress size={24} className={styles.buttonProgress} />}{success && <DoneIcon color="primary" className={styles.success}/>}Submit</Button>
                         <Button className={styles.button} onClick={cancel} variant='contained' color='secondary'>Cancel</Button>
                     </div>
                 </form>

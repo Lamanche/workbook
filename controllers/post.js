@@ -1,4 +1,4 @@
-const postModal = require('../models/post.js')
+const postModal = require('../models/post.js');
 
 
 const fetchAllPosts = async (req, res) => {
