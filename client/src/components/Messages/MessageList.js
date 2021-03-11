@@ -2,14 +2,14 @@ import React from 'react'
 import styles from './Messages.module.css';
 import MessageListItem from './MessageListItem';
 
-const MessageList = ({loading, messages}) => {    
+const MessageList = ({loading, messages, setCurrentMessage, setMessageOpen}) => {    
     return (
         <div className={styles.messageListContainer}>
             {loading === true ? 
                 <p>Loading...</p> 
                 :
                 (messages.length > 0 ? 
-                    messages.map(message => <MessageListItem message={message} />)
+                    messages.map(message => <MessageListItem key={message._id} setMessageOpen={setMessageOpen} setCurrentMessage={setCurrentMessage} message={message} />)
                     :
                     <h3>No messages</h3>
                 )   

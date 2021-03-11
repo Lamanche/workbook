@@ -26,7 +26,7 @@ const UserProfile = () => {
         return () => {
           unlisten();
         };
-      }, [history, userId]);
+      }, [history, userId, dispatch]);
     
     return (
         <div className={styles.profileContainer}>

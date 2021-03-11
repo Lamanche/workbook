@@ -28,7 +28,7 @@ const Comments = (props) => {
                     setLoading(false)
                }                           
             });
-    },[update]);
+    },[update, dispatch, userId]);
     
     return (
         <div>

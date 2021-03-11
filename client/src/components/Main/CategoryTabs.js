@@ -28,7 +28,7 @@ const CategoryTabs = () => {
 
     useEffect(() => {
         setValue(cats.indexOf(category));
-    },[category]);
+    },[category, cats]);
 
     
     return (

@@ -51,7 +51,7 @@ const Content = () => {
                 setPosts(sortedData);
                 dispatch(finishedLoading());
             });           
-    },[type, userType, category, categoryType]);
+    },[type, userType, category, categoryType, dispatch]);
     
     
     return (
@@ -64,7 +64,7 @@ const Content = () => {
                         <div className={styles.noPostsYet}>
                             <h3>Nothing to show yet</h3>
                         </div>
-                    : 
+                        : 
                         posts.map(post => (                        
                             <Grid key={post._id} item >
                                 <Card data={post}/>                            

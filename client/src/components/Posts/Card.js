@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Card.module.css';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPostData } from '../../actions/postData.js';
+import { addToFavourites } from '../../api/index';
+import { tokenExpired } from '../../actions/auth.js';
 
 import coding from '../../images/coding.jpg';
 import design from '../../images/design.jpg';
@@ -14,6 +16,7 @@ import { CardHeader, Avatar, CardMedia, Typography, Paper, Tooltip } from '@mate
 import SearchIcon from '@material-ui/icons/Search';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import QueueIcon from '@material-ui/icons/Queue';
+import DoneIcon from '@material-ui/icons/Done';
 
 
 const Card = ({data}) => {
@@ -24,6 +27,9 @@ const Card = ({data}) => {
     const selectedPostId = useSelector(state => state.postData.post?._id);
     const userId = useSelector(state => state.auth.authData?.result._id);
     const creatorId = data.creatorId;
+
+    const [loading, setLoading] = useState(false);
+    const [favouriteSuccess, setFavouriteSuccess] = useState(false);
     
     const categoryImage = () => {
         switch (data.category) {
@@ -50,7 +56,23 @@ const Card = ({data}) => {
       };
 
       const addToFav = () => {
-
+        setLoading(true)
+        addToFavourites({userId, currentPostId})
+          .then(res => {
+            if (res.status === 200 || res.status === 201) {
+              setLoading(false)
+              setFavouriteSuccess(true)
+              setTimeout(() => {
+                setFavouriteSuccess(false)
+              }, 1000)
+            }
+          })
+          .catch(error => {
+            if (error.response.status === 401) {
+              setLoading(false)  
+              dispatch(tokenExpired());
+            }
+        });   
       };
     
     return (

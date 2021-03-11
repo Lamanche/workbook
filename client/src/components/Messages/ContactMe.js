@@ -30,7 +30,7 @@ const ContactMe = (props) => {
                     setTimeout(() => {
                         setSuccess(false);
                         props.setMessage(false);
-                    }, 1500);                    
+                    }, 1000);                    
                 };
             })
             .catch(error => {

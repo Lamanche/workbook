@@ -37,7 +37,7 @@ const Home = () => {
         if (loggedIn === true) {
             history.replace('/main')
         };
-        },[]);   
+        },[dispatch, history, loggedIn]);   
     
     return (
         <div className={styles.homeContainer}>

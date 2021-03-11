@@ -7,11 +7,17 @@ import { clearPostData, setPostData } from '../../../actions/postData.js';
 import MakeOffer from '../../Offers/MakeOffer';
 import ContactMe from '../../Messages/ContactMe';
 import { tokenExpired } from '../../../actions/auth';
+import { addToFavourites } from '../../../api/index';
 
 import { TextField, Paper, Button, Tooltip, InputAdornment, CircularProgress } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import QueueIcon from '@material-ui/icons/Queue';
 import CreateIcon from '@material-ui/icons/Create';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import SearchIcon from '@material-ui/icons/Search';
+import EventBusyIcon from '@material-ui/icons/EventBusy';
+import DoneIcon from '@material-ui/icons/Done';
+
 
 const Post = ({data}) => {
     const dispatch = useDispatch();
@@ -21,10 +27,12 @@ const Post = ({data}) => {
     const postId = data._id;    
     
     const [modify, setModify] = useState(false);
-    const [formData, setFormData] = useState({ description: data.description, about: data.about, price: data.price });
+    const [formData, setFormData] = useState({ description: data.description, about: data.about, price: data.price, deadline: data.deadline });
     const [loading, setLoading] = useState(false);
     const [offer, setOffer] = useState(false);
     const [message, setMessage] = useState(false);
+    const [favouriteSuccess, setFavouriteSuccess] = useState(false);
+    const [loadingFav, setLoadingFav] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value});
@@ -66,7 +74,7 @@ const Post = ({data}) => {
 
     const cancelUpdate = () => {
         setModify(false);
-        setFormData({ description: data.description, about: data.about, price: data.price });
+        setFormData({ description: data.description, about: data.about, price: data.price, deadline: data.deadline });
     };
     
     const deletePost = () => {
@@ -93,15 +101,42 @@ const Post = ({data}) => {
     }; 
     
     const addToFav = () => {
-
+        const currentPostId = postId
+        setLoadingFav(true)
+        addToFavourites({userId, currentPostId})
+          .then(res => {
+            if (res.status === 200 || res.status === 201) {
+              setLoadingFav(false)
+              setFavouriteSuccess(true)
+              setTimeout(() => {
+                setFavouriteSuccess(false)
+              }, 1000)
+            }
+          })
+          .catch(error => {
+            if (error.response.status === 401) {
+              setLoadingFav(false)  
+              dispatch(tokenExpired());
+            }
+        });   
     };
     
     return (
         <div className={styles.container}>
             <Paper className={styles.paper} elevation={3}>
-                <div onClick={close} className={styles.close}>
-                    <CloseIcon />
-                </div>
+                <div>
+                    <div className={styles.postType}>
+                        {data.type === 'Otsin' ? 
+                            <SearchIcon />
+                            :
+                            <LocalOfferIcon />
+                        }                        
+                        <h2 className={styles.postTypeText}>{data.categoryType}</h2>
+                    </div>                    
+                    <div onClick={close} className={styles.close}>
+                        <CloseIcon />
+                    </div>
+                </div>                
                 <div>
                     <TextField
                         className={styles.text}
@@ -166,7 +201,33 @@ const Post = ({data}) => {
                         }}
                         multiline
                         InputLabelProps={{ shrink: true }}
-                    />                    
+                    />
+                    {data.categoryType === 'Hange' ? 
+                        <TextField
+                            className={styles.text}
+                            onChange={handleChange}
+                            label="Deadline"
+                            name= 'deadline'
+                            defaultValue={data?.deadline}
+                            value={modify === false ? data.deadline : undefined}                        
+                            fullWidth                        
+                            InputProps={{
+                                readOnly: modify === true ? false : true,
+                                classes: {
+                                    root: modify === true ? styles.textModify : styles.description,
+                                    input: styles.textField,                                
+                                },
+                                endAdornment: (
+                                    modify === true ? <CreateIcon/> : null
+                                ),
+                                startAdornment: <InputAdornment position="start"><EventBusyIcon /></InputAdornment>,
+                            }}
+                            multiline
+                            InputLabelProps={{ shrink: true }}
+                        />
+                        :
+                        null                    
+                    }                   
                 </div>
                 <div className={styles.buttonContainer}>
                     {userId === creatorId ?
@@ -184,14 +245,19 @@ const Post = ({data}) => {
                         </div>
                         : 
                         (isLoggedIn === true ?
-                            <div className={styles.buttons}>
-                                <Button disabled={offer} onClick ={makeOffer} className={styles.button} variant='contained' color='primary'>Make offer</Button>
-                                <Button disabled={message} onClick ={contactMe} className={styles.contactBtn} variant='contained' color='primary'>Contact me</Button>
-                            </div>
+                            (data.categoryType === 'Hange' ? 
+                                <div className={styles.buttons}>
+                                    <Button disabled={offer} onClick ={makeOffer} className={styles.button} variant='contained' color='primary'>Make offer</Button>
+                                    <Button disabled={message} onClick ={contactMe} className={styles.contactBtn} variant='contained' color='primary'>Contact me</Button>
+                                </div>
+                                :
+                                <div className={styles.buttons}>
+                                    <Button disabled={message} onClick ={contactMe} className={styles.contactBtn} variant='contained' color='primary'>Contact me</Button>
+                                </div>
+                            )
                             :
                             null
                         )
-
                     }
                     {isLoggedIn ? 
                         (creatorId === userId ?

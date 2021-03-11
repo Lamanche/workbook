@@ -60,7 +60,7 @@ const User = (props) => {
                 setFormData({ about: res.data.about, experience: res.data.experience, references: res.data.references, profile: true})
             });        
         dispatch(loading());        
-    },[userId]);
+    },[userId, dispatch]);
     
     return (
         <div className={styles.userContainer}>

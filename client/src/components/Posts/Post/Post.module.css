@@ -78,6 +78,15 @@
     position: absolute;    
 }
 
+.postType {
+    display: flex;
+    align-items: center;
+}
+
+.postTypeText {
+    margin-left: .8rem;
+}
+
 @media (max-width: 600px) {
     .button {
         font-size: .7rem;

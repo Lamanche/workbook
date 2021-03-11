@@ -37,7 +37,7 @@ function App() {
 
   useEffect(() => {
     dispatch(isLoggedIn());
-  },[loggedIn]);
+  },[loggedIn, dispatch]);
 
   return (      
         <Container className={classes.container} maxWidth="lg">
