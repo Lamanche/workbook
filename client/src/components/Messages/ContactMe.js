@@ -54,7 +54,7 @@ const ContactMe = (props) => {
                 </div>
                 <form className={styles.contactForm} onSubmit={submitMessage}>
                     <div className={styles.contactTextContainer}>
-                        <TextField onChange={handleChange} className={styles.contactText} name='message' label='message' variant="outlined" multiline rows={4}/>                
+                        <TextField onChange={handleChange} className={styles.contactText} name='message' label='message' variant="outlined" multiline rows={4} required/>                
                     </div>
                     <div className={styles.contactFooter}>
                         <Button disabled={loading || success} className={styles.button} type='submit' variant='contained' color='primary'>{loading && <CircularProgress size={24} className={styles.buttonProgress}/>}{success && <DoneIcon color="primary" className={styles.success}/>}Send</Button>
