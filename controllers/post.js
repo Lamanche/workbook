@@ -64,7 +64,6 @@ const findAllPostsByWord = async (req, res) => {
 const findPostsByKey = async (req, res) => {
     const key = req.query
     try {
-        console.log(key)
         const posts = await postModal.find(key)
         res.status(200).json({ posts });
     } catch (error) {
