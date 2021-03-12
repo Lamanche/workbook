@@ -13,6 +13,8 @@ const Favourites = () => {
     const userId = useSelector(state => state.auth.authData.result._id);
     const [loading, setLoading] = useState(false);
     const [favourites, setFavourites] = useState([]);
+    const [notFound, setNotFound] = useState(false)
+    const update = useSelector(state => state.update)
 
     useEffect(() => {
         setLoading(true);
@@ -22,26 +24,35 @@ const Favourites = () => {
                 setLoading(false);
             })
             .catch(error => {
-                if (error.response.status === 401) {
+                if (error.response.status === 404) {
+                    setLoading(false);
+                    setNotFound(true)
+                }
+                else if (error.response.status === 401) {
                     dispatch(tokenExpired());
                     setLoading(false);
                 }
             });        
-    },[userId, dispatch]);
+    },[userId, dispatch, update]);
 
     return (
         <div className={styles.favouritesContainer}>
-            {loading === false ? 
-                <Grid container spacing={1}>
-                    {favourites.map(favourite => 
-                        (<Grid key={favourite._id} item>
-                            <Card data={favourite}/>
-                        </Grid>)
-                    )}
-                </Grid>
-                :
-                <p>Loading...</p>
-            }
+            
+                {loading === true ? 
+                    <p>Loading...</p>
+                    :
+                    (notFound === true || favourites.length === 0 ? 
+                        <h3>No favourites</h3>
+                        :
+                        <Grid container spacing={1}>
+                            {favourites.map(favourite => 
+                                (<Grid key={favourite._id} item>
+                                    <Card data={favourite}/>
+                                </Grid>)
+                            )}
+                        </Grid>
+                    )                
+                }          
         </div>
     )
 }

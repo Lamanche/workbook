@@ -53,7 +53,6 @@ const Content = () => {
             });           
     },[type, userType, category, categoryType, dispatch]);
     
-    
     return (
         <Grid className={styles.grid} container spacing={1}> 
             {loadingState === true ? 

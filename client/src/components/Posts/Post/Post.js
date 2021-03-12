@@ -7,17 +7,15 @@ import { clearPostData, setPostData } from '../../../actions/postData.js';
 import MakeOffer from '../../Offers/MakeOffer';
 import ContactMe from '../../Messages/ContactMe';
 import Rent from './Rent';
+import Fav from '../Fav';
 import { tokenExpired } from '../../../actions/auth';
-import { addToFavourites } from '../../../api/index';
 
-import { TextField, Paper, Button, Tooltip, InputAdornment, CircularProgress } from '@material-ui/core';
+import { TextField, Paper, Button, InputAdornment, CircularProgress } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import QueueIcon from '@material-ui/icons/Queue';
 import CreateIcon from '@material-ui/icons/Create';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import SearchIcon from '@material-ui/icons/Search';
 import EventBusyIcon from '@material-ui/icons/EventBusy';
-import DoneIcon from '@material-ui/icons/Done';
 
 
 const Post = ({data}) => {
@@ -32,8 +30,6 @@ const Post = ({data}) => {
     const [loading, setLoading] = useState(false);
     const [offer, setOffer] = useState(false);
     const [message, setMessage] = useState(false);
-    const [favouriteSuccess, setFavouriteSuccess] = useState(false);
-    const [loadingFav, setLoadingFav] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value});
@@ -106,27 +102,6 @@ const Post = ({data}) => {
     const close = () => {
         dispatch(clearPostData());
     }; 
-    
-    const addToFav = () => {
-        const currentPostId = postId
-        setLoadingFav(true)
-        addToFavourites({userId, currentPostId})
-          .then(res => {
-            if (res.status === 200 || res.status === 201) {
-              setLoadingFav(false)
-              setFavouriteSuccess(true)
-              setTimeout(() => {
-                setFavouriteSuccess(false)
-              }, 1000)
-            }
-          })
-          .catch(error => {
-            if (error.response.status === 401) {
-              setLoadingFav(false)  
-              dispatch(tokenExpired());
-            }
-        });   
-    };
     
     return (
         <div className={styles.container}>
@@ -275,15 +250,11 @@ const Post = ({data}) => {
                         (creatorId === userId ?
                             null
                             :
-                            <div className={styles.addToFav}>
-                                <Tooltip title="Add to favorites">
-                                    <QueueIcon onClick={addToFav} />
-                                </Tooltip>
-                            </div>
+                            <Fav userId={userId} currentPostId={postId} style={styles.addToFav}/>
                         )
-                    :
-                    null
-                  }              
+                        :
+                        null
+                    }              
                 </div>             
             </Paper>
             {offer ? 

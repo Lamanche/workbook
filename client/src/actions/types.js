@@ -19,3 +19,6 @@ export const UPDATE = 'UPDATE'
 
 export const SET_POSTDATA = 'SET_POSTDATA'
 export const CLEAR_POSTDATA = 'CLEAR_POSTDATA'
+
+export const SET_FAVOURITES = 'SET_FAVOURITES'
+export const CLEAR_FAVOURITES = 'CLEAR_FAVOURITES'

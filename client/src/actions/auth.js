@@ -1,4 +1,4 @@
-import { AUTH, LOGOUT, LOGGED_IN } from './types.js';
+import { AUTH, LOGOUT, LOGGED_IN, CLEAR_FAVOURITES } from './types.js';
 import * as api from '../api/index.js';
 
 export const isLoggedIn = () => async (dispatch) => {    
@@ -29,7 +29,7 @@ export const signin = (formData, history) => async (dispatch) => {
 export const signup = (formData, history) => async (dispatch) => {
   try {
     const { data } = await api.register(formData);
-    dispatch({ type: AUTH, data });
+    dispatch({ type: AUTH, data });    
     history.replace('/updateprofile');
   } catch (error) {
     alert(error.message)
@@ -38,8 +38,9 @@ export const signup = (formData, history) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    await api.logout()
+    await api.logout();
     dispatch({ type: LOGOUT });
+    dispatch({ type: CLEAR_FAVOURITES });
   } catch (error) {
     console.log(error.message)
   }
@@ -47,4 +48,5 @@ export const logout = () => async (dispatch) => {
 
 export const tokenExpired = () => (dispatch) => {
   dispatch({ type: LOGOUT });
+  dispatch({ type: CLEAR_FAVOURITES });
 }

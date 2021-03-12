@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './Card.module.css';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPostData } from '../../actions/postData.js';
-import { addToFavourites } from '../../api/index';
-import { tokenExpired } from '../../actions/auth.js';
+import Fav from './Fav';
 
 import coding from '../../images/coding.jpg';
 import design from '../../images/design.jpg';
 import engineering from '../../images/engineering.jpg';
 import construction from '../../images/construction.jpg';
 
-import { CardHeader, Avatar, CardMedia, Typography, Paper, Tooltip } from '@material-ui/core';
+import { CardHeader, Avatar, CardMedia, Typography, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
-import QueueIcon from '@material-ui/icons/Queue';
-import DoneIcon from '@material-ui/icons/Done';
 
 
 const Card = ({data}) => {
@@ -26,10 +23,7 @@ const Card = ({data}) => {
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
     const selectedPostId = useSelector(state => state.postData.post?._id);
     const userId = useSelector(state => state.auth.authData?.result._id);
-    const creatorId = data.creatorId;
-
-    const [loading, setLoading] = useState(false);
-    const [favouriteSuccess, setFavouriteSuccess] = useState(false);
+    const creatorId = data.creatorId;    
     
     const categoryImage = () => {
         switch (data.category) {
@@ -53,27 +47,7 @@ const Card = ({data}) => {
       const openPost = () => {
         dispatch(setPostData(data));
         history.push(`/userprofile/${data.creatorId}`);        
-      };
-
-      const addToFav = () => {
-        setLoading(true)
-        addToFavourites({userId, currentPostId})
-          .then(res => {
-            if (res.status === 200 || res.status === 201) {
-              setLoading(false)
-              setFavouriteSuccess(true)
-              setTimeout(() => {
-                setFavouriteSuccess(false)
-              }, 1000)
-            }
-          })
-          .catch(error => {
-            if (error.response.status === 401) {
-              setLoading(false)  
-              dispatch(tokenExpired());
-            }
-        });   
-      };
+      };      
     
     return (
         <div className={currentPostId === selectedPostId ? styles.containerSelected : styles.container}>
@@ -115,11 +89,7 @@ const Card = ({data}) => {
                     (creatorId === userId ?
                       null
                       :
-                      <div className={styles.addToFav}>
-                        <Tooltip title="Add to favorites">
-                          <QueueIcon onClick={addToFav} />
-                        </Tooltip>
-                      </div>
+                      <Fav userId={userId} currentPostId={currentPostId} style={styles.addToFav}/>
                     )
                     :
                     null

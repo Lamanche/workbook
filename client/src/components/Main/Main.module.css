@@ -12,11 +12,6 @@
     display: flex
 }
 
-/* TABS */
-.tabsUpper {
-
-}
-
 /* HEADER */
 .headerContainer {
     display: flex;
@@ -41,11 +36,6 @@
 /* SIDEBAR */
 .sideBar {
     margin-right: 2rem;
-}
-
-/* GRID */
-.grid {
-    /*justify-content: center;*/
 }
 
 .noPostsYet {

@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { isLoggedIn } from './actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchFavourites } from './api/index';
+import { setFavourites } from './actions/favourites';
+import { tokenExpired } from './actions/auth';
 import Header from './components/Header/Header';
 import Home from './components/Home/Home';
 import LogIn from './components/Auth/LogIn.js';
@@ -21,6 +24,7 @@ function App() {
   const dispatch = useDispatch();
   const loggedIn = useSelector(state => state.auth.isLoggedIn);
   const profileUpdated = useSelector(state => state.auth.authData?.result.profile);
+  const userId = useSelector(state => state.auth.authData?.result._id)
   
   const useStyles = makeStyles(() => ({
     container: {    
@@ -39,6 +43,20 @@ function App() {
     dispatch(isLoggedIn());
   },[loggedIn, dispatch]);
 
+  useEffect(() => {
+    if (loggedIn === true) {
+      fetchFavourites({params: { id: userId }})
+          .then(res => {
+            dispatch(setFavourites(res.data.favs))
+          })
+          .catch(error => {
+            if (error.response.status === 401) { 
+              dispatch(tokenExpired());
+            }
+        });   
+    };
+  },[loggedIn, userId, dispatch]);
+
   return (      
         <Container className={classes.container} maxWidth="lg">
           <Paper className={classes.paper} variant="outlined" square>    
@@ -53,8 +71,7 @@ function App() {
                   {loggedIn === true ? <Route path="/form" exact component={Form} /> : <Redirect to="/main" exact component={Main} />}; 
                   {loggedIn === true ? <Route path="/favourites" exact component={Favourites} /> : <Redirect to="/main" exact component={Main} />};
                   {loggedIn === true ? <Route path="/messages" exact component={MyMessages} /> : <Redirect to="/main" exact component={Main} />};
-                  {loggedIn === true && profileUpdated === false ? <Route path="/updateprofile" exact component={UpdateProfile} /> : <Redirect to="/main" exact component={Main} />};                               
-                      
+                  {loggedIn === true && profileUpdated === false ? <Route path="/updateprofile" exact component={UpdateProfile} /> : <Redirect to="/main" exact component={Main} />};                      
               </Switch>            
             </Box>
           </Paper>

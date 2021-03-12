@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import styles from './Main.module.css';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { location } from '../../actions/location';
@@ -8,17 +9,14 @@ import TabBar from './TabBar';
 import SideBar from './SideBar';
 import Content from './Content';
 
-import styles from './Main.module.css';
-
 
 const Main = () => {
     const history = useHistory();
     const dispatch = useDispatch();
-
+    
     useEffect(() => {
         dispatch(location(history.location.pathname));
-        },[history, dispatch]);
-
+    },[history, dispatch]);    
     
     return (
         <>

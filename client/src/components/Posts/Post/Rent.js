@@ -5,6 +5,7 @@ import { TextField, InputAdornment, Switch } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import EventBusyIcon from '@material-ui/icons/EventBusy';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 
 const Rent = ({ data, modify, handleChange, setAvailable }) => {
@@ -22,7 +23,10 @@ const Rent = ({ data, modify, handleChange, setAvailable }) => {
     return (
         <div>
             <div className={styles.availableContainer}>
-                <h3><DoneOutlineIcon /><span className={state.available === true ? styles.available : styles.notAvailable}>{state.available === true ? 'saadaval' : 'pole saadaval'}</span></h3>
+                <div className={styles.availableHeader}>
+                    {data.available === true || state.available === true ? <DoneOutlineIcon /> : <HighlightOffIcon />}
+                    <h3 className={state.available === true ? styles.available : styles.notAvailable}>{state.available === true ? 'saadaval' : 'pole saadaval'}</h3>
+                </div>                
                 {modify === true ? 
                     <Switch
                         checked={state.available}

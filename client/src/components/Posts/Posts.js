@@ -21,7 +21,9 @@ const Posts = (props) => {
     useEffect(() => {        
         findUserPosts({params: { userId }})
             .then(res => {
-                setPosts(res.data.Posts);
+                const data = res.data.Posts;
+                const sortedData = data.sort((a, b) => new Date(a) < new Date(b) ? 1 : -1);
+                setPosts(sortedData);
                 dispatch(finishedLoading());
         });
     },[update, userId, dispatch]);

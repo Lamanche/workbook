@@ -44,5 +44,5 @@ export const deleteOffer = (offerId) => API.delete('/messages/deleteoffer', offe
 
 /* Favourites */
 export const fetchFavourites = (id) => API.get('/favourites/find', id);
-export const addToFavourites = (data) => API.post('/favourites/add', data);
-export const deleteFavourite = (favourite) => API.delete('/favourites/delete', favourite);
+export const addToFavourites = (data) => API.patch('/favourites/add', data);
+export const deleteFavourite = (favourite) => API.patch('/favourites/delete', favourite);

@@ -4,8 +4,8 @@ const { findFavouritesHandler, addFavouriteHandler, deleteFavouriteHandler } = r
 const auth = require("../middleware/auth.js")
 
 router.get('/find', auth, findFavouritesHandler)
-router.post('/add', auth, addFavouriteHandler)
-router.delete('/delete', auth, deleteFavouriteHandler)
+router.patch('/add', auth, addFavouriteHandler)
+router.patch('/delete', auth, deleteFavouriteHandler)
 
 
 module.exports = router; 
