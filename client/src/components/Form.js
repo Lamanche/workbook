@@ -41,7 +41,7 @@ const Form = () => {
     const categoryType = useSelector(state => state.posts.postCategoryType)
     const type = useSelector(state => state.posts.postType)
     
-    const initialState = { id: uuid(), company: user.result.company, name: user.result.name, email: user.result.email, creatorId: user.result._id, type: type, userType: user.result.userType, categoryType: categoryType, picture: user.result.picture, category: '', description: '', about: '', price: '', deadline: '', available: true }
+    const initialState = { id: uuid(), company: user.result.company, name: user.result.name, email: user.result.email, creatorId: user.result._id, type: type, userType: user.result.userType, categoryType: categoryType, picture: user.result.picture, category: '', description: '', about: '', price: '', deadline: '', available: true, availableFrom: '' }
     
     const [formData, setFormData] = useState(initialState);
 

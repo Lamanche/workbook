@@ -12,6 +12,18 @@
     margin-top: 1.6rem;
 }
 
+.availableText {
+    margin-top: 1rem;
+}
+
+.available {
+    color: green;
+}
+
+.notAvailable {
+    color: red;
+}
+
 .description {
     font-weight: bold;
 }
@@ -85,6 +97,12 @@
 
 .postTypeText {
     margin-left: .8rem;
+}
+
+.availableContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: .8rem;
 }
 
 @media (max-width: 600px) {

@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { clearPostData, setPostData } from '../../../actions/postData.js';
 import MakeOffer from '../../Offers/MakeOffer';
 import ContactMe from '../../Messages/ContactMe';
+import Rent from './Rent';
 import { tokenExpired } from '../../../actions/auth';
 import { addToFavourites } from '../../../api/index';
 
@@ -27,7 +28,7 @@ const Post = ({data}) => {
     const postId = data._id;    
     
     const [modify, setModify] = useState(false);
-    const [formData, setFormData] = useState({ description: data.description, about: data.about, price: data.price, deadline: data.deadline });
+    const [formData, setFormData] = useState({ description: data.description, about: data.about, price: data.price, deadline: data.deadline, availableFrom: data.availableFrom, available: data.available });
     const [loading, setLoading] = useState(false);
     const [offer, setOffer] = useState(false);
     const [message, setMessage] = useState(false);
@@ -36,6 +37,11 @@ const Post = ({data}) => {
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value});
+    };
+
+    const setAvailable = (value) => {
+        setFormData({ ...formData, available: value});
+        
     };
 
     const makeOffer = () => {
@@ -53,6 +59,7 @@ const Post = ({data}) => {
     };
 
     const updateP = () => {
+        console.log(formData)
         setLoading(true);
         updatePost(postId, formData)            
             .then(res => {
@@ -74,7 +81,7 @@ const Post = ({data}) => {
 
     const cancelUpdate = () => {
         setModify(false);
-        setFormData({ description: data.description, about: data.about, price: data.price, deadline: data.deadline });
+        setFormData({ description: data.description, about: data.about, price: data.price, deadline: data.deadline, availableFrom: data.AvailableFrom, available: data.available });
     };
     
     const deletePost = () => {
@@ -227,7 +234,12 @@ const Post = ({data}) => {
                         />
                         :
                         null                    
-                    }                   
+                    }
+                    {data.categoryType === 'Rent' ? 
+                        <Rent data={data} modify={modify} handleChange={handleChange} setAvailable={setAvailable}/>
+                        :
+                        null                    
+                    }                              
                 </div>
                 <div className={styles.buttonContainer}>
                     {userId === creatorId ?

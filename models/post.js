@@ -16,7 +16,7 @@ const postSchema = new mongoose.Schema({
     price: String,
     deadline: String,
     available: Boolean,
-    unavailableUntil: String,
+    availableFrom: String,
     createdAt: {
         type: Date,
         default: new Date(),
