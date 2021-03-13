@@ -1,14 +1,17 @@
 import React from 'react';
 import styles from './Messages.module.css';
+import { patchMessage } from '../../api';
 
 import { Paper, Typography } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import DraftsIcon from '@material-ui/icons/Drafts';
 
 const messageListItem = ({ setMessageOpen, setCurrentMessage, message }) => {    
+
     const openMessage = () => {
-        setCurrentMessage(message)
+        setCurrentMessage(message, message.seen = true)
         setMessageOpen(true)
+        patchMessage({ id: message._id })
     }
     
     return (

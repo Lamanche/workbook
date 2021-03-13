@@ -6,8 +6,16 @@ import ReplyIcon from '@material-ui/icons/Reply';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 
-const Message = ({currentMessage}) => {
+const Message = ({ currentMessage }) => {
     const [reply, setReply] = useState(false)
+
+    const deleteMessage = () => {
+
+    };
+
+    const replyToMessage = () => {
+        setReply(true)
+    };
     
     return (
         <div className={styles.messageContainer}>
@@ -17,14 +25,18 @@ const Message = ({currentMessage}) => {
                         <TextField label='Kasutajalt' className={styles.textField} InputLabelProps={{ shrink: true }} inputProps={{readOnly: true, classes: {input: styles.textField}}} value={currentMessage.authorName}/>
                         <TextField label='Teema' InputLabelProps={{ shrink: true }} inputProps={{readOnly: true}} value={currentMessage}/>
                     </div>
-                    <div className={styles.messageHeaderButtons}>
-                        <div>
-                            <DeleteForeverIcon />
-                        </div>                        
-                        <div>
-                            <ReplyIcon fontSize='large'/>
+                    {reply === false ? 
+                        <div className={styles.messageHeaderButtons}>
+                            <div onClick={deleteMessage} className={styles.messageHeaderDelete}>
+                                <DeleteForeverIcon />
+                            </div>                        
+                            <div onClick={replyToMessage} className={styles.messageHeaderReply}>
+                                <ReplyIcon fontSize='large'/>
+                            </div>
                         </div>
-                    </div>
+                        :
+                        null
+                    }
                 </div>
                 <div className={styles.messageBody}>
                     <Typography>{currentMessage.message}</Typography>

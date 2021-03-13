@@ -48,6 +48,22 @@
     justify-content: space-between;
 }
 
+.messageHeaderDelete {
+    cursor: pointer;
+}
+
+.messageHeaderDelete:hover {
+    transform: scale(1.1);
+}
+
+.messageHeaderReply {
+    cursor: pointer;
+}
+
+.messageHeaderReply:hover {
+    transform: scale(1.1);
+}
+
 .messageHeaderInfo {
     display: flex;
     flex-direction: column;

@@ -26,6 +26,11 @@ const newMessageHandler = async (req, res) => {
 
 };
 
+const patchMessageHandler = async (req, res) => {
+    const id = req.body.id;
+    await messageModal.findByIdAndUpdate({ _id: id }, { seen: true })
+};
+
 const deleteMessageHandler = async (req, res) => {
     
 };
@@ -57,4 +62,4 @@ const deleteOfferHandler = async (req, res) => {
 };
 
 
-module.exports = { findMessagesHandler, newMessageHandler, deleteMessageHandler, findOffersHandler, newOfferHandler, deleteOfferHandler };
+module.exports = { findMessagesHandler, newMessageHandler, patchMessageHandler, deleteMessageHandler, findOffersHandler, newOfferHandler, deleteOfferHandler };
