@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Post.module.css';
 import { update } from '../../../actions/update.js';
 import { deletePosts, updatePost } from '../../../api/index';
@@ -33,10 +33,18 @@ const Post = ({data}) => {
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value});
+        console.log(formData)
     };
 
     const setAvailable = (value) => {
-        setFormData({ ...formData, available: value});
+        setFormData({ ...formData, available: value });
+        /*if (value === true) {
+            setFormData({ ...formData, available: false});
+        } else if (value === false) {
+            setFormData({ ...formData, available: true});
+        }*/
+        
+        console.log(formData)
         
     };
 
@@ -102,6 +110,10 @@ const Post = ({data}) => {
     const close = () => {
         dispatch(clearPostData());
     }; 
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    },[])
     
     return (
         <div className={styles.container}>
@@ -211,7 +223,7 @@ const Post = ({data}) => {
                         null                    
                     }
                     {data.categoryType === 'Rent' ? 
-                        <Rent data={data} modify={modify} handleChange={handleChange} setAvailable={setAvailable}/>
+                        <Rent setFormData={setFormData} formData={formData} data={data} modify={modify} handleChange={handleChange} setAvailable={setAvailable}/>
                         :
                         null                    
                     }                              

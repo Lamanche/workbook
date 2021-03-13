@@ -5,7 +5,7 @@ import { Paper, Typography } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import DraftsIcon from '@material-ui/icons/Drafts';
 
-const messageListItem = ({setMessageOpen, setCurrentMessage, message}) => {    
+const messageListItem = ({ setMessageOpen, setCurrentMessage, message }) => {    
     const openMessage = () => {
         setCurrentMessage(message)
         setMessageOpen(true)

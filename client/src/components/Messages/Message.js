@@ -8,6 +8,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const Message = ({currentMessage}) => {
     const [reply, setReply] = useState(false)
+    
     return (
         <div className={styles.messageContainer}>
             <Paper variant='outlined'>

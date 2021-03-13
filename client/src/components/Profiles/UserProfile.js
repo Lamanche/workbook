@@ -11,27 +11,26 @@ import { Divider } from '@material-ui/core';
 
 
 const UserProfile = () => {
-    let {userId}= useParams();
+    let { userId } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();  
     const isLoggedIn = useSelector(state => state.auth?.isLoggedIn);
     
-    // kõik muidu töötab aga kui back nuppu vajutada siis ei kustu postData ära
-    useEffect(() => { 
+    useEffect(() => {
         const unlisten = history.listen((location) => {
             if(location.pathname !== `/userprofile/${userId}`) {
                 dispatch(clearPostData());
-            };          
+            };
         });
         return () => {
           unlisten();
         };
-      }, [history, userId, dispatch]);
+      }, [history, userId, dispatch]);      
     
     return (
         <div className={styles.profileContainer}>
-            <div className={styles.leftSide} >                
-                <Posts key={userId} userId={userId} />            
+            <div className={styles.leftSide}>                
+                <Posts key={userId} userId={userId} />
             </div>
 
             <Divider orientation='vertical' flexItem/>

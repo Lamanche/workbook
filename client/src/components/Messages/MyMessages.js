@@ -33,7 +33,7 @@ const MyMessages = () => {
     return (
         <div className={styles.myMessagesContainer}>
             <div className={styles.messagesContainer}>
-                <MessageList setMessageOpen={setMessageOpen} setCurrentMessage={setCurrentMessage}loading={loading} messages={messages}/>
+                <MessageList setMessageOpen={setMessageOpen} setCurrentMessage={setCurrentMessage} loading={loading} messages={messages}/>
                 {messageOpen === true ?
                     <Message currentMessage={currentMessage}/>
                     :

@@ -5,6 +5,7 @@ import Post from './Post/Post';
 import { finishedLoading } from '../../actions/posts';
 import { findUserPosts } from '../../api/index.js';
 import Card from '../Posts/Card.js';
+import { Route } from 'react-router-dom';
 
 import { Grid } from '@material-ui/core';
 
@@ -27,10 +28,18 @@ const Posts = (props) => {
                 dispatch(finishedLoading());
         });
     },[update, userId, dispatch]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    },[])
     
     return (
         <div className={styles.postsContainer}>
-            {post ? <Post key={post.id} data={post} /> : null}
+            {post ? 
+                <Post key={post.id} data={post} />               
+                : 
+                null
+            }
             <Grid className={styles.grid} container spacing={1}>                    
                     {loadingState === true ? 
                         <p>Loading...</p> 

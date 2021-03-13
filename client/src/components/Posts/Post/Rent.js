@@ -8,24 +8,33 @@ import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 
-const Rent = ({ data, modify, handleChange, setAvailable }) => {
-    const [state, setState] = useState({available: data.available});
+const Rent = ({ setFormData, formData, data, modify, handleChange, setAvailable }) => {
+    const available = formData.available
+    const [state, setState] = useState({available: true});
     
     const changeAvailable = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-        setAvailable(state.available)
+        if (state.available === true){
+            setState({ available: false });
+        }
+        //setState({ ...state, [event.target.name]: event.target.checked });
+        //setAvailable(state.available);
+        setAvailable(event.target.checked)
+        
+        console.log(state)
     };
     
     useEffect(() => {
-        setState({available: data.available})
-    },[modify, data.available])
+        
+        //setState(formData.available)
+        console.log(data.available)
+    },[])
     
     return (
         <div>
             <div className={styles.availableContainer}>
                 <div className={styles.availableHeader}>
                     {data.available === true || state.available === true ? <DoneOutlineIcon /> : <HighlightOffIcon />}
-                    <h3 className={state.available === true ? styles.available : styles.notAvailable}>{state.available === true ? 'saadaval' : 'pole saadaval'}</h3>
+                    {/*<h3 className={state.available === true ? styles.available : styles.notAvailable}>{state.available === true ? 'saadaval' : 'pole saadaval'}</h3>*/}
                 </div>                
                 {modify === true ? 
                     <Switch

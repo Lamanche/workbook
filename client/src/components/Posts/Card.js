@@ -3,7 +3,7 @@ import styles from './Card.module.css';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPostData } from '../../actions/postData.js';
+import { setPostData, clearPostData } from '../../actions/postData.js';
 import Fav from './Fav';
 
 import coding from '../../images/coding.jpg';
@@ -47,7 +47,7 @@ const Card = ({data}) => {
       const openPost = () => {
         dispatch(setPostData(data));
         history.push(`/userprofile/${data.creatorId}`);        
-      };      
+      };
     
     return (
         <div className={currentPostId === selectedPostId ? styles.containerSelected : styles.container}>

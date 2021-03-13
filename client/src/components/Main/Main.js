@@ -3,6 +3,7 @@ import styles from './Main.module.css';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { location } from '../../actions/location';
+import { clearPostData } from '../../actions/postData.js';
 
 import Header from './Header';
 import TabBar from './TabBar';
@@ -16,6 +17,7 @@ const Main = () => {
     
     useEffect(() => {
         dispatch(location(history.location.pathname));
+        dispatch(clearPostData())
     },[history, dispatch]);    
     
     return (

@@ -4,6 +4,7 @@ import Card from '../Posts/Card';
 import styles from './Favourites.module.css';
 import { fetchFavourites } from '../../api/index.js';
 import { tokenExpired } from '../../actions/auth.js';
+import { clearPostData } from '../../actions/postData.js';
 
 import { Grid } from '@material-ui/core';
 
@@ -34,6 +35,10 @@ const Favourites = () => {
                 }
             });        
     },[userId, dispatch, update]);
+
+    useEffect(() => {
+        dispatch(clearPostData())
+    },[dispatch]); 
 
     return (
         <div className={styles.favouritesContainer}>

@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './Messages.module.css';
 import MessageListItem from './MessageListItem';
 
-const MessageList = ({loading, messages, setCurrentMessage, setMessageOpen}) => {    
+const MessageList = ({ loading, messages, setCurrentMessage, setMessageOpen }) => {    
     return (
         <div className={styles.messageListContainer}>
             {loading === true ? 
