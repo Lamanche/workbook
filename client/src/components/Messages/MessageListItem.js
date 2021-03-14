@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Messages.module.css';
 import { patchMessage } from '../../api';
 
@@ -6,17 +6,24 @@ import { Paper, Typography } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import DraftsIcon from '@material-ui/icons/Drafts';
 
-const messageListItem = ({ setMessageOpen, setCurrentMessage, message }) => {    
-
+const MessageListItem = ({ setMessageOpen, setCurrentMessage, message, setReply }) => {    
+    const [active, setActive] = useState(false); 
+    
     const openMessage = () => {
-        setCurrentMessage(message, message.seen = true)
-        setMessageOpen(true)
-        patchMessage({ id: message._id })
-    }
+        setReply(false);
+        /*See ei tööta*/
+        setActive(true)
+        if (message.seen === false) {
+            setCurrentMessage(message, message.seen = true);
+            patchMessage({ id: message._id });
+        };
+        setCurrentMessage(message)    
+        setMessageOpen(true); 
+    };
     
     return (
         <div onClick={openMessage} className={styles.messageListItemContainer}>
-            <Paper className={styles.messageListItemPaper} square variant='outlined'>
+            <Paper className={active ? styles.messageListItemPaperActive : styles.messageListItemPaper} square variant='outlined'>
                 <div className={styles.listItemHeader}>
                     <div>
                     <Typography className={styles.senderName}>{message.authorName}</Typography>
@@ -30,7 +37,7 @@ const messageListItem = ({ setMessageOpen, setCurrentMessage, message }) => {
                     </div>
                 </div>
                 <div>
-                    <Typography className={styles.messagePreview} >{message.message.slice(0, 35)}{message.message.length > 35 ? '...' : null}</Typography>
+                    <Typography className={styles.messagePreview} >{message.title.slice(0, 25)}{message.title.length > 25 ? '...' : null}</Typography>
                 </div>
                 
             </Paper>
@@ -39,4 +46,4 @@ const messageListItem = ({ setMessageOpen, setCurrentMessage, message }) => {
     )
 }
 
-export default messageListItem
+export default MessageListItem

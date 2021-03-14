@@ -7,6 +7,12 @@ import { logout } from '../../actions/auth.js';
 
 import { Avatar, Typography, Menu, MenuItem, IconButton } from '@material-ui/core';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import CreateIcon from '@material-ui/icons/Create';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 
 const Profile = ({user}) => {
@@ -68,12 +74,12 @@ const Profile = ({user}) => {
                     open={Boolean(anchorEl)}                        
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={post}>Uus keika</MenuItem>
-                    <MenuItem onClick={profile}>Minu profiil</MenuItem>
-                    <MenuItem onClick={messages}>Teated</MenuItem>
-                    <MenuItem onClick={favorites}>Lemmikud</MenuItem>
-                    <MenuItem onClick={logOut}>Logi välja</MenuItem>
-                    <MenuItem onClick={deleteAccount}>Kustuta konto</MenuItem>
+                    <MenuItem onClick={post}><CreateIcon style={{marginRight: '.8rem'}}fontSize="small" />Uus keika</MenuItem>
+                    <MenuItem onClick={profile}><PersonOutlineIcon style={{marginRight: '.8rem'}}fontSize="small" />Minu profiil</MenuItem>
+                    <MenuItem onClick={messages}><MailOutlineIcon style={{marginRight: '.8rem'}}fontSize="small" />Teated</MenuItem>
+                    <MenuItem onClick={favorites}><FavoriteBorderIcon style={{marginRight: '.8rem'}}fontSize="small" />Lemmikud</MenuItem>
+                    <MenuItem onClick={logOut}><ExitToAppIcon style={{marginRight: '.8rem'}}fontSize="small" />Logi välja</MenuItem>
+                    <MenuItem onClick={deleteAccount}><HighlightOffIcon style={{marginRight: '.8rem'}}fontSize="small" />Kustuta konto</MenuItem>
                 </Menu>                     
             </IconButton>        
         </div>

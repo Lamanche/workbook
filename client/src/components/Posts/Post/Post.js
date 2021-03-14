@@ -23,7 +23,8 @@ const Post = ({data}) => {
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
     const userId = useSelector(state => state.auth.authData?.result._id);
     const creatorId = data.creatorId;
-    const postId = data._id;    
+    const postId = data._id;
+    const postTitle = data.description;    
     
     const [modify, setModify] = useState(false);
     const [formData, setFormData] = useState({ description: data.description, about: data.about, price: data.price, deadline: data.deadline, availableFrom: data.availableFrom, available: data.available });
@@ -275,7 +276,7 @@ const Post = ({data}) => {
                 null
             }
             {message ? 
-                <ContactMe setMessage={setMessage} setOffer={setOffer} postId={postId} postAuthor={creatorId} />
+                <ContactMe setMessage={setMessage} setOffer={setOffer} postId={postId} postAuthor={creatorId} title={postTitle}/>
                 :
                 null
             }

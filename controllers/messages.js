@@ -28,11 +28,22 @@ const newMessageHandler = async (req, res) => {
 
 const patchMessageHandler = async (req, res) => {
     const id = req.body.id;
-    await messageModal.findByIdAndUpdate({ _id: id }, { seen: true })
+    try {
+        await messageModal.findByIdAndUpdate({ _id: id }, { seen: true });
+        res.status(200).json({ message: "Message updated" });
+    } catch (error) {
+        res.status(500).json({ message: "Something went wrong" });
+    };    
 };
 
 const deleteMessageHandler = async (req, res) => {
-    
+    const id = req.query.id;
+    try {
+        await messageModal.findOneAndDelete({ _id: id });
+        res.status(200).json({ message: "Message deleted" });
+    } catch (error) {
+        res.status(500).json({ message: "Something went wrong" });
+    }
 };
 
 /* Offers */

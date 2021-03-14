@@ -35,6 +35,11 @@
     padding: .5rem;
 }
 
+.messageListItemPaperActive {
+    padding: .5rem;
+    background-color: rgb(128, 128, 128);
+}
+
 .messageContainer {
     width: 100%;
     margin: 1rem 1rem 1rem 0;
@@ -43,7 +48,7 @@
 .messageHeader {
     min-height: 7rem;
     margin: .8rem;
-    padding: .8rem;
+    padding: .5rem;
     display: flex;
     justify-content: space-between;
 }
@@ -67,6 +72,7 @@
 .messageHeaderInfo {
     display: flex;
     flex-direction: column;
+    width: 80%;
 }
 
 .messageHeaderButtons {
@@ -78,21 +84,43 @@
 .textField {
     font-weight: bold;
     margin-bottom: .8rem;
+    font-size: 1.2rem;
 }
 
 .messageBody {
-    min-height: 14rem;       
+    height: 14rem;
+    overflow-y: scroll;      
     border-radius: 5px;
     margin: .8rem;
     padding: .8rem;
     background-color: rgb(221, 219, 217);
+    border: 1px solid;
 }
+
+.messageBody::-webkit-scrollbar {
+    width: 3px;
+}
+
+.messageBodyReply {
+    min-height: 14rem;       
+    border-radius: 5px;
+    margin: .8rem;
+    background-color: rgb(221, 219, 217);
+}
+
+.replyText {
+    width: 100%;
+}
+
+/*.replyText::-webkit-scrollbar {
+    width: 3px;
+}*/
 
 .messageFooter {
     display: flex;
     align-items: center;
-    padding: .8rem;
-    float: right;
+    padding: 0 .8rem .8rem .8rem;
+    justify-content: space-between;
 }
 
 .contactContainer {

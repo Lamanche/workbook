@@ -11,7 +11,7 @@ const ContactMe = (props) => {
     const dispatch = useDispatch();
     const userName = useSelector(state => state.auth.authData?.result.name);
     const userId = useSelector(state => state.auth.authData?.result._id);
-    const [message, setMessage] = useState({ type: 'message', author: userId, authorName: userName, forUser: props.postAuthor, forUserPost: props.postId, message: '', seen: false });
+    const [message, setMessage] = useState({ type: 'message', title: props.title, author: userId, authorName: userName, forUser: props.postAuthor, forUserPost: props.postId, message: '', seen: false });
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
 
