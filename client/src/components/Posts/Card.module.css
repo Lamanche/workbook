@@ -91,6 +91,10 @@
         width: 12rem;
         height: 15rem;
     }
+    .containerSelected {
+        width: 12rem;
+        height: 15rem;
+    }
     .avatar {
         height: 1.6rem;
         width: 1.6rem;

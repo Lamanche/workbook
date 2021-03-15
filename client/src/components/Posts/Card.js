@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Card.module.css';
 import moment from 'moment';
+import 'moment/locale/et'
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPostData } from '../../actions/postData.js';

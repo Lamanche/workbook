@@ -6,8 +6,7 @@ import styles from './Main.module.css';
 import { Tabs, Tab } from '@material-ui/core';
 
 const CategoryTabs = () => {
-    const dispatch = useDispatch();
-    
+    const dispatch = useDispatch();    
     const category = useSelector(state => state.posts.postCategory);
 
     const cats = ['', 'engineering', 'coding', 'design', 'construction'];
@@ -28,7 +27,7 @@ const CategoryTabs = () => {
 
     useEffect(() => {
         setValue(cats.indexOf(category));
-    },[category, cats]);
+    },[category]);
 
     
     return (

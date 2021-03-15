@@ -10,15 +10,16 @@ import Rent from './Rent';
 import Fav from '../Fav';
 import { tokenExpired } from '../../../actions/auth';
 
-import { TextField, Paper, Button, InputAdornment, CircularProgress } from '@material-ui/core';
+import { TextField, Paper, Button, InputAdornment, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import CreateIcon from '@material-ui/icons/Create';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import SearchIcon from '@material-ui/icons/Search';
 import EventBusyIcon from '@material-ui/icons/EventBusy';
+import DoneIcon from '@material-ui/icons/Done';
 
 
-const Post = ({data}) => {
+const Post = ({ data, setLoadingMain }) => {
     const dispatch = useDispatch();
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
     const userId = useSelector(state => state.auth.authData?.result._id);
@@ -29,24 +30,12 @@ const Post = ({data}) => {
     const [modify, setModify] = useState(false);
     const [formData, setFormData] = useState({ description: data.description, about: data.about, price: data.price, deadline: data.deadline, availableFrom: data.availableFrom, available: data.available });
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
     const [offer, setOffer] = useState(false);
     const [message, setMessage] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value});
-        console.log(formData)
-    };
-
-    const setAvailable = (value) => {
-        setFormData({ ...formData, available: value });
-        /*if (value === true) {
-            setFormData({ ...formData, available: false});
-        } else if (value === false) {
-            setFormData({ ...formData, available: true});
-        }*/
-        
-        console.log(formData)
-        
     };
 
     const makeOffer = () => {
@@ -64,7 +53,6 @@ const Post = ({data}) => {
     };
 
     const updateP = () => {
-        console.log(formData)
         setLoading(true);
         updatePost(postId, formData)            
             .then(res => {
@@ -72,7 +60,11 @@ const Post = ({data}) => {
                     setModify(false);
                     dispatch(update(1));                   
                     dispatch(setPostData(res.data.updatedPost));
-                    setLoading(false);                    
+                    setLoading(false);
+                    setSuccess(true);
+                    setTimeout(() => {
+                        setSuccess(false);
+                    }, 1000);                
                 };
             })
             .catch(error => {
@@ -89,11 +81,23 @@ const Post = ({data}) => {
         setFormData({ description: data.description, about: data.about, price: data.price, deadline: data.deadline, availableFrom: data.AvailableFrom, available: data.available });
     };
     
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    
     const deletePost = () => {
+        setOpen(false);
         setLoading(true);
         deletePosts(data._id)
             .then(res => {
                 if (res.status === 200) {
+                    setLoadingMain(true);
                     dispatch(update(1));
                     dispatch(clearPostData());                    
                     setLoading(false);
@@ -105,7 +109,7 @@ const Post = ({data}) => {
                     setLoading(false);
                     setModify(false);
                 };
-            });                
+            });             
     };
 
     const close = () => {
@@ -136,7 +140,7 @@ const Post = ({data}) => {
                     <TextField
                         className={styles.text}
                         onChange={handleChange}
-                        label="Description"
+                        label="Pealkiri"
                         name= 'description'
                         defaultValue={data?.description}
                         value={modify === false ? data.description : undefined}
@@ -157,7 +161,7 @@ const Post = ({data}) => {
                     <TextField
                         className={styles.text}
                         onChange={handleChange}
-                        label="Details"
+                        label="Üksikasjad"
                         name= 'about'
                         defaultValue={data?.about}
                         value={modify === false ? data.about : undefined}
@@ -178,7 +182,7 @@ const Post = ({data}) => {
                     <TextField
                         className={styles.text}
                         onChange={handleChange}
-                        label="Price"
+                        label="Hind"
                         name= 'price'
                         defaultValue={data?.price}
                         value={modify === false ? data.price : undefined}                        
@@ -201,7 +205,7 @@ const Post = ({data}) => {
                         <TextField
                             className={styles.text}
                             onChange={handleChange}
-                            label="Deadline"
+                            label="Hanke tähtaeg"
                             name= 'deadline'
                             defaultValue={data?.deadline}
                             value={modify === false ? data.deadline : undefined}                        
@@ -224,7 +228,7 @@ const Post = ({data}) => {
                         null                    
                     }
                     {data.categoryType === 'Rent' ? 
-                        <Rent setFormData={setFormData} formData={formData} data={data} modify={modify} handleChange={handleChange} setAvailable={setAvailable}/>
+                        <Rent setFormData={setFormData} formData={formData} data={data} modify={modify} />
                         :
                         null                    
                     }                              
@@ -232,27 +236,39 @@ const Post = ({data}) => {
                 <div className={styles.buttonContainer}>
                     {userId === creatorId ?
                         <div className={styles.buttons}>                 
-                            {modify === true ? 
-                                <Button onClick ={updateP} classes={{root: styles.updateBtn}} className={styles.updateBtn} disabled={loading} variant='contained' color='primary'>{loading && <CircularProgress size={24} className={styles.buttonProgress}/>}Update</Button>
+                            {modify === true ?                                 
+                                <Button onClick ={updateP} classes={{root: styles.updateBtn}} className={styles.updateBtn} disabled={loading} variant='contained' color='primary'>{loading && <CircularProgress size={24} className={styles.buttonProgress}/>}Kinnita</Button>                                    
                                 :
-                                <Button onClick ={modifyPost} className={styles.button} variant='contained' color='primary'>Modify</Button>
+                                <Button onClick ={modifyPost} className={styles.button} variant='contained' color='primary' disabled={loading || success}>{success && <DoneIcon color="primary" className={styles.success}/>}Muuda</Button>
                             }
                             {modify === false ? 
-                                <Button onClick={deletePost} className={styles.button} disabled={loading} variant='contained' color='secondary'>{loading && <CircularProgress size={24} className={styles.buttonProgress}/>}Delete</Button>
+                                <>    
+                                    <Button onClick={handleClickOpen} className={styles.button} disabled={loading} variant='contained' color='secondary'>{loading && <CircularProgress size={24} className={styles.buttonProgress}/>}Kustuta</Button>
+                                    <Dialog
+                                        open={open}
+                                        onClose={handleClose}                                        
+                                    >
+                                        <DialogTitle>{"Oled kindel, et soovid postituse kustutada?"}</DialogTitle>
+                                        <DialogActions>
+                                            <Button onClick={handleClose} color="primary" autoFocus>Tühista</Button>
+                                            <Button onClick={deletePost} color="secondary">Kinnita</Button>
+                                        </DialogActions>
+                                    </Dialog>
+                                </>
                                 :
-                                <Button onClick={cancelUpdate} className={styles.button} variant='contained' color='secondary'>cancel</Button>
+                                <Button onClick={cancelUpdate} className={styles.button} variant='contained' color='secondary'>Tühista</Button>
                             }
                         </div>
                         : 
                         (isLoggedIn === true ?
                             (data.categoryType === 'Hange' ? 
                                 <div className={styles.buttons}>
-                                    <Button disabled={offer} onClick ={makeOffer} className={styles.button} variant='contained' color='primary'>Make offer</Button>
-                                    <Button disabled={message} onClick ={contactMe} className={styles.contactBtn} variant='contained' color='primary'>Contact me</Button>
+                                    <Button disabled={offer} onClick ={makeOffer} className={styles.button} variant='contained' color='primary'>Tee pakkumine</Button>
+                                    <Button disabled={message} onClick ={contactMe} className={styles.contactBtn} variant='contained' color='primary'>Võta ühendust</Button>
                                 </div>
                                 :
                                 <div className={styles.buttons}>
-                                    <Button disabled={message} onClick ={contactMe} className={styles.contactBtn} variant='contained' color='primary'>Contact me</Button>
+                                    <Button disabled={message} onClick ={contactMe} className={styles.contactBtn} variant='contained' color='primary'>Võta ühendust</Button>
                                 </div>
                             )
                             :

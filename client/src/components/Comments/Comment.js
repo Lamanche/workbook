@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Comments.module.css';
 import moment from 'moment';
+import 'moment/locale/et'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { update } from '../../actions/update.js';

@@ -71,11 +71,11 @@ const Fav = ({ userId, currentPostId, style }) => {
                     :
                     // Siia kas on juba lisatud v mitte
                     (favourites.indexOf(currentPostId) === -1 ? 
-                        <Tooltip title="Add to favorites">
+                        <Tooltip title="Lisa lemmikutesse">
                             <FavoriteBorderIcon onClick={addToFav} />
                         </Tooltip>
                         :
-                        <Tooltip title="Remove from favorites">
+                        <Tooltip title="Eemalda lemmikutest">
                             <FavoriteIcon color='primary' onClick={deleteFav} />
                         </Tooltip>
                     )

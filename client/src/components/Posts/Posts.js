@@ -12,12 +12,12 @@ import { Grid } from '@material-ui/core';
 const Posts = (props) => {
     let userId= props.userId;  
     const dispatch = useDispatch();
-    const update = useSelector(state => state.update);
-    
+    const update = useSelector(state => state.update);    
     const post = useSelector(state => state.postData.post);    
     const loadingState = useSelector(state => state.posts.loading); 
     
     const [posts, setPosts] = useState([]);
+    const [loadingMain, setLoadingMain] = useState(false)
 
     useEffect(() => {        
         findUserPosts({params: { userId }})
@@ -25,6 +25,7 @@ const Posts = (props) => {
                 const data = res.data.Posts;
                 const sortedData = data.sort((a, b) => new Date(a) < new Date(b) ? 1 : -1);
                 setPosts(sortedData);
+                setLoadingMain(false)
                 dispatch(finishedLoading());
         });
     },[update, userId, dispatch]);
@@ -36,12 +37,12 @@ const Posts = (props) => {
     return (
         <div className={styles.postsContainer}>
             {post ? 
-                <Post key={post.id} data={post} />               
+                <Post key={post.id} data={post} setLoadingMain={setLoadingMain} />               
                 : 
                 null
             }
             <Grid className={styles.grid} container spacing={1}>                    
-                    {loadingState === true ? 
+                    {loadingState === true || loadingMain === true ? 
                         <p>Loading...</p> 
                         :                
                         (posts.length === 0 ?                        

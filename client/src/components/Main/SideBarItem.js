@@ -3,7 +3,7 @@ import styles from './Main.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { postCategoryType } from '../../actions/posts';
 
-const SideBarItem = ({value, Icon}) => {
+const SideBarItem = ({ value, Icon }) => {
     const dispatch = useDispatch();
     const categoryType = useSelector(state => state.posts.postCategoryType);
 
