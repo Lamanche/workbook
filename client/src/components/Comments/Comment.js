@@ -10,7 +10,7 @@ import { deleteComment } from '../../api/index.js';
 import { Avatar, Typography, Paper, CircularProgress } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-const Comment = ({data}) => {
+const Comment = ({ data }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const loggedInUserId = useSelector(state => state.auth.authData?.result._id);

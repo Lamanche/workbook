@@ -46,7 +46,6 @@ const Message = ({ reply, setReply, currentMessage, setMessageOpen }) => {
     };
 
     const sendReply = () => {
-        console.log(message)
         setLoading(true);
         postMessage(message)
             .then(res => {

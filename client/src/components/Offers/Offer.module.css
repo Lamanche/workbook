@@ -12,6 +12,10 @@
     justify-content: space-between;
 }
 
+.offerContainer {
+    margin-top: .8rem;
+}
+
 .userName {
     font-weight: bold;
     font-size: 1.5rem;
@@ -38,8 +42,90 @@
     position: absolute;    
 }
 
+.commentContainer {
+    margin-bottom: 1rem;
+}
+
+.commentPaper {
+    padding: 0.8rem;
+}
+
+.commentHeader {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.headerProfile {
+    display: flex;
+}
+
+.avatar {
+    margin-right: .6rem;;
+}
+
+.name {
+    font-weight: bold; 
+    font-size: .95rem;
+}
+
+.name:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.commentBody {
+    min-height: 3rem;
+    padding: 0.8rem;
+    margin-top: .5rem;    
+    border-radius: 5px;
+    background-color: rgb(221, 219, 217);
+}
+
+.deleteIcon:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+}
+
+.noComments {
+    margin-top: .8rem;
+    padding: 1rem;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+}
+
 @media (max-width: 600px) {
+    .userName {
+        font-size: 1.2rem;
+    }
+    
+    .makeOfferText {
+        font-size: 1.9rem;
+    }
+    
     .button {
+        font-size: .7rem;
+    }
+    .avatar {
+        height: 2rem;
+        width: 2rem;
+    }
+    .name {
+        font-size: .85rem;
+    }
+    .date {        
+        font-size: .7rem;     
+    }
+    .comment {        
+        font-size: .85rem;
+    }
+    .addBtn {
         font-size: .7rem;
     }
 }

@@ -1,12 +1,10 @@
 const mongoose = require('mongoose')
 
 const offerSchema = new mongoose.Schema({
-    type: String,
     author: String,
     authorName: String,
     forUser: String,
-    forUserPost: String,        
-    offerType: String,
+    forUserPost: String,
     information: String,
     price: String,
     seen: Boolean,

@@ -5,6 +5,7 @@ import { deletePosts, updatePost } from '../../../api/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearPostData, setPostData } from '../../../actions/postData.js';
 import MakeOffer from '../../Offers/MakeOffer';
+import Offers from '../../Offers/Offers';
 import ContactMe from '../../Messages/ContactMe';
 import Rent from './Rent';
 import Fav from '../Fav';
@@ -12,7 +13,7 @@ import { tokenExpired } from '../../../actions/auth';
 import moment from 'moment';
 import 'moment/locale/et';
 
-import { TextField, Paper, Button, InputAdornment, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import { TextField, Paper, Button, InputAdornment, CircularProgress, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import CloseIcon from '@material-ui/icons/Close';
@@ -325,8 +326,11 @@ const Post = ({ data, setLoadingMain }) => {
                 :
                 null
             }
-            
-            
+            {data.categoryType === 'Hange' ? 
+                <Offers creatorId={creatorId} />
+                :
+                null
+            }            
         </div>
     )
 }
