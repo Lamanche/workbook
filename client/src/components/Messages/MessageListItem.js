@@ -21,7 +21,7 @@ const MessageListItem = ({ setChosen, active, setMessageOpen, setCurrentMessage,
     
     return (
         <div onClick={openMessage} className={styles.messageListItemContainer}>
-            <Paper className={active ? styles.messageListItemPaperActive : styles.messageListItemPaper} square variant='outlined'>
+            <Paper className={active ? styles.messageListItemPaperActive : styles.messageListItemPaper} variant='outlined'>
                 <div className={styles.listItemHeader}>
                     <div>
                     <Typography className={styles.senderName}>{message.authorName}</Typography>

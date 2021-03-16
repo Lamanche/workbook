@@ -5,7 +5,6 @@ import Post from './Post/Post';
 import { finishedLoading } from '../../actions/posts';
 import { findUserPosts } from '../../api/index.js';
 import Card from '../Posts/Card.js';
-import { Route } from 'react-router-dom';
 
 import { Grid } from '@material-ui/core';
 

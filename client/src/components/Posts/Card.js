@@ -7,51 +7,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPostData } from '../../actions/postData.js';
 import Fav from './Fav';
 
-import coding from '../../images/coding.jpg';
-import design from '../../images/design.jpg';
-import engineering from '../../images/engineering.jpg';
-import construction from '../../images/construction.jpg';
-
 import { CardHeader, Avatar, CardMedia, Typography, Paper } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 
 
-const Card = ({data}) => {
+const Card = ({ data }) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const currentPostId = data._id
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
     const selectedPostId = useSelector(state => state.postData.post?._id);
     const userId = useSelector(state => state.auth.authData?.result._id);
-    const creatorId = data.creatorId; 
+    const creatorId = data.creatorId;    
+    const image = require(`../../images/${data.category}.jpg`)    
     
-    //const image = () => require(`../../images/design.jpg`)
-    
-    
-    const categoryImage = () => {
-        switch (data.category) {
-          case 'coding':
-            return coding;
-          case 'engineering':
-            return engineering;
-          case 'construction':
-            return construction;
-          case 'design':
-            return design;   
-          default:
-            return '';
-        }
-      };
-    
-      const userProfile = () => {
-        history.push(`/userprofile/${data.creatorId}`);
-      };     
+    const userProfile = () => {
+      history.push(`/userprofile/${data.creatorId}`);
+    };     
 
-      const openPost = () => {
-        dispatch(setPostData(data));
-        history.push(`/userprofile/${data.creatorId}`);        
-      };
+    const openPost = () => {
+      dispatch(setPostData(data));
+      history.push(`/userprofile/${data.creatorId}`);        
+    };
     
     return (
         <div className={currentPostId === selectedPostId ? styles.containerSelected : styles.container}>
@@ -79,7 +57,7 @@ const Card = ({data}) => {
                 </div>
                 <CardMedia
                     className={styles.media}
-                    image={require('../../images/design.jpg')}
+                    image={image.default}
                     title="category"
                 />
                 <div className={styles.info}>

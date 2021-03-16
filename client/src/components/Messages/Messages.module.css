@@ -87,6 +87,10 @@
     font-size: 1.2rem;
 }
 
+.textField:hover {
+    cursor: pointer;
+}
+
 .messageBody {
     height: 14rem;
     overflow-y: scroll;      

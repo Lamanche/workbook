@@ -32,7 +32,7 @@ const CategoryTabs = () => {
         else {
             setValue(categories.indexOf(category));
         }        
-    },[]);
+    },[category]);
 
     
     return (

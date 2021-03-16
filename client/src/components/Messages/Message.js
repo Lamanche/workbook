@@ -4,6 +4,7 @@ import { deleteMessage, postMessage } from '../../api/index';
 import { tokenExpired } from '../../actions/auth.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { update } from '../../actions/update.js';
+import { useHistory } from 'react-router-dom';
 
 import { Button, Paper, TextField, Typography, CircularProgress } from '@material-ui/core';
 import ReplyIcon from '@material-ui/icons/Reply';
@@ -13,12 +14,17 @@ import DoneIcon from '@material-ui/icons/Done';
 
 const Message = ({ reply, setReply, currentMessage, setMessageOpen }) => {    
     const dispatch = useDispatch();
+    const history = useHistory();
     const userName = useSelector(state => state.auth.authData?.result.name);
     const userId = useSelector(state => state.auth.authData?.result._id);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [message, setMessage] = useState({ type: 'message', title: `RE: ${currentMessage.title}`, author: userId, authorName: userName, forUser: currentMessage.author, forUserPost: currentMessage.forUserPost, message: '', seen: false });
 
+    const userProfile = () => {
+        history.push(`/userprofile/${currentMessage.author}`);
+      };
+    
     const deleteM = () => {
         setLoading(true)
         deleteMessage({ params: { id: currentMessage._id } })
@@ -70,8 +76,8 @@ const Message = ({ reply, setReply, currentMessage, setMessageOpen }) => {
         <div className={styles.messageContainer}>
             <Paper className={styles.messagePaper} variant='outlined'>
                 <div className={styles.messageHeader}>
-                    <div className={styles.messageHeaderInfo}>
-                        <TextField label='Kasutajalt' InputLabelProps={{ shrink: true }} InputProps={{readOnly: true, classes: {root: styles.textField}}} value={currentMessage.authorName}/>
+                    <div className={styles.messageHeaderInfo}>                        
+                        <TextField  onClick={userProfile} label='Kasutajalt' InputLabelProps={{ shrink: true }} InputProps={{readOnly: true, classes: {root: styles.textField}}} value={currentMessage.authorName}/>                                               
                         <TextField label='Teema' InputLabelProps={{ shrink: true }} InputProps={{readOnly: true}} value={currentMessage.title}/>
                     </div>
                     {reply === false ? 
