@@ -1,21 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Profile from './Profile';
 import styles from './Header.module.css';
+import { fetchUnreadMessages } from '../../api';
+import { tokenExpired } from '../../actions/auth.js';
 
 import { Button, Typography, AppBar } from '@material-ui/core';
 
   
 const Header = () => { 
   const history = useHistory();
+  const dispatch = useDispatch();
   const location = useSelector(state => state.location.location);
   const loggedIn = useSelector(state => state.auth.isLoggedIn);
-  const user = useSelector(state => state.auth.authData); 
+  const user = useSelector(state => state.auth.authData);
+  const userId = useSelector(state => state.auth.authData?.result._id);
+
+  const [unreadMessages, setUnreadMessages] = useState(0)
 
   const login = () => {
     history.push('/login');
   }; 
+
+  useEffect(() => {
+    if (loggedIn === true) {
+      fetchUnreadMessages({ params: { userId }})
+            .then(res => {
+              setUnreadMessages(res.data.messages.length)
+            })
+            .catch(error => {
+                if (error.response.status === 401) {
+                    dispatch(tokenExpired());
+                }
+            });        
+    }
+  },[loggedIn, userId, dispatch])
 
   return (    
         <div className={styles.container}>
@@ -25,7 +45,7 @@ const Header = () => {
             </div>            
             {loggedIn === true ? (
                 <div className={styles.profile}>
-                  <Profile key={user} user={user} />    
+                  <Profile key={user} unread={unreadMessages} setUnread={setUnreadMessages} user={user} />    
                 </div>
               ) 
               : 

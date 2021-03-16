@@ -9,8 +9,12 @@ import ContactMe from '../../Messages/ContactMe';
 import Rent from './Rent';
 import Fav from '../Fav';
 import { tokenExpired } from '../../../actions/auth';
+import moment from 'moment';
+import 'moment/locale/et';
 
 import { TextField, Paper, Button, InputAdornment, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import CloseIcon from '@material-ui/icons/Close';
 import CreateIcon from '@material-ui/icons/Create';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
@@ -33,9 +37,15 @@ const Post = ({ data, setLoadingMain }) => {
     const [success, setSuccess] = useState(false);
     const [offer, setOffer] = useState(false);
     const [message, setMessage] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(data.availableFrom);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value});
+    };    
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        setFormData({ ...formData, deadline: date });
     };
 
     const makeOffer = () => {
@@ -202,28 +212,47 @@ const Post = ({ data, setLoadingMain }) => {
                         InputLabelProps={{ shrink: true }}
                     />
                     {data.categoryType === 'Hange' ? 
-                        <TextField
-                            className={styles.text}
-                            onChange={handleChange}
-                            label="Hanke tähtaeg"
-                            name= 'deadline'
-                            defaultValue={data?.deadline}
-                            value={modify === false ? data.deadline : undefined}                        
-                            fullWidth                        
-                            InputProps={{
-                                readOnly: modify === true ? false : true,
-                                classes: {
-                                    root: modify === true ? styles.textModify : styles.description,
-                                    input: styles.textField,                                
-                                },
-                                endAdornment: (
-                                    modify === true ? <CreateIcon/> : null
-                                ),
-                                startAdornment: <InputAdornment position="start"><EventBusyIcon /></InputAdornment>,
-                            }}
-                            multiline
-                            InputLabelProps={{ shrink: true }}
-                        />
+                        (modify === true ? 
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <KeyboardDatePicker
+                                    disableToolbar
+                                    disablePast
+                                    variant="dialog"
+                                    format="dd.MM.yyyy"
+                                    margin="normal"
+                                    label="Saadaval alates"
+                                    value={selectedDate}
+                                    onChange={handleDateChange}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                    InputLabelProps={{ shrink: true }}
+                                    classes={{ 
+                                        root: styles.datePicker,                        
+                                    }}
+                                />
+                            </MuiPickersUtilsProvider>
+                            :
+                            <TextField
+                                className={styles.text}
+                                //onChange={handleChange}
+                                label="Hanke tähtaeg"
+                                name= 'deadline'
+                                defaultValue={moment(selectedDate).format('LL')}                                                        
+                                fullWidth                        
+                                InputProps={{
+                                    readOnly: true,
+                                    classes: {
+                                        root: styles.description,
+                                        input: styles.textField,                                
+                                    },
+                                    endAdornment: (
+                                        modify === true ? <CreateIcon/> : null
+                                    ),
+                                    startAdornment: <InputAdornment position="start"><EventBusyIcon /></InputAdornment>,
+                                }}
+                                InputLabelProps={{ shrink: true }}
+                            />)
                         :
                         null                    
                     }

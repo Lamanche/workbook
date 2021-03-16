@@ -24,7 +24,10 @@ const Card = ({data}) => {
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
     const selectedPostId = useSelector(state => state.postData.post?._id);
     const userId = useSelector(state => state.auth.authData?.result._id);
-    const creatorId = data.creatorId;    
+    const creatorId = data.creatorId; 
+    
+    //const image = () => require(`../../images/design.jpg`)
+    
     
     const categoryImage = () => {
         switch (data.category) {
@@ -76,7 +79,7 @@ const Card = ({data}) => {
                 </div>
                 <CardMedia
                     className={styles.media}
-                    image={categoryImage()}
+                    image={require('../../images/design.jpg')}
                     title="category"
                 />
                 <div className={styles.info}>

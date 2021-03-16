@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Post.module.css';
 import moment from 'moment';
-import 'moment/locale/et'
+import 'moment/locale/et';
 
 import { TextField, InputAdornment, Switch } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
@@ -83,7 +83,7 @@ const Rent = ({ formData, setFormData, data, modify }) => {
             {modify === false && data.available === false ? 
                 <TextField
                     className={styles.availableText}
-                    onChange={handleChange}
+                    //onChange={handleChange}
                     label="Saadaval alates"
                     name= 'availableFrom'
                     defaultValue={moment(selectedDate).format('LL')}                       
@@ -91,15 +91,14 @@ const Rent = ({ formData, setFormData, data, modify }) => {
                     InputProps={{
                         readOnly: true,
                         classes: {
-                            root: modify === true ? styles.textModify : styles.description,
+                            root: styles.description,
                             input: styles.textField,                                
                         },
                         endAdornment: (
                             modify === true ? <CreateIcon/> : null
                         ),
                         startAdornment: <InputAdornment position="start"><EventBusyIcon /></InputAdornment>,
-                    }}
-                    multiline
+                    }}                    
                     InputLabelProps={{ shrink: true }}
                 />
                 :

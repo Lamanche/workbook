@@ -34,6 +34,7 @@ export const deleteComment = (id) => API.delete(`/comments/delete/${id}`);
 
 /* Messages */
 export const fetchMessages = (id) => API.get('/messages/findmessages', id);
+export const fetchUnreadMessages = (id) => API.get('/messages/findunreadmessages', id);
 export const postMessage = (message) => API.post('/messages/newmessage', message);
 export const patchMessage = (id) => API.patch('/messages/patchmessage', id)
 export const deleteMessage = (id) => API.delete('/messages/deletemessage', id);

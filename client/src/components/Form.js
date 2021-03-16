@@ -31,12 +31,14 @@ import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import BuildIcon from '@material-ui/icons/Build';
 import SchoolIcon from '@material-ui/icons/School';
 import AcUnitIcon from '@material-ui/icons/AcUnit';
+import { categories } from '../utils/categories'
 
 
 const Form = () => {    
     const user = useSelector(state => state.auth.authData)
     const history = useHistory();
-    const dispatch = useDispatch();  
+    const dispatch = useDispatch();
+    const cats = categories.slice(1) 
     
     const categoryType = useSelector(state => state.posts.postCategoryType)
     const type = useSelector(state => state.posts.postType)
@@ -64,6 +66,7 @@ const Form = () => {
         if (e.target.name === 'category') {
             dispatch(postCategory(e.target.value))
         }
+        console.log(formData)
     };
 
     
@@ -99,6 +102,7 @@ const Form = () => {
             if (res.status === 201){
                 history.push('/main')}
         }).catch(error => console.log(error))
+        console.log(formData)
     };    
     
     const back = () => {
@@ -170,12 +174,11 @@ const Form = () => {
                         <Grid container spacing={2}>                                                           
                                 <Grid item xs={12}>
                                     <FormControl variant="outlined" fullWidth>
-                                        <InputLabel>Category</InputLabel>
-                                            <Select required name="category" defaultValue = "" label="Category" onChange={handleChange}>
-                                                <MenuItem value="engineering">Engineering</MenuItem>
-                                                <MenuItem value="coding">Coding</MenuItem>
-                                                <MenuItem value="design">Design</MenuItem>
-                                                <MenuItem value="construction">Construction</MenuItem>
+                                        <InputLabel>Kategooria</InputLabel>
+                                            <Select required name="category" defaultValue = "" label="Kategooria" onChange={handleChange}>
+                                                {cats.map(item => (
+                                                    <MenuItem value={item}>{item[0].toUpperCase()+item.slice(1).toLowerCase()}</MenuItem>
+                                                ))}
                                             </Select>
                                     </FormControl>
                                 </Grid>                            

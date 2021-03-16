@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { clearProfile } from '../../actions/profile.js';
 import { logout } from '../../actions/auth.js';
 
-import { Avatar, Typography, Menu, MenuItem, IconButton } from '@material-ui/core';
+import { Avatar, Typography, Menu, MenuItem, IconButton, Badge } from '@material-ui/core';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import CreateIcon from '@material-ui/icons/Create';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
@@ -15,7 +15,7 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 
-const Profile = ({user}) => {
+const Profile = ({ user, unread, setUnread }) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -23,6 +23,7 @@ const Profile = ({user}) => {
   
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
+        console.log(anchorEl)
     };
 
     const handleClose = () => {
@@ -47,6 +48,7 @@ const Profile = ({user}) => {
       };
 
       const messages = () => {
+        setUnread(0)
         history.push('/messages');
         setAnchorEl(null); 
       };
@@ -65,23 +67,27 @@ const Profile = ({user}) => {
         <div className={styles.profileContainer}>
             <Avatar className={styles.avatar} alt={user?.result.name} src={user?.result.picture || user?.result.imageUrl}>{user?.result.name.charAt(0)}</Avatar>
             <Typography className={styles.userName} variant="h6">{user?.result.company === "" ? user?.result.name : user?.result.company}</Typography>              
-            <IconButton edge="end" color="inherit">
-                <MoreIcon onClick={handleClick} />
-                <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}                        
-                    onClose={handleClose}
-                >
-                    <MenuItem onClick={post}><CreateIcon style={{marginRight: '.8rem'}}fontSize="small" />Uus keika</MenuItem>
-                    <MenuItem onClick={profile}><PersonOutlineIcon style={{marginRight: '.8rem'}}fontSize="small" />Minu profiil</MenuItem>
-                    <MenuItem onClick={messages}><MailOutlineIcon style={{marginRight: '.8rem'}}fontSize="small" />Teated</MenuItem>
-                    <MenuItem onClick={favorites}><FavoriteBorderIcon style={{marginRight: '.8rem'}}fontSize="small" />Lemmikud</MenuItem>
-                    <MenuItem onClick={logOut}><ExitToAppIcon style={{marginRight: '.8rem'}}fontSize="small" />Logi välja</MenuItem>
-                    <MenuItem onClick={deleteAccount}><HighlightOffIcon style={{marginRight: '.8rem'}}fontSize="small" />Kustuta konto</MenuItem>
-                </Menu>                     
-            </IconButton>        
+            <Badge invisible={anchorEl === null ? false : true} badgeContent={anchorEl === null ? unread : 0} color="secondary" anchorOrigin={{ vertical: 'right', horizontal: 'left' }}>
+              <IconButton edge="end" color="inherit">
+                  <MoreIcon onClick={handleClick} />
+                  <Menu
+                      id="simple-menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}                        
+                      onClose={handleClose}
+                  >
+                      <MenuItem onClick={post}><CreateIcon style={{marginRight: '.8rem'}}fontSize="small" />Uus keika</MenuItem>
+                      <MenuItem onClick={profile}><PersonOutlineIcon style={{marginRight: '.8rem'}}fontSize="small" />Minu profiil</MenuItem>
+                      <Badge badgeContent={unread} color="secondary" anchorOrigin={{ vertical: 'right', horizontal: 'left' }}>
+                        <MenuItem onClick={messages}><MailOutlineIcon style={{marginRight: '.8rem'}}fontSize="small" />Teated</MenuItem>
+                      </Badge>
+                      <MenuItem onClick={favorites}><FavoriteBorderIcon style={{marginRight: '.8rem'}}fontSize="small" />Lemmikud</MenuItem>
+                      <MenuItem onClick={logOut}><ExitToAppIcon style={{marginRight: '.8rem'}}fontSize="small" />Logi välja</MenuItem>
+                      <MenuItem onClick={deleteAccount}><HighlightOffIcon style={{marginRight: '.8rem'}}fontSize="small" />Kustuta konto</MenuItem>
+                  </Menu>                     
+              </IconButton> 
+            </Badge>       
         </div>
     )
 }

@@ -10,8 +10,17 @@ const findMessagesHandler = async (req, res) => {
         res.status(200).json({ messages });
     } catch (error) {
         res.status(500).json({ message: "Something went wrong" });
-    };
-    
+    };    
+};
+
+const unreadMessagesHandler = async (req, res) => {
+    const id = req.query.userId;
+    try {
+        const messages = await messageModal.find({ forUser: id, seen: false });
+        res.status(200).json({ messages });
+    } catch (error) {
+        res.status(500).json({ message: "Something went wrong" });
+    };    
 };
 
 const newMessageHandler = async (req, res) => {
@@ -73,4 +82,4 @@ const deleteOfferHandler = async (req, res) => {
 };
 
 
-module.exports = { findMessagesHandler, newMessageHandler, patchMessageHandler, deleteMessageHandler, findOffersHandler, newOfferHandler, deleteOfferHandler };
+module.exports = { findMessagesHandler, unreadMessagesHandler, newMessageHandler, patchMessageHandler, deleteMessageHandler, findOffersHandler, newOfferHandler, deleteOfferHandler };

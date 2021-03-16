@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './Messages.module.css';
 import { patchMessage } from '../../api';
 
@@ -6,13 +6,11 @@ import { Paper, Typography } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import DraftsIcon from '@material-ui/icons/Drafts';
 
-const MessageListItem = ({ setMessageOpen, setCurrentMessage, message, setReply }) => {    
-    const [active, setActive] = useState(false); 
+const MessageListItem = ({ setChosen, active, setMessageOpen, setCurrentMessage, message, setReply }) => {    
     
     const openMessage = () => {
         setReply(false);
-        /*See ei tööta*/
-        setActive(true)
+        setChosen(message)
         if (message.seen === false) {
             setCurrentMessage(message, message.seen = true);
             patchMessage({ id: message._id });
@@ -37,7 +35,7 @@ const MessageListItem = ({ setMessageOpen, setCurrentMessage, message, setReply 
                     </div>
                 </div>
                 <div>
-                    <Typography className={styles.messagePreview} >{message.title.slice(0, 25)}{message.title.length > 25 ? '...' : null}</Typography>
+                    <Typography className={styles.messagePreview} >{message.title?.slice(0, 25)}{message.title?.length > 25 ? '...' : null}</Typography>
                 </div>
                 
             </Paper>
