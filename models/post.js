@@ -5,6 +5,7 @@ const postSchema = new mongoose.Schema({
     name: String,        
     email: String,
     company: String,
+    website: String,
     type: String,
     category: String,
     userType: String,

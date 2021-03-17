@@ -9,8 +9,9 @@ import { clearPostData } from '../../actions/postData.js';
 import { updateMyProfile } from '../../api/index.js';
 import StarRatingComponent from 'react-star-rating-component';
 
-import { Paper, TextField, Typography, Avatar, Button } from '@material-ui/core';
+import { Paper, TextField, Typography, Avatar, Button, CircularProgress } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
+import DoneIcon from '@material-ui/icons/Done';
 
 
 const User = (props) => {
@@ -19,6 +20,8 @@ const User = (props) => {
     const dispatch = useDispatch();
     const history = useHistory();
     
+    const [loadingUpdate, setLoadingUpdate] = useState(false);
+    const [success, setSuccess] = useState(false);
     const [profile, setProfile] = useState({});
     const [modify, setModify] = useState(false);
     
@@ -39,12 +42,18 @@ const User = (props) => {
 
     const submitProfileUpdate = (e) => {
         e.preventDefault();
+        setLoadingUpdate(true)
         updateMyProfile(loggedInUserId, formData)
-            .then(res => {
-                setProfile(res.data);
-                setModify(false);
+            .then(res => {                
+                setProfile(res.data);                
                 const data = res.data;
                 dispatch({ type: AUTH, data });
+                setLoadingUpdate(false)
+                setSuccess(true);
+                setTimeout(() => {
+                    setSuccess(false);
+                    setModify(false);
+                }, 1000); 
             });
     };
     
@@ -80,7 +89,7 @@ const User = (props) => {
                         onChange={handleChange}
                         className={styles.text}
                         name= 'about'
-                        label="About"
+                        label="Minust"
                         value={modify === false ? profile.about : undefined}
                         defaultValue={profile.about}
                         fullWidth                        
@@ -101,7 +110,7 @@ const User = (props) => {
                         onChange={handleChange}
                         className={styles.text}
                         name='experience'
-                        label="Experience"
+                        label="Kogemus"
                         value={modify === false ? profile.experience : undefined}
                         defaultValue={profile?.experience}
                         fullWidth                        
@@ -122,7 +131,7 @@ const User = (props) => {
                         onChange={handleChange}
                         className={styles.text}
                         name='references'
-                        label="References"
+                        label="Soovitajad"
                         value={modify === false ? profile.references : undefined}
                         defaultValue={profile?.references}
                         fullWidth                        
@@ -141,7 +150,7 @@ const User = (props) => {
                     />                
                     <TextField
                         className={styles.text}
-                        label="Contact"
+                        label="Kontakt"
                         defaultValue={profile?.email}
                         fullWidth
                         InputProps={{
@@ -156,17 +165,17 @@ const User = (props) => {
                 </form>
                 {userId === loggedInUserId ? 
                     (modify === false ? 
-                        <Button className={styles.modifyBtn} onClick={updateProfile} variant="contained" fullWidth color="primary">Update profile</Button>
+                        <Button className={styles.modifyBtn} onClick={updateProfile} variant="contained" fullWidth color="primary">Muuda profiili</Button>
                         :
                         <div className={styles.updateBtnContainer}>
-                            <Button onClick ={submitProfileUpdate} classes={{root: styles.updateBtn}} className={styles.submitUpdateBtn} variant='contained' color='primary'>Update</Button>
-                            <Button onClick ={cancelUpdate} className={styles.cancelUpdateBtn} variant='contained' color='secondary'>Cancel</Button>
+                            <Button onClick ={submitProfileUpdate} classes={{root: styles.updateBtn}} className={styles.submitUpdateBtn} variant='contained' color='primary' disabled={loadingUpdate || success}>{loadingUpdate && <CircularProgress size={24} className={styles.buttonProgress}/>}{success && <DoneIcon color="primary" className={styles.success}/>}Uuenda</Button>
+                            <Button onClick ={cancelUpdate} className={styles.cancelUpdateBtn} variant='contained' color='secondary'>Tühista</Button>
                         </div>
                     )                    
                     :
                     null
                 }             
-                <Button onClick={back} className={styles.backBtn} variant="contained" fullWidth >Back to Main</Button>
+                <Button onClick={back} className={styles.backBtn} variant="contained" fullWidth >Pealehele</Button>
             </Paper>
         </div>
     )

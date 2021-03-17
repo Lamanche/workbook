@@ -3,6 +3,7 @@ import styles from './Offer.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { postOffer } from '../../api/index';
 import { tokenExpired } from '../../actions/auth';
+import { update } from '../../actions/update.js';
 
 import { Paper, TextField, Button, Typography, CircularProgress } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
@@ -12,7 +13,8 @@ const MakeOffer = (props) => {
     const dispatch = useDispatch();
     const userName = useSelector(state => state.auth.authData?.result.name);
     const userId = useSelector(state => state.auth.authData?.result._id);
-    const [offer, setOffer] = useState({ author: userId, authorName: userName, forUser: props.postAuthor, forUserPost: props.postId, information: '', price: '', seen: false });
+    const picture = useSelector(state => state.auth.authData?.result.picture);
+    const [offer, setOffer] = useState({ author: userId, authorName: userName, picture: picture, forUser: props.postAuthor, forUserPost: props.postId, information: '', price: '', seen: false });
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     
@@ -28,6 +30,7 @@ const MakeOffer = (props) => {
                 if (res.status === 201) {
                     setLoading(false);
                     setSuccess(true);
+                    dispatch(update(1))
                     setTimeout(() => {
                         setSuccess(false);
                         props.setOffer(false);

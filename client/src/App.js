@@ -14,7 +14,7 @@ import UserProfile from './components/Profiles/UserProfile';
 import UpdateProfile from './components/Profiles/UpdateProfile.js';
 import Favourites from './components/Favourites/Favourites';
 import MyMessages from './components/Messages/MyMessages' ;
-import Form from './components/Form.js';
+import Form from './components/Form/Form.js';
 
 import { Container, Paper, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';

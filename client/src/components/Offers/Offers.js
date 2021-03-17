@@ -2,16 +2,28 @@ import React, { useEffect, useState } from 'react';
 import styles from './Offer.module.css';
 import Offer from './Offer';
 import { fetchOffers } from '../../api/index.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { tokenExpired } from '../../actions/auth.js';
 
-const Offers = ({ creatorId }) => {
-    const [offers, setOffers] = useState([])
+const Offers = ({ postId }) => {
+    const update = useSelector(state => state.update);
+    const dispatch = useDispatch();
+
+    const [offers, setOffers] = useState([]);
+    
     useEffect(() => {
-        fetchOffers({ params: { id: creatorId }})
+        fetchOffers({ params: { postId: postId }})
             .then(res => {
-                console.log(res.data.offers)
-                setOffers(res.data.offers)
+                const data = res.data?.offers;
+                const sortedData = data.sort((a, b) => new Date(a) < new Date(b) ? 1 : -1);
+                setOffers(sortedData)
             })
-    },[creatorId])
+            .catch(error => {
+                if (error.response.status === 401) {
+                    dispatch(tokenExpired());
+                };
+            });      
+    },[postId, update])
     
     return (
         <div className={styles.offerContainer}>

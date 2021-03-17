@@ -40,11 +40,15 @@ const Offer = ({ data }) => {
                     null
                     }
                 </div>
-                <div className={styles.commentBody}>
-                    <Typography className={styles.comment} variant='body1'>{data.information}</Typography>                
-                </div>
+                {data.information.length > 1 ? 
+                    <div className={styles.commentBody}>
+                        <Typography className={styles.comment} variant='body1'>{data.information}</Typography>                
+                    </div>
+                    :
+                    null
+                }               
                 <div className={styles.offerPrice}>
-                    <Typography className={styles.comment} variant='body1'>Pakkumine: {data.price}</Typography>
+                    <Typography className={styles.comment} variant='h6'>Pakkumine €: {data.price}</Typography>
                 </div>
     
             </Paper>

@@ -29,7 +29,7 @@ const Rent = ({ formData, setFormData, data, modify }) => {
 
     useEffect(() => {
         setAvailable(data.available)
-        setSelectedDate(data.availableFrom)
+        setSelectedDate(data.availableFrom !== '' ? data.availableFrom : moment())
     },[modify, data.available, data.availableFrom])
     
     return (

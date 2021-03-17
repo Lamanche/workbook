@@ -3,6 +3,8 @@ import styles from './Main.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { postCategoryType } from '../../actions/posts';
 
+import { Paper } from '@material-ui/core'
+
 const SideBarItem = ({ value, Icon }) => {
     const dispatch = useDispatch();
     const categoryType = useSelector(state => state.posts.postCategoryType);
@@ -23,9 +25,12 @@ const SideBarItem = ({ value, Icon }) => {
     }; 
     
     return (
-        <div onClick={getValue} className={active}>
-            {Icon}
-            <p className={styles.sideBarItemText}>{value}</p>
+        <div onClick={getValue}>
+            <Paper className={active}>
+                {Icon}
+                <p className={styles.sideBarItemText}>{value}</p>
+            </Paper>
+            
         </div>
     )
 }

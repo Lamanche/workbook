@@ -86,6 +86,11 @@
     transform: scale(1.1);   
 }
 
+.priceTag {
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
 @media (max-width: 600px) {
     .container {
         width: 12rem;
@@ -111,6 +116,8 @@
     }
     .priceText {
         font-size: 1rem;
-        font-weight: bold;
+    }
+    .priceTag {
+        font-size: 1.1rem;
     }
 }

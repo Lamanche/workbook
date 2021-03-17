@@ -1,1 +1,1 @@
-export const categories = ["kõik", "disain", "it", "ehitus", "meelelahutus", "transport", "tööstus", "muu" ]
+export const categories = ["kõik", "disain", "it", "ehitus", "meelelahutus", "toitlustus", "transport", "tööstus", "muu" ]

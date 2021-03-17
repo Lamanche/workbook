@@ -65,7 +65,7 @@ const Card = ({ data }) => {
                 </div>                
                 <footer className={styles.footer}>
                   <div className={styles.price}>
-                    <Typography className={styles.priceText} variant='h6'>Price: {data.price}€</Typography>
+                    <Typography className={styles.priceText} variant='h6'>Price €: <span className={styles.priceTag}>{data.price}</span></Typography>
                   </div>
                   {isLoggedIn ? 
                     (creatorId === userId ?

@@ -38,7 +38,7 @@ const Post = ({ data, setLoadingMain }) => {
     const [success, setSuccess] = useState(false);
     const [offer, setOffer] = useState(false);
     const [message, setMessage] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(data.availableFrom);
+    const [selectedDate, setSelectedDate] = useState(data.deadline);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value});
@@ -327,7 +327,7 @@ const Post = ({ data, setLoadingMain }) => {
                 null
             }
             {data.categoryType === 'Hange' ? 
-                <Offers creatorId={creatorId} />
+                <Offers postId={postId} />
                 :
                 null
             }            

@@ -18,6 +18,6 @@ const SideBar = () => {
             <SideBarItem value="Varia" Icon={<AcUnitIcon />}/>
         </div>
     )
-}
+};
 
 export default SideBar

@@ -57,9 +57,9 @@ const deleteMessageHandler = async (req, res) => {
 
 /* Offers */
 const findOffersHandler = async (req, res) => {
-    const id = req.query.id;
+    const postId = req.query.postId
     try {
-        const offers = await offerModal.find({ forUser: id });
+        const offers = await offerModal.find({ forUserPost: postId });
         res.status(200).json({ offers });
     } catch (error) {
         res.status(500).json({ message: "Something went wrong" });
