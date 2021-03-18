@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postCategoryType } from '../../actions/posts';
 
 import clsx from 'clsx';
-import { Drawer, Button, List, Divider, ListItem, ListItemIcon, Typography, IconButton } from '@material-ui/core';
+import { Drawer, List, Divider, ListItem, ListItemIcon, Typography, IconButton } from '@material-ui/core';
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import BuildIcon from '@material-ui/icons/Build';

@@ -29,7 +29,7 @@ function App() {
   const useStyles = makeStyles(() => ({
     container: {    
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'column',     
     },
     paper: {
       minHeight: '99vh',

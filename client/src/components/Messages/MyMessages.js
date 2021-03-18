@@ -5,6 +5,7 @@ import MessageList from './MessageList';
 import Message from './Message';
 import { fetchMessages } from '../../api';
 import { tokenExpired } from '../../actions/auth.js';
+import MessageDrawer from './MessageDrawer';
 
 const MyMessages = () => {
     const dispatch = useDispatch();
@@ -37,7 +38,14 @@ const MyMessages = () => {
             <div className={styles.messagesContainer}>
                 <MessageList setMessageOpen={setMessageOpen} setCurrentMessage={setCurrentMessage} loading={loading} messages={messages} setReply={setReply} />
                 {messageOpen === true ?
-                    <Message currentMessage={currentMessage} reply={reply} setReply={setReply} setMessageOpen={setMessageOpen} />
+                    <>
+                        <div className={styles.messageBig}>
+                            <Message currentMessage={currentMessage} reply={reply} setReply={setReply} setMessageOpen={setMessageOpen} />
+                        </div>                    
+                        <div className={styles.messageSmall}>
+                            <MessageDrawer open={messageOpen} currentMessage={currentMessage} reply={reply} setReply={setReply} setMessageOpen={setMessageOpen} />
+                        </div>
+                    </>
                     :
                     null
                 }                

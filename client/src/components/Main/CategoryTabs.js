@@ -17,7 +17,6 @@ const CategoryTabs = () => {
     };
 
     const tabValue = (e) => {
-        console.log(e.target.innerText)
         if (e.target.innerText === "KÕIK") {
             dispatch(postCategory(""));
         } else {

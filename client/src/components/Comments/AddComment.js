@@ -45,9 +45,9 @@ const AddComment = (props) => {
         <div className={styles.addCommentContainer}>
             <Paper className={styles.paper} elevation={3}>
                 <form onSubmit={handleSubmit} className={styles.form}>
-                    <TextField value={value} onChange={handleChange} name='comment' label='Add comment...' variant="outlined" fullWidth multiline rows={4} required/>
+                    <TextField value={value} onChange={handleChange} name='comment' label='Jäta kasutaja kohta arvustus' variant="outlined" fullWidth multiline rows={4} required/>
                     <div className={styles.addButton}>
-                        <Button className={styles.addBtn} disabled={loading} variant="contained" type='submit' color="primary">{loading && <CircularProgress size={24} className={styles.buttonProgress} />}Add comment</Button>                        
+                        <Button className={styles.addBtn} disabled={loading} variant="contained" type='submit' color="primary">{loading && <CircularProgress size={24} className={styles.buttonProgress} />}Arvustus</Button>                        
                     </div>
                 </form>
             </Paper>

@@ -1,7 +1,17 @@
+.mainMainContainer {
+    width: 100%;
+    
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;    
+}
+
 .container {
     width: 100%;
     min-height: 58vh;
-    margin: 1rem;
+    
 }
 
 .paper {
@@ -15,7 +25,8 @@
 /* HEADER */
 .headerContainer {
     display: flex;
-    justify-content: center;    
+    justify-content: center; 
+    width: 100%; 
 }
 
 .headerText {
@@ -24,6 +35,7 @@
 
 .headerSubContainer {
     margin-top: .8rem;
+    margin-bottom: .8rem;
     display: flex;
     flex-direction: column;    
     align-items: center;
@@ -36,6 +48,11 @@
 /* SIDEBAR */
 .sideBar {
     margin-right: 2rem;
+    margin-left: 1rem;
+}
+
+.sideBarSmall {
+    display: none;
 }
 
 .noPostsYet {
@@ -83,12 +100,28 @@
     float: right;
 }
 
+.sideBarSmallPaper {
+    height: 3rem;
+    width: 100%;
+}
+
 .smallCategoryName {
     margin-right: 1rem;
     font-weight: bold;
 }
 
+.contentContainer {
+    margin: .8rem;
+}
+
 @media (max-width: 600px) {
+    .sideBarBig {
+        display: none;
+    }    
+    .sideBarSmall {
+        display: block;
+        
+    }    
     .typeTabs {
         height: 2rem;
     }    
@@ -102,7 +135,7 @@
         font-size: .7rem;
     }
     .headerText {
-        font-size: 1.5rem;        
+        font-size: 1.4rem;        
     }
     .sideBar {
         margin-left: .6rem;
@@ -118,7 +151,7 @@
     }
     .sideBarItemActive {        
         background-color: rgb(255, 255, 255);
-        border: 1px rgb(46, 3, 202) solid;
+        border: 1px rgb(37, 0, 172) solid;
         padding: .4rem;
     }
 }
